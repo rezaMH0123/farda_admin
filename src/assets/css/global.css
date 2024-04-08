@@ -1,0 +1,12 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./font.css";
+@import "./ckEditor";
+@import "./datePicker";
+
+html,
+body {
+  font-family: "Shabnam";
+}

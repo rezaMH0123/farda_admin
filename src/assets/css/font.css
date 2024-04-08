@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 400;
+  src: url("./fonts/Shabnam-FD.ttf");
+}
+
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 500;
+  src: url("./fonts//Shabnam-Medium-FD.ttf");
+}
+
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 700;
+  src: url("./fonts//Shabnam-Bold-FD.ttf");
+}

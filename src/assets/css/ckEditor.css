@@ -1,0 +1,47 @@
+.ck-reset_all :not(.ck-reset_all-excluded *),
+.ck.ck-reset_all {
+  background: #eff4ff !important;
+  direction: rtl;
+}
+
+.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+  direction: rtl !important;
+}
+
+.ck.ck-balloon-panel.ck-powered-by-balloon
+  .ck.ck-powered-by
+  .ck-powered-by__label {
+  display: none !important;
+}
+.ck .ck-icon .ck-reset_all-excluded {
+  display: none !important;
+}
+.ck.ck-balloon-panel.ck-powered-by-balloon .ck.ck-powered-by {
+  display: none !important;
+}
+.ck .ck-reset .ck-editor .ck-rounded-corners {
+  border-radius: 50px !important;
+}
+.ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+.ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  border-radius: var(--ck-border-radius);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.ck-reset_all :not(.ck-reset_all-excluded *),
+.ck.ck-reset_all {
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+}
+.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+  border: 1px solid #ccc !important;
+  box-shadow: none !important;
+}
+
+.ck-editor__editable {
+  min-height: 150px !important;
+}
+
+.custom-shadow {
+  box-shadow: 0px 2px 30px 0px #0000000f;
+}
