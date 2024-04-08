@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SigninI } from "@/types/forms/signin";
 import FormE from "@/types/form";
 import "../../../yup.config";
-
+import Cookies from "js-cookie";
 import http from "@/core/services/httpServices";
 import CustomToast from "../Toast";
 
@@ -47,7 +47,7 @@ export default function SignInForm() {
       .then((response) => {
         const data = response.data;
         const access_token = data.data.access_token;
-        localStorage.setItem("access_token", access_token);
+        Cookies.set("access_token", access_token, { expires: 2 });
         reset();
         navigate("/");
         setLoading(false);
