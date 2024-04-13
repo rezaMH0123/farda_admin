@@ -11,6 +11,7 @@ import SwitchToggle from "@/components/SwitchToggle";
 import RadioButton from "@/components/RadioButton";
 import Button from "@/components/Button";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { useModal } from "@/context/modalContext";
 
 const weekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 type Inputs = {
@@ -27,12 +28,8 @@ type Inputs = {
   isComment: boolean;
 };
 
-type ContentsModalBodyProps = {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-export default function ContentsModalBody({
-  setOpenModal,
-}: ContentsModalBodyProps) {
+export default function ContentsModalBody() {
+  const { closeModal } = useModal();
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const [selectedOption, setSelectedOption] = useState<string>("preview");
@@ -267,7 +264,7 @@ export default function ContentsModalBody({
           </div>
           <div className="flex gap-x-4 items-center justify-end b h-[8%]">
             <Button
-              onClick={() => setOpenModal(false)}
+              onClick={closeModal}
               className="border border-[#FF8A8A] text-[#FF8A8A]  h-[44px] w-[180px]"
               title={"بستن"}
             />
