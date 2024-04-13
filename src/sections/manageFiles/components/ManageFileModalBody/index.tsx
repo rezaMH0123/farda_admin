@@ -8,14 +8,12 @@ import CustomToast from "@/components/Toast";
 import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
+import { useModal } from "@/context/modalContext";
 
-export default function ManageFileModalBody({
-  setOpenModal,
-}: {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function ManageFileModalBody() {
   const [file, setFile] = useState<File | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const { closeModal } = useModal();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
@@ -48,7 +46,7 @@ export default function ManageFileModalBody({
         .then((response) => {
           const data = response.data;
           console.log(data);
-          setOpenModal(false);
+          closeModal();
           setLoading(false);
           toast.custom((t) => (
             <CustomToast
@@ -95,7 +93,7 @@ export default function ManageFileModalBody({
         <Button
           className="text-sm w-[50%] h-full font-bold text-PrimaryRed-100 border border-PrimaryRed-100 leading-5"
           title={SHARED_STRINGS[StringsE.Close]}
-          onClick={() => setOpenModal(false)}
+          onClick={closeModal}
         />
         <Button
           type="submit"
