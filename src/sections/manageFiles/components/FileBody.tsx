@@ -5,18 +5,20 @@ import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import Photos from "./Photo";
 import Files from "./File";
+import http from "@/core/services/httpServices";
+import Cookies from "js-cookie";
+import { FilesI } from "@/types/models/Files.type";
 
-export default function ManageFileBodySection({
-  files,
-  photos,
-}: {
-  files: File[];
-  photos: File[];
-}) {
+export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
   const allPage: number = 8;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [photos, setPhotos] = useState<FilesI[]>([]);
+  const [files, setFiles] = useState<FilesI[]>([]);
+
+  const access_token: string | undefined = Cookies.get("access_token");
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -25,13 +27,44 @@ export default function ManageFileBodySection({
     setCurrentPage((prev) => prev - 1);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  const getFiles = async () => {
+    setLoading(true);
 
-    return () => clearTimeout(timer);
-  }, []);
+    await http
+      .get("Panel/File", {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        params: {
+          Size: 6,
+          Page: currentPage,
+          Sort: "filename",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // filtering images from resullt
+        const photosArr: FilesI[] = response.data.data.result.filter(
+          (item: FilesI) => item.contentType.slice(0, 5) === "image"
+        );
+        setPhotos(photosArr);
+        // filtering files from result
+        const filesArr: FilesI[] = response.data.data.result.filter(
+          (item: FilesI) => item.contentType.slice(0, 11) === "application"
+        );
+        setFiles(filesArr);
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getFiles();
+  }, [currentPage]);
 
   return (
     <>
