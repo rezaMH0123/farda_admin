@@ -1,27 +1,71 @@
 import { ChangeEvent, useState } from "react";
 import AploadBg from "@/assets/img/tools/uploadBg.svg";
-import Success from "@/assets/img/logo/success.svg";
 import toast from "react-hot-toast";
 import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import Button from "@/components/Button";
+import CustomToast from "@/components/Toast";
+import http from "@/core/services/httpServices";
+import Cookies from "js-cookie";
+import Loading from "@/components/Loading";
 
 export default function ManageFileModalBody({
   setOpenModal,
-  photos,
-  files,
 }: {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  photos: File[];
-  setPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-  files: File[];
-  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
   const [file, setFile] = useState<File | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const access_token: string | undefined = Cookies.get("access_token");
 
   const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const image = e.target.files?.[0];
-    setFile(image);
+    const userFile = e.target.files?.[0];
+    setFile(userFile);
+  };
+
+  const addFile = async () => {
+    setLoading(true);
+    if (file === undefined) {
+      setLoading(false);
+      toast.custom((t) => (
+        <CustomToast
+          text="!لطفا فایل مورد نظر را انتخاب نمایید"
+          animation={t}
+          status="error"
+        />
+      ));
+    } else {
+      const formData = new FormData();
+      formData.append("file", file);
+      await http
+        .post("Panel/File", formData, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          console.log(data);
+          setOpenModal(false);
+          setLoading(false);
+          toast.custom((t) => (
+            <CustomToast
+              text="!فایل با موفقیت اضافه شد"
+              animation={t}
+              status="success"
+            />
+          ));
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+          toast.custom((t) => (
+            <CustomToast text="error!" animation={t} status="error" />
+          ));
+        });
+    }
   };
 
   return (
@@ -49,48 +93,21 @@ export default function ManageFileModalBody({
       </form>
       <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-8">
         <Button
-          type="submit"
-          className="text-sm w-[50%] h-full font-ShabnamBold text-PrimaryRed-100 border border-Pritext-PrimaryRed-100 leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
+          className="text-sm w-[50%] h-full font-bold text-PrimaryRed-100 border border-PrimaryRed-100 leading-5"
           title={SHARED_STRINGS[StringsE.Close]}
           onClick={() => setOpenModal(false)}
         />
         <Button
           type="submit"
-          className="text-sm w-[50%] h-full font-ShabnamBold text-[#FFFFFF] bg-PrimaryBlue-100 leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
-          title={SHARED_STRINGS[StringsE.AddFile]}
-          onClick={() => {
-            if (file?.type.slice(0, 5) === "image") {
-              photos.push(file);
-              setOpenModal(false);
-              toast.custom((t) => (
-                <div
-                  className={`${
-                    t.visible ? "animate-enter" : "animate-leave"
-                  } h-[40px] w-[350px] bg-PrimaryGreen-100 rounded-lg flex items-center justify-end`}
-                >
-                  <p className="mr-2 font-ShabnamRegular text-[#000]">
-                    .عکس با موفقیت اضافه شد
-                  </p>
-                  <img src={Success} className="mr-4" />
-                </div>
-              ));
-            } else if (file?.type.slice(0, 11) === "application") {
-              files.push(file);
-              setOpenModal(false);
-              toast.custom((t) => (
-                <div
-                  className={`${
-                    t.visible ? "animate-enter" : "animate-leave"
-                  } h-[40px] w-[350px] bg-PrimaryGreen-100 rounded-lg flex items-center justify-end`}
-                >
-                  <p className="mr-2 font-ShabnamRegular text-[#000]">
-                    .فایل با موفقیت اضافه شد
-                  </p>
-                  <img src={Success} className="mr-4" />
-                </div>
-              ));
-            }
-          }}
+          className="text-sm w-[50%] h-full font-bold text-[#FFFFFF] bg-PrimaryBlue-100 leading-5"
+          title={
+            loading ? (
+              <Loading className={"bg-PrimaryBlack-200"} />
+            ) : (
+              SHARED_STRINGS[StringsE.AddFile]
+            )
+          }
+          onClick={addFile}
         />
       </div>
     </div>
