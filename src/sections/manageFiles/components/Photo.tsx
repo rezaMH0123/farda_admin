@@ -1,6 +1,7 @@
 import { FilesI } from "@/types/models/Files.type";
 import Square from "@/assets/img/tools/square.svg";
 import DropDownMenu from "./DropDownMenu";
+import { PhotoMenuItems } from "@/constants/items/dropDownMenuItems";
 
 export default function Photos({ photos }: { photos?: FilesI[] }) {
   return (
@@ -15,14 +16,14 @@ export default function Photos({ photos }: { photos?: FilesI[] }) {
           >
             <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
               <img src={Square} alt="square" className="cursor-pointer" />
-              <DropDownMenu />
+              <DropDownMenu menuItemsT={PhotoMenuItems} />
             </div>
             <div
               className="w-[95%] h-[123px] rounded m-auto bg-cover bg-no-repeat"
               style={{ backgroundImage: `url(${item.fileUrl})` }}
             ></div>
             <div className="w-full h-[20%] flex items-center justify-center">
-              <p className="font-ShabnamRegular text-PrimaryBlack-500">
+              <p className="font-normal text-PrimaryBlack-500">
                 سه‌شنبه 21 فروردین 1403
               </p>
             </div>

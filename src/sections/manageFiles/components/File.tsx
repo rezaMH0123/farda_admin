@@ -1,4 +1,3 @@
-import More from "@/assets/img/tools/more.svg";
 import Pdf from "@/assets/img/tools/pdf.svg";
 import Word from "@/assets/img/tools/word.svg";
 import Exel from "@/assets/img/tools/exel.svg";
@@ -6,6 +5,8 @@ import PdfFile from "@/assets/img/tools/file.svg";
 import WordFile from "@/assets/img/tools/wordFile.svg";
 import ExelFile from "@/assets/img/tools/excelFile.svg";
 import { FilesI } from "@/types/models/Files.type";
+import DropDownMenu from "./DropDownMenu";
+import { FileMenuItems } from "@/constants/items/dropDownMenuItems";
 
 export default function Files({ files }: { files: FilesI[] }) {
   return (
@@ -38,7 +39,7 @@ export default function Files({ files }: { files: FilesI[] }) {
                     {item.filename}
                   </p>
                 </div>
-                <img src={More} alt="more" className="cursor-pointer" />
+                <DropDownMenu menuItemsT={FileMenuItems} />
               </div>
               <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
                 <img
