@@ -4,21 +4,20 @@ import { Toast } from "react-hot-toast";
 
 type CustomToastProps = {
   text: string;
-  backgroundColor: string;
   animation: Toast;
-  status: string;
+  status: "error" | "success";
 };
 
 export default function CustomToast({
   text,
-  backgroundColor,
   animation,
   status,
 }: CustomToastProps) {
-  console.log(backgroundColor);
   return (
     <div
-      style={{ backgroundColor: backgroundColor }}
+      style={{
+        backgroundColor: `${status === "success" ? "#76f18b" : "#f93838"}`,
+      }}
       className={`${
         animation.visible ? "animate-enter" : "animate-leave"
       } h-[40px] w-[350px] rounded-lg flex items-center justify-end`}
