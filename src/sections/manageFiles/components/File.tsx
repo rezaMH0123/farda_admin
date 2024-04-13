@@ -1,12 +1,67 @@
-import FileCard from "./Card/FileCards";
+import More from "@/assets/img/tools/more.svg";
+import Pdf from "@/assets/img/tools/pdf.svg";
+import Word from "@/assets/img/tools/word.svg";
+import Exel from "@/assets/img/tools/exel.svg";
+import PdfFile from "@/assets/img/tools/file.svg";
+import WordFile from "@/assets/img/tools/wordFile.svg";
+import ExelFile from "@/assets/img/tools/excelFile.svg";
+import { FilesI } from "@/types/models/Files.type";
 
-export default function Files({ files }: { files?: File[] }) {
+export default function Files({ files }: { files: FilesI[] }) {
   return (
     <>
       {files?.length === 0 ? (
         <>there is no files</>
       ) : (
-        Array.isArray(files) && <FileCard files={files} />
+        files?.map((item) => {
+          const fileType: string = item.extention;
+          return (
+            <div
+              key={item.id}
+              className="h-[200px] w-[100%] rounded-[20px] bg-[#DEE8FF] custom-shadow"
+            >
+              <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      fileType === ".pdf"
+                        ? Pdf
+                        : fileType === ".docx"
+                        ? Word
+                        : fileType === ".xlsx" || fileType === ".xls"
+                        ? Exel
+                        : ""
+                    }
+                    alt="fileType"
+                  />
+                  <p className="font-ShabnamRegular text-xs text-PrimaryBlack-300">
+                    {item.filename}
+                  </p>
+                </div>
+                <img src={More} alt="more" className="cursor-pointer" />
+              </div>
+              <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
+                <img
+                  src={
+                    fileType === ".pdf"
+                      ? PdfFile
+                      : fileType === ".docx"
+                      ? WordFile
+                      : fileType === ".xlsx" || fileType === ".xls"
+                      ? ExelFile
+                      : ""
+                  }
+                  alt="file"
+                />
+              </div>
+              <div className="w-full h-[20%] flex items-center justify-center">
+                <p className="font-ShabnamRegular text-PrimaryBlack-500">
+                  سه‌شنبه 21 فروردین 1403
+                </p>
+              </div>
+            </div>
+          );
+        })
       )}
     </>
   );
