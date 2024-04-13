@@ -3,12 +3,10 @@ import plusIcon from "@/assets/img/tools/plus.svg";
 import filrterIcon from "@/assets/img/tools/filter.svg";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
+import { useModal } from "@/context/modalContext";
 
-type ContentHeaderSectionProps = {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const ContentHeaderSection = ({ setOpenModal }: ContentHeaderSectionProps) => {
+const ContentHeaderSection = () => {
+  const { openModal } = useModal();
   return (
     <div className="header flex justify-between items-center px-6 h-[15%] ">
       <div className="right">
@@ -24,7 +22,7 @@ const ContentHeaderSection = ({ setOpenModal }: ContentHeaderSectionProps) => {
           <img src={filrterIcon} alt="filrterIcon" />
         </div>
         <AdditionButton
-          onClick={() => setOpenModal(true)}
+          onClick={openModal}
           className="w-[152px] h-[44px] font-ShabnamMedium "
         >
           <span className="text-[14px]">
