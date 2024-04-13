@@ -8,6 +8,14 @@
   direction: rtl !important;
 }
 
+.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) li {
+  /* padding: 1px !important; */
+  margin-right: 10px !important;
+}
+ol > li {
+  margin-right: 10px !important;
+}
+
 .ck.ck-balloon-panel.ck-powered-by-balloon
   .ck.ck-powered-by
   .ck-powered-by__label {
