@@ -1,14 +1,14 @@
-import React from "react";
 import Select, { StylesConfig } from "react-select";
-type OptionType = {
+import "./dropDown.module.css";
+export type OptionType = {
   value: string;
   label: string;
 };
-type MyDropDownProps = {
+type SelectInputProps = {
   placeholder: string;
   options?: OptionType[];
+  setCategory: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
-
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
   indicatorSeparator: (provided) => ({
@@ -37,14 +37,27 @@ const customStyles: StylesConfig = {
   }),
 };
 
-const MyDropDown: React.FC<MyDropDownProps> = ({ placeholder, options }) => {
+const MyDropDown = ({
+  options,
+  placeholder,
+  setCategory,
+}: SelectInputProps) => {
+  const handleChange = (newValue: unknown) => {
+    if (newValue !== null && typeof newValue !== "undefined") {
+      const selectedOption = newValue as OptionType;
+      setCategory(selectedOption.value);
+    } else {
+      setCategory(undefined);
+    }
+  };
   return (
     <div className="w-[47%] h-[38px]">
       <Select
         options={options}
+        noOptionsMessage={() => "یافت نشد"}
         styles={customStyles}
         placeholder={placeholder}
-        noOptionsMessage={() => "یافت نشد"}
+        onChange={handleChange}
       />
     </div>
   );
