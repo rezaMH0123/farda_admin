@@ -1,6 +1,6 @@
 import { FilesI } from "@/types/models/Files.type";
-import More from "@/assets/img/tools/more.svg";
 import Square from "@/assets/img/tools/square.svg";
+import DropDownMenu from "./DropDownMenu";
 
 export default function Photos({ photos }: { photos?: FilesI[] }) {
   return (
@@ -15,7 +15,7 @@ export default function Photos({ photos }: { photos?: FilesI[] }) {
           >
             <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
               <img src={Square} alt="square" className="cursor-pointer" />
-              <img src={More} alt="more" className="cursor-pointer" />
+              <DropDownMenu />
             </div>
             <div
               className="w-[95%] h-[123px] rounded m-auto bg-cover bg-no-repeat"
