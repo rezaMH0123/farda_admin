@@ -1,23 +1,18 @@
 import { ReactNode, MouseEvent } from "react";
 import "animate.css";
 import { createPortal } from "react-dom";
+import { useModal } from "@/context/modalContext";
 
 type ModalProps = {
   children: ReactNode;
   width: number;
   height: number;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
-export default function Modal({
-  children,
-  width,
-  height,
-  setOpenModal,
-}: ModalProps) {
+export default function Modal({ children, width, height }: ModalProps) {
+  const { closeModal } = useModal();
   const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
-    // Prevent the click event from propagating to the backdrop click handler
     event.stopPropagation();
-    setOpenModal(false);
+    closeModal();
   };
 
   return createPortal(
