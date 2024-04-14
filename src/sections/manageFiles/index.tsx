@@ -15,7 +15,7 @@ export default function ManageFile() {
       <ManageFileHeaderSection />
       <ManageFileBodySection />
       {isModalOpen && (
-        <Modal width={35} height={55}>
+        <Modal width={35} height={60}>
           <div className="w-full h-full">
             <ManageFileModalBody />
           </div>
