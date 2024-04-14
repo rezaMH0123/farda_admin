@@ -67,8 +67,8 @@ export default function ManageFileModalBody() {
   };
 
   return (
-    <div>
-      <p className="text-[20px] font-ShabnamBold mt-10 mr-10 text-PrimaryBlack-100">
+    <div className="h-full flex flex-col gap-y-4 p-5">
+      <p className="text-[20px] font-bold mt-4 mr-10 text-PrimaryBlack-100">
         {SHARED_STRINGS[StringsE.AddFile]}
       </p>
       <form
@@ -78,7 +78,7 @@ export default function ManageFileModalBody() {
       >
         <div
           style={{ backgroundImage: `url(${AploadBg})` }}
-          className="w-[70%] h-[232px] flex flex-col justify-center items-center m-auto mt-8 cursor-pointer bg-contain bg-no-repeat"
+          className="w-[70%] h-[232px] flex flex-col justify-center items-center m-auto cursor-pointer bg-contain bg-no-repeat"
         >
           <input
             type="file"
@@ -86,19 +86,19 @@ export default function ManageFileModalBody() {
             hidden
             onChange={handleFileInputChange}
           />
-          <p className="mt-[40%] font-ShabnamRegular">{file && file.name}</p>
+          <p className="mt-[40%] font-normal">{file && file.name}</p>
         </div>
       </form>
-      <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-8">
+      <div className="w-[70%] m-auto flex gap-5 mt-7">
         <Button
-          className="text-sm w-[50%] h-full font-bold"
+          className="text-sm w-[50%] font-bold"
           title={SHARED_STRINGS[StringsE.Close]}
           onClick={closeModal}
           model="outline_red"
         />
         <Button
           type="submit"
-          className="text-sm w-[50%] h-full font-bold"
+          className="text-sm w-[50%] font-bold"
           model="fill_blue"
           title={
             loading ? (
