@@ -14,6 +14,12 @@ export type DropDownMenuProps = {
 export default function DropDownMenu({ menuItemsT }: DropDownMenuProps) {
   const { openDeleteModal } = useModal();
 
+  const DeleteModal = (name: string) => {
+    if (name === "حذف") {
+      openDeleteModal();
+    }
+  };
+
   return (
     <div>
       <Menu as="div" className="relative inline-block text-center">
@@ -35,7 +41,7 @@ export default function DropDownMenu({ menuItemsT }: DropDownMenuProps) {
                 <Menu.Item>
                   <p
                     className="cursor-pointer"
-                    onClick={() => item.name === "حذف" && openDeleteModal()}
+                    onClick={() => DeleteModal(item.name)}
                   >
                     {item.name}
                   </p>
