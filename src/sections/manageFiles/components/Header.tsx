@@ -3,6 +3,7 @@ import plusIcon from "@/assets/img/tools/plus.svg";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
 import { useModal } from "@/context/modalContext";
+import Button from "@/components/Button";
 
 export default function ManageFileHeaderSection() {
   const { openModal } = useModal();
@@ -15,15 +16,13 @@ export default function ManageFileHeaderSection() {
         </span>
       </div>
       <div className="left flex justify-end items-center gap-x-5 w-[30%] h-full">
-        <AdditionButton
-          className="w-[152px] h-[44px] font-ShabnamMedium"
+        <Button
+          title={SHARED_STRINGS[StringsE.AdditionButton]}
+          className="w-[152px] font-medium"
+          model="fill_blue"
           onClick={openModal}
-        >
-          <span className="text-[14px]">
-            {SHARED_STRINGS[StringsE.AdditionButton]}
-          </span>
-          <img src={plusIcon} alt="plusIcon" />
-        </AdditionButton>
+          icon={<img src={plusIcon} alt="plusIcon" />}
+        />
       </div>
     </div>
   );

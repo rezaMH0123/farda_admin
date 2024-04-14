@@ -126,14 +126,16 @@ export default function ManageFileBodySection() {
                 </p>
                 <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-12">
                   <Button
-                    className="text-sm w-[50%] h-full text-PrimaryBlack-300 border border-PrimaryBlatext-PrimaryBlack-300 leading-5"
+                    className="text-sm w-[50%]"
+                    model="outline_gray"
                     title="منصرف شدم"
                     onClick={closeDeleteModal}
-                  ></Button>
+                  />
                   <Button
-                    className="text-sm w-[50%] h-full bg-PrimaryRed-100 text-white leading-5"
+                    className="text-sm w-[50%]"
+                    model="fill_red"
                     title="حذف شود"
-                  ></Button>
+                  />
                 </div>
               </div>
             </div>

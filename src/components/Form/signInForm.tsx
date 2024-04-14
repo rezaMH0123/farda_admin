@@ -91,7 +91,8 @@ export default function SignInForm() {
         </div>
         <Button
           type="submit"
-          className="mt-8 h-[44px] w-full font-bold bg-PrimaryBlue-100 text-[#FFFFFF] leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
+          model="fill_blue"
+          className="mt-8 w-full font-bold disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
           title={
             loading ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
           }
