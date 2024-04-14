@@ -22,7 +22,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-2 ${
+      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-2 leading-5 ${
         model === "fill_blue"
           ? "bg-PrimaryBlue-100 text-white"
           : model === "outline_gray"
