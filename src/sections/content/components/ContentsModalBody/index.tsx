@@ -21,7 +21,7 @@ type Inputs = {
   dateStart: string | undefined;
   dateEnd: string | undefined;
   selectedItem: string | null;
-  selectedOption: string | null;
+  selectedOption: string;
   category: string | undefined;
   Subcategory: string | undefined;
   isShare: boolean;
@@ -32,7 +32,6 @@ export default function ContentsModalBody() {
   const { closeModal } = useModal();
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string>("preview");
 
   const {
     register,
@@ -76,14 +75,23 @@ export default function ContentsModalBody() {
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
+    { value: "ali", label: "ali" },
+    { value: "reza", label: "reza" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
+    { value: "mamad", label: "mamad" },
   ];
   return (
-    <div className="flex justify-center items-center w-full h-full ">
+    <div className="flex justify-center items-center w-full h-full overflow-auto  ">
       <form
-        className="flex justify-center items-center w-full h-full"
+        className="flex justify-center items-center w-full h-full "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="h-full w-[90%] py-4">
+        <div className="h-full w-[90%] py-4 ">
           <div className="h-[25%]">
             <span className="font-ShabnamBold text-[20px]">افزودن محتوا</span>
             <TextField
@@ -100,7 +108,7 @@ export default function ContentsModalBody() {
               register={register("summary")}
             />
           </div>
-          <div className="h-fit">
+          <div className="h-fit  mt-3">
             <span className="font-ShabnamRegular block mb-4">توضیحات</span>
             <Controller
               name="ckDescription"
@@ -122,7 +130,7 @@ export default function ContentsModalBody() {
               )}
             />
           </div>
-          <div className="flex justify-between items-center  h-[8%]">
+          <div className="flex justify-between items-center  h-[8%]  mt-3">
             <div className="relative  w-[47%]  ">
               <div className="flex justify-between overflow-hidden items-center h-[38px] w-[100%] border border-PrimaryBlack-300 rounded-lg ">
                 <div style={{ direction: "rtl" }}>
@@ -185,7 +193,7 @@ export default function ContentsModalBody() {
               </div>
             </div>
           </div>
-          <div className=" h-[8%] flex items-center font-light  text-PrimaryBlack-600">
+          <div className=" h-[8%] flex items-center font-light  text-PrimaryBlack-600 mt-3">
             <Controller
               name="selectedItem"
               control={control}
@@ -198,7 +206,7 @@ export default function ContentsModalBody() {
               )}
             />
           </div>
-          <div className="w-full  h-[8%] flex justify-between items-center gap-x-3">
+          <div className="w-full  h-[8%] flex justify-between items-center gap-x-3 mt-3">
             <Controller
               name="category"
               defaultValue={""}
@@ -207,6 +215,7 @@ export default function ContentsModalBody() {
                 <MyDropDown
                   setCategory={field.onChange}
                   placeholder="دسته بندی‌ها*"
+                  isMulti={true}
                   options={options}
                 />
               )}
@@ -219,6 +228,7 @@ export default function ContentsModalBody() {
                 <MyDropDown
                   setCategory={field.onChange}
                   placeholder="دسته بندی زیر مجموعه"
+                  isMulti={true}
                   // options={options}
                 />
               )}
@@ -255,10 +265,17 @@ export default function ContentsModalBody() {
             </div>
             <div className="flex items-center gap-x-3">
               <span className="text-PrimaryBlack-400">وضعیت نمایش*</span>
-              <RadioButton
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
-                color={"#33BDF1"}
+              <Controller
+                name="selectedOption"
+                defaultValue="preview"
+                control={control}
+                render={({ field }) => (
+                  <RadioButton
+                    selectedOption={field.value}
+                    setSelectedOption={field.onChange}
+                    color="#33BDF1"
+                  />
+                )}
               />
             </div>
           </div>
