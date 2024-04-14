@@ -91,13 +91,15 @@ export default function ManageFileModalBody() {
       </form>
       <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-8">
         <Button
-          className="text-sm w-[50%] h-full font-bold text-PrimaryRed-100 border border-PrimaryRed-100 leading-5"
+          className="text-sm w-[50%] h-full font-bold"
           title={SHARED_STRINGS[StringsE.Close]}
           onClick={closeModal}
+          model="outline_red"
         />
         <Button
           type="submit"
-          className="text-sm w-[50%] h-full font-bold text-[#FFFFFF] bg-PrimaryBlue-100 leading-5"
+          className="text-sm w-[50%] h-full font-bold"
+          model="fill_blue"
           title={
             loading ? (
               <Loading className={"bg-PrimaryBlack-200"} />
