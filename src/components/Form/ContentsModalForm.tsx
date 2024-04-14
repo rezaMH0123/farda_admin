@@ -284,12 +284,14 @@ export default function ContentsModalForm() {
             <div className="flex gap-x-4 items-center justify-end b h-[8%]">
               <Button
                 onClick={closeModal}
-                className="border border-[#FF8A8A] text-[#FF8A8A]  h-[44px] w-[180px]"
+                className="w-[180px]"
+                model="outline_red"
                 title={"بستن"}
               />
               <Button
                 type="submit"
-                className="bg-PrimaryBlue-100 text-white  h-[44px] w-[180px]"
+                className="w-[180px]"
+                model="fill_blue"
                 title={"افزودن"}
               />
             </div>
