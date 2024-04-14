@@ -1,69 +1,50 @@
-import Pdf from "@/assets/img/tools/pdf.svg";
-import Word from "@/assets/img/tools/word.svg";
-import Exel from "@/assets/img/tools/exel.svg";
-import PdfFile from "@/assets/img/tools/file.svg";
-import WordFile from "@/assets/img/tools/wordFile.svg";
-import ExelFile from "@/assets/img/tools/excelFile.svg";
 import { FilesI } from "@/types/models/Files.type";
-import DropDownMenu from "./DropDownMenu";
-import { FileMenuItems } from "@/constants/items/dropDownMenuItems";
+import { useGlobalState } from "@/context/globalStateContext";
+import { useModal } from "@/context/modalContext";
+import Modal from "@/components/Modal";
+import IconDelete from "@/components/Icons/DeleteIcon";
+import Button from "@/components/Button";
+import CardFile from "./Cards/CardFile";
 
 export default function Files({ files }: { files: FilesI[] }) {
+  const { isDeleteModalOpen, closeDeleteModal } = useModal();
+  const { itemFile } = useGlobalState();
+
   return (
     <>
       {files?.length === 0 ? (
         <>there is no files</>
       ) : (
-        files?.map((item) => {
-          const fileType: string = item.extention;
-          return (
-            <div
-              key={item.id}
-              className="h-[200px] w-[100%] rounded-[20px] bg-[#DEE8FF] custom-shadow"
-            >
-              <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      fileType === ".pdf"
-                        ? Pdf
-                        : fileType === ".docx"
-                        ? Word
-                        : fileType === ".xlsx" || fileType === ".xls"
-                        ? Exel
-                        : ""
-                    }
-                    alt="fileType"
-                  />
-                  <p className="font-ShabnamRegular text-xs text-PrimaryBlack-300">
-                    {item.filename}
-                  </p>
-                </div>
-                <DropDownMenu menuItemsT={FileMenuItems} />
-              </div>
-              <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
-                <img
-                  src={
-                    fileType === ".pdf"
-                      ? PdfFile
-                      : fileType === ".docx"
-                      ? WordFile
-                      : fileType === ".xlsx" || fileType === ".xls"
-                      ? ExelFile
-                      : ""
-                  }
-                  alt="file"
-                />
-              </div>
-              <div className="w-full h-[20%] flex items-center justify-center">
-                <p className="font-ShabnamRegular text-PrimaryBlack-500">
-                  سه‌شنبه 21 فروردین 1403
+        files?.map((item) => <CardFile key={item.id} item={item} />)
+      )}
+      <>
+        {isDeleteModalOpen && (
+          <Modal width={25} height={38}>
+            <div className="w-full h-full">
+              <div className="w-full h-full flex items-center flex-col">
+                <IconDelete className="mt-[82px]" />
+                <p className="mt-4 text-PrimaryBlack-800 text-xs">
+                  {itemFile?.filename}
+                  {itemFile?.extention}
                 </p>
+                <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-12">
+                  <Button
+                    className="text-sm w-[50%]"
+                    model="outline_gray"
+                    title="منصرف شدم"
+                    onClick={closeDeleteModal}
+                  />
+                  <Button
+                    className="text-sm w-[50%]"
+                    model="fill_red"
+                    title="حذف شود"
+                  />
+                </div>
               </div>
             </div>
-          );
-        })
-      )}
+          </Modal>
+        )}
+      </>
     </>
   );
 }

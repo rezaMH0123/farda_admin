@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import More from "@/assets/img/tools/more.svg";
 import { useModal } from "@/context/modalContext";
+import { useGlobalState } from "@/context/globalStateContext";
+import { FilesI } from "@/types/models/Files.type";
 
 type MenuItemsT = {
   name: string;
@@ -9,12 +11,15 @@ type MenuItemsT = {
 
 export type DropDownMenuProps = {
   menuItemsT: MenuItemsT[];
+  items: FilesI;
 };
 
-export default function DropDownMenu({ menuItemsT }: DropDownMenuProps) {
+export default function DropDownMenu({ menuItemsT, items }: DropDownMenuProps) {
   const { openDeleteModal } = useModal();
+  const { setItemFile } = useGlobalState();
 
   const DeleteModal = (name: string) => {
+    setItemFile(items);
     if (name === "حذف") {
       openDeleteModal();
     }
