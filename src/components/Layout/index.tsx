@@ -9,7 +9,7 @@ export default function Layout() {
     <div className="flex justify-center px-12 py-4 h-full w-screen">
       <ModalProvider>
         <GlobalStateProvider>
-          <div className="w-[1440px] h-full">
+          <div className="w-[95%] h-full">
             <Header />
             <div className="flex justify-between gap-x-3  h-full mt-6">
               <Outlet />
