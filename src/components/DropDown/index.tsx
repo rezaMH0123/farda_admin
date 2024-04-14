@@ -1,5 +1,4 @@
 import Select, { StylesConfig } from "react-select";
-import "./dropDown.module.css";
 export type OptionType = {
   value: string;
   label: string;
@@ -7,7 +6,10 @@ export type OptionType = {
 type SelectInputProps = {
   placeholder: string;
   options?: OptionType[];
-  setCategory: React.Dispatch<React.SetStateAction<string | undefined>>;
+  isMulti: boolean;
+  setCategory: React.Dispatch<
+    React.SetStateAction<string | string[] | undefined>
+  >;
 };
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
@@ -41,15 +43,22 @@ const MyDropDown = ({
   options,
   placeholder,
   setCategory,
+  isMulti,
 }: SelectInputProps) => {
   const handleChange = (newValue: unknown) => {
     if (newValue !== null && typeof newValue !== "undefined") {
       const selectedOption = newValue as OptionType;
-      setCategory(selectedOption.value);
+      if (Array.isArray(selectedOption)) {
+        const values = selectedOption.map((option) => option.value);
+        setCategory(values);
+      } else {
+        setCategory(selectedOption.value);
+      }
     } else {
       setCategory(undefined);
     }
   };
+
   return (
     <div className="w-[47%] h-[38px]">
       <Select
@@ -58,6 +67,8 @@ const MyDropDown = ({
         styles={customStyles}
         placeholder={placeholder}
         onChange={handleChange}
+        isMulti={isMulti}
+        maxMenuHeight={105}
       />
     </div>
   );
