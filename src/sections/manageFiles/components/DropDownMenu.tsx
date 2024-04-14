@@ -25,6 +25,12 @@ export default function DropDownMenu({ menuItemsT, items }: DropDownMenuProps) {
     }
   };
 
+  const DeleteModal = (name: string) => {
+    if (name === "حذف") {
+      openDeleteModal();
+    }
+  };
+
   return (
     <div>
       <Menu as="div" className="relative inline-block text-center">
