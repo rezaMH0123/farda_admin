@@ -7,7 +7,12 @@ type ButtonPropsT = {
   disable?: boolean;
   onClick?: () => void;
   icon?: ReactNode;
+<<<<<<< HEAD
   model?: "fill_blue" | "fill_red" | "outline_gray" | "outline_red";
+=======
+  background?: string;
+  textColor?: string;
+>>>>>>> d470c0c (edit button component)
 };
 
 export default function Button({
