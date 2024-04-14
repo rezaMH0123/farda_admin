@@ -8,10 +8,6 @@ import Files from "./File";
 import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import { FilesI } from "@/types/models/Files.type";
-import Modal from "@/components/Modal";
-import { useModal } from "@/context/modalContext";
-import IconDelete from "@/components/Icons/DeleteIcon";
-import Button from "@/components/Button";
 
 export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
@@ -21,8 +17,6 @@ export default function ManageFileBodySection() {
 
   const [photos, setPhotos] = useState<FilesI[]>([]);
   const [files, setFiles] = useState<FilesI[]>([]);
-
-  const { isDeleteModalOpen, closeDeleteModal } = useModal();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
@@ -116,31 +110,6 @@ export default function ManageFileBodySection() {
             prevPageClick={prevPageClick}
           />
         </div>
-        {isDeleteModalOpen && (
-          <Modal width={25} height={38}>
-            <div className="w-full h-full">
-              <div className="w-full h-full flex items-center flex-col">
-                <IconDelete className="mt-[82px]" />
-                <p className="mt-4 text-PrimaryBlack-800 text-xs">
-                  PDF.مجمع۱۴۰۱
-                </p>
-                <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-12">
-                  <Button
-                    className="text-sm w-[50%]"
-                    model="outline_gray"
-                    title="منصرف شدم"
-                    onClick={closeDeleteModal}
-                  />
-                  <Button
-                    className="text-sm w-[50%]"
-                    model="fill_red"
-                    title="حذف شود"
-                  />
-                </div>
-              </div>
-            </div>
-          </Modal>
-        )}
       </div>
     </>
   );
