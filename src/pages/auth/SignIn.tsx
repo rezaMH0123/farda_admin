@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import fardaIns from "@/assets/img/logo/signinFardaBg.svg";
-import SignInForm from "@/components/Form/signInForm";
+import SignInForm from "@/components/Form/SignInForme";
 
 export default function SignIn() {
   const location = useLocation();
