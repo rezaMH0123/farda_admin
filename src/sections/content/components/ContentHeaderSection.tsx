@@ -1,9 +1,9 @@
-import AdditionButton from "@/components/AdditionButton";
 import plusIcon from "@/assets/img/tools/plus.svg";
 import filrterIcon from "@/assets/img/tools/filter.svg";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
 import { useModal } from "@/context/modalContext";
+import Button from "@/components/Button";
 
 const ContentHeaderSection = () => {
   const { openModal } = useModal();
@@ -21,15 +21,13 @@ const ContentHeaderSection = () => {
           </span>
           <img src={filrterIcon} alt="filrterIcon" />
         </div>
-        <AdditionButton
+        <Button
           onClick={openModal}
-          className="w-[152px] h-[44px] font-ShabnamMedium "
-        >
-          <span className="text-[14px]">
-            {SHARED_STRINGS[StringsE.AdditionButton]}
-          </span>
-          <img src={plusIcon} alt="plusIcon" />
-        </AdditionButton>
+          title={SHARED_STRINGS[StringsE.AdditionButton]}
+          className="w-[152px] font-medium"
+          model="fill_blue"
+          icon={<img src={plusIcon} alt="plusIcon" />}
+        ></Button>
       </div>
     </div>
   );
