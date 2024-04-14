@@ -67,7 +67,7 @@ export default function ManageFileModalBody() {
   };
 
   return (
-    <div className="h-full flex flex-col gap-y-4 p-5">
+    <div className="h-[90%] w-full flex flex-col gap-y-4 p-5">
       <p className="text-[20px] font-bold mt-4 mr-10 text-PrimaryBlack-100">
         {SHARED_STRINGS[StringsE.AddFile]}
       </p>
