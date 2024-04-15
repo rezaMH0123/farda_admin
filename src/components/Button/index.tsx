@@ -5,7 +5,7 @@ type ButtonPropsT = {
   className?: string;
   title: string | ReactNode;
   disable?: boolean;
-  onClick?: () => void;
+  onClick?: (() => Promise<void>) | (() => void);
   icon?: ReactNode;
   model?: "fill_blue" | "fill_red" | "outline_gray" | "outline_red";
 };

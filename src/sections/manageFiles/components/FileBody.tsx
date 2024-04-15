@@ -8,6 +8,7 @@ import Files from "./File";
 import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import { FilesI } from "@/types/models/Files.type";
+import { useGlobalState } from "@/context/globalStateContext";
 
 export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
@@ -17,6 +18,7 @@ export default function ManageFileBodySection() {
 
   const [photos, setPhotos] = useState<FilesI[]>([]);
   const [files, setFiles] = useState<FilesI[]>([]);
+  const { fileStatus } = useGlobalState();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
@@ -38,7 +40,7 @@ export default function ManageFileBodySection() {
         params: {
           Size: 6,
           Page: currentPage,
-          Sort: "filename",
+          Sort: "createdOn desc",
         },
       })
       .then((response) => {
@@ -64,7 +66,7 @@ export default function ManageFileBodySection() {
 
   useEffect(() => {
     getFiles();
-  }, [currentPage]);
+  }, [currentPage, fileStatus]);
 
   return (
     <>
