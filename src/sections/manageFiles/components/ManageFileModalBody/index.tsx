@@ -67,29 +67,36 @@ export default function ManageFileModalBody() {
   };
 
   return (
-    <div className="h-[90%] w-full flex flex-col gap-y-4 p-5">
-      <p className="text-[20px] font-bold mt-4 mr-10 text-PrimaryBlack-100">
-        {SHARED_STRINGS[StringsE.AddFile]}
-      </p>
-      <form
-        onClick={() =>
-          document.querySelector<HTMLInputElement>(".input-field")?.click()
-        }
-      >
-        <div
-          style={{ backgroundImage: `url(${AploadBg})` }}
-          className="w-[70%] h-[232px] flex flex-col justify-center items-center m-auto cursor-pointer bg-contain bg-no-repeat"
-        >
+    <div className="h-[90%] w-full flex flex-col gap-y-2 p-5">
+      <div className="h-fit">
+        <p className="text-[20px] font-bold mr-10 text-PrimaryBlack-100">
+          {SHARED_STRINGS[StringsE.AddFile]}
+        </p>
+      </div>
+      <div className="h-[70%] relative mt-4">
+        <div className="h-full flex flex-col items-center">
+          <img
+            src={AploadBg}
+            alt="AploadBg"
+            onClick={() =>
+              document.querySelector<HTMLInputElement>(".input-field")?.click()
+            }
+            className="h-[85%] cursor-pointer"
+          />
           <input
             type="file"
             className="input-field"
             hidden
             onChange={handleFileInputChange}
           />
-          <p className="mt-[40%] font-normal">{file && file.name}</p>
+          <p className="mt-2 font-normal absolute bottom-0">
+            {file && file.name.length > 30
+              ? file.name.substring(0, 30) + "... ." + file.name.split(".")[1]
+              : file?.name}
+          </p>
         </div>
-      </form>
-      <div className="w-[70%] m-auto flex gap-5 mt-7">
+      </div>
+      <div className="h-[25%] w-[70%] mt-2 flex m-auto gap-5">
         <Button
           className="text-sm w-[50%] font-bold"
           title={SHARED_STRINGS[StringsE.Close]}
