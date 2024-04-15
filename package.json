@@ -14,6 +14,7 @@
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@headlessui/react": "^1.7.18",
     "@hookform/resolvers": "^3.3.4",
+    "@tanstack/react-query": "^5.29.2",
     "@types/js-cookie": "^3.0.6",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
