@@ -9,17 +9,31 @@ import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import { useModal } from "@/context/modalContext";
+import { useGlobalState } from "@/context/globalStateContext";
 
 export default function ManageFileModalBody() {
   const [file, setFile] = useState<File | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const { closeModal } = useModal();
+  const { setFileStatus } = useGlobalState();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
   const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const userFile = e.target.files?.[0];
-    setFile(userFile);
+    if (userFile) {
+      if (userFile.type === "image/svg+xml") {
+        toast.custom((t) => (
+          <CustomToast
+            animation={t}
+            status="error"
+            text=".نوع فایل مجاز نمی‌باشد"
+          />
+        ));
+      } else {
+        setFile(userFile);
+      }
+    }
   };
 
   const addFile = async () => {
@@ -48,6 +62,7 @@ export default function ManageFileModalBody() {
           console.log(data);
           closeModal();
           setLoading(false);
+          setFileStatus("added");
           toast.custom((t) => (
             <CustomToast
               text="!فایل با موفقیت اضافه شد"
@@ -60,7 +75,11 @@ export default function ManageFileModalBody() {
           console.log(error);
           setLoading(false);
           toast.custom((t) => (
-            <CustomToast text="error!" animation={t} status="error" />
+            <CustomToast
+              text="!مشکلی پیش آمده است"
+              animation={t}
+              status="error"
+            />
           ));
         });
     }
@@ -81,7 +100,7 @@ export default function ManageFileModalBody() {
             onClick={() =>
               document.querySelector<HTMLInputElement>(".input-field")?.click()
             }
-            className="h-[85%] cursor-pointer"
+            className="h-[85%] w-full cursor-pointer"
           />
           <input
             type="file"
