@@ -6,11 +6,8 @@ import {
   getPersianMonth,
   getPersianYear,
 } from "@/utils/helper";
-import moment from "jalali-moment";
 
 export default function Header() {
-  const today = moment();
-  console.log(today.format("dddd"));
   return (
     <div className="flex justify-between bg-[#EFF4FF] w-full h-[80px] rounded-lg font-medium">
       <div className="flex items-center justify-between gap-x-4  min-w-[17%] ml-8">
