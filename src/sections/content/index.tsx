@@ -1,8 +1,8 @@
 import Modal from "@/components/Modal";
-import ContentsModalBody from "@/sections/content/components/ContentsModalBody";
 import ContentHeaderSection from "@/sections/content/components/ContentHeaderSection";
 import ContentChart from "@/sections/content/components/ContentChart";
 import { useModal } from "@/context/modalContext";
+import ContentsModalForm from "@/components/Form/ContentsModalForm";
 
 export default function Content() {
   // const [openModal, setOpenModal] = useState(false);
@@ -18,7 +18,7 @@ export default function Content() {
       {isModalOpen ? (
         <Modal width={65} height={94}>
           <div className="w-full h-full">
-            <ContentsModalBody />
+            <ContentsModalForm />
           </div>
         </Modal>
       ) : (

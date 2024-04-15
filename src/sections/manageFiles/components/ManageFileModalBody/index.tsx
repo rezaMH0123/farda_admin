@@ -8,14 +8,12 @@ import CustomToast from "@/components/Toast";
 import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
+import { useModal } from "@/context/modalContext";
 
-export default function ManageFileModalBody({
-  setOpenModal,
-}: {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function ManageFileModalBody() {
   const [file, setFile] = useState<File | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const { closeModal } = useModal();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
@@ -48,7 +46,7 @@ export default function ManageFileModalBody({
         .then((response) => {
           const data = response.data;
           console.log(data);
-          setOpenModal(false);
+          closeModal();
           setLoading(false);
           toast.custom((t) => (
             <CustomToast
@@ -69,8 +67,8 @@ export default function ManageFileModalBody({
   };
 
   return (
-    <div>
-      <p className="text-[20px] font-ShabnamBold mt-10 mr-10 text-PrimaryBlack-100">
+    <div className="h-[90%] w-full flex flex-col gap-y-4 p-5">
+      <p className="text-[20px] font-bold mt-4 mr-10 text-PrimaryBlack-100">
         {SHARED_STRINGS[StringsE.AddFile]}
       </p>
       <form
@@ -80,7 +78,7 @@ export default function ManageFileModalBody({
       >
         <div
           style={{ backgroundImage: `url(${AploadBg})` }}
-          className="w-[70%] h-[232px] flex flex-col justify-center items-center m-auto mt-8 cursor-pointer bg-contain bg-no-repeat"
+          className="w-[70%] h-[232px] flex flex-col justify-center items-center m-auto cursor-pointer bg-contain bg-no-repeat"
         >
           <input
             type="file"
@@ -88,18 +86,20 @@ export default function ManageFileModalBody({
             hidden
             onChange={handleFileInputChange}
           />
-          <p className="mt-[40%] font-ShabnamRegular">{file && file.name}</p>
+          <p className="mt-[40%] font-normal">{file && file.name}</p>
         </div>
       </form>
-      <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-8">
+      <div className="w-[70%] m-auto flex gap-5 mt-7">
         <Button
-          className="text-sm w-[50%] h-full font-bold text-PrimaryRed-100 border border-PrimaryRed-100 leading-5"
+          className="text-sm w-[50%] font-bold"
           title={SHARED_STRINGS[StringsE.Close]}
-          onClick={() => setOpenModal(false)}
+          onClick={closeModal}
+          model="outline_red"
         />
         <Button
           type="submit"
-          className="text-sm w-[50%] h-full font-bold text-[#FFFFFF] bg-PrimaryBlue-100 leading-5"
+          className="text-sm w-[50%] font-bold"
+          model="fill_blue"
           title={
             loading ? (
               <Loading className={"bg-PrimaryBlack-200"} />

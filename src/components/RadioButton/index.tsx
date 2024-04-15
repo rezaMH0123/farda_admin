@@ -2,7 +2,7 @@ import React from "react";
 
 type RadioButtonProps = {
   selectedOption: string;
-  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedOption: (value: string) => void;
   color?: string;
 };
 

@@ -7,7 +7,7 @@ export default function LableSelected({
   selectedItem,
   setSelectedItem,
 }: LableSelectedProps) {
-  const lableItems = ["اخبار", "بلاگ", "آیین ‌نامه"];
+  const lableItems = ["جدید ترین", "مهم ترین", "ورزشی"];
 
   return (
     <div className="flex items-center">
