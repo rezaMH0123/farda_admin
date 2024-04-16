@@ -1,7 +1,7 @@
 import IconChevron from "../Icons/Chevron";
 
 interface PaginationProps {
-  allPage: number;
+  allPage: number | undefined;
   currentPage: number;
   prevPageClick: () => void;
   nextPageClick: () => void;
