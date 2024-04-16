@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Pagination from "@/components/Pagination";
 import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
@@ -36,14 +36,18 @@ export default function ContentChart() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, isError, isLoading } = useQuery<
-    HttpResponseList<Advertisement>
-  >({
+  const { data, isLoading } = useQuery<HttpResponseList<Advertisement>>({
     queryKey: ["content", currentPage],
     queryFn: () => getContent(currentPage),
     retry: false,
     refetchOnWindowFocus: true,
   });
+
+  useEffect(() => {
+    if (data) {
+      setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
+    }
+  }, [data]);
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -51,8 +55,6 @@ export default function ContentChart() {
   const prevPageClick = () => {
     setCurrentPage((prev) => prev - 1);
   };
-
-  console.log(data?.data.result);
 
   return (
     <div className="chartContetnt px-6 h-full w-full">
