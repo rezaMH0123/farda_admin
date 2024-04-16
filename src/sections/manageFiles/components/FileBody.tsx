@@ -66,7 +66,6 @@ export default function ManageFileBodySection() {
       );
       setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
-    console.log(data);
   }, [data]);
 
   return (
