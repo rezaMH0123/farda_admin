@@ -64,9 +64,7 @@ export default function ManageFileBodySection() {
           (item: FilesI) => item.contentType.slice(0, 11) === "application"
         )
       );
-      if (data) {
-        setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
-      }
+      setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
     console.log(data);
   }, [data]);
