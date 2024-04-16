@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
