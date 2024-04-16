@@ -33,7 +33,7 @@ const getFiles = async (currentPage: number) => {
 
 export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
-  const allPage: number = 8;
+  const [allPage, setAllPage] = useState<number | undefined>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [photos, setPhotos] = useState<FilesI[] | undefined>([]);
   const [files, setFiles] = useState<FilesI[] | undefined>([]);
@@ -64,6 +64,9 @@ export default function ManageFileBodySection() {
           (item: FilesI) => item.contentType.slice(0, 11) === "application"
         )
       );
+      if (data) {
+        setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
+      }
     }
     console.log(data);
   }, [data]);
