@@ -15,7 +15,6 @@ export default function ManageFileModalBody() {
   const [file, setFile] = useState<File | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   const { closeModal } = useModal();
-  const { setFileStatus } = useGlobalState();
 
   const access_token: string | undefined = Cookies.get("access_token");
 
@@ -62,7 +61,6 @@ export default function ManageFileModalBody() {
           console.log(data);
           closeModal();
           setLoading(false);
-          setFileStatus("added");
           toast.custom((t) => (
             <CustomToast
               text="!فایل با موفقیت اضافه شد"

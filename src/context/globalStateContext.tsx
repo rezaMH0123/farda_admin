@@ -11,10 +11,6 @@ interface GlobalStateContextType {
   setItemFile: React.Dispatch<React.SetStateAction<FilesI | undefined>>;
   loading: boolean;
   deleteFiles: (id: string) => Promise<void>;
-  fileStatus: "added" | "deleted" | "normal";
-  setFileStatus: React.Dispatch<
-    React.SetStateAction<"added" | "deleted" | "normal">
-  >;
 }
 
 type MyComponentProps = {
@@ -40,9 +36,6 @@ export const GlobalStateProvider: React.FC<MyComponentProps> = ({
 }) => {
   const [itemFile, setItemFile] = useState<FilesI | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  const [fileStatus, setFileStatus] = useState<"added" | "deleted" | "normal">(
-    "normal"
-  );
 
   const { closeDeleteModal } = useModal();
 
@@ -62,7 +55,6 @@ export const GlobalStateProvider: React.FC<MyComponentProps> = ({
       .then((response) => {
         console.log(response);
         closeDeleteModal();
-        setFileStatus("deleted");
         toast.custom((t) => (
           <CustomToast
             text="!فایل با موفقیت حذف شد"
@@ -85,8 +77,6 @@ export const GlobalStateProvider: React.FC<MyComponentProps> = ({
         setItemFile,
         loading,
         deleteFiles,
-        fileStatus,
-        setFileStatus,
       }}
     >
       {children}
