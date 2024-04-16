@@ -7,7 +7,7 @@ import { useGlobalState } from "@/context/globalStateContext";
 import CardPhoto from "./Cards/CardPhoto";
 import Loading from "@/components/Loading";
 
-export default function Photos({ photos }: { photos?: FilesI[] }) {
+export default function Photos({ photos }: { photos?: FilesI[] | undefined }) {
   const { isDeleteModalOpen, closeDeleteModal } = useModal();
   const { itemFile, loading, deleteFiles, setItemFile } = useGlobalState();
 

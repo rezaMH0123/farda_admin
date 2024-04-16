@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import CardFile from "./Cards/CardFile";
 import Loading from "@/components/Loading";
 
-export default function Files({ files }: { files: FilesI[] }) {
+export default function Files({ files }: { files: FilesI[] | undefined }) {
   const { isDeleteModalOpen, closeDeleteModal } = useModal();
   const { itemFile, loading, deleteFiles, setItemFile } = useGlobalState();
 
