@@ -8,17 +8,35 @@ import Files from "./File";
 import http from "@/core/services/httpServices";
 import Cookies from "js-cookie";
 import { FilesI } from "@/types/models/Files.type";
+import { useQuery } from "@tanstack/react-query";
+import { HttpResponseList } from "@/types/httpResponse";
+
+const access_token: string | undefined = Cookies.get("access_token");
+
+const getFiles = async (currentPage: number) => {
+  try {
+    const res = await http.get("Panel/File", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      params: {
+        Size: 6,
+        Page: currentPage,
+        Sort: "createdOn desc",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
-  const allPage: number = 8;
+  const [allPage, setAllPage] = useState<number | undefined>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const [photos, setPhotos] = useState<FilesI[]>([]);
-  const [files, setFiles] = useState<FilesI[]>([]);
-
-  const access_token: string | undefined = Cookies.get("access_token");
+  const [photos, setPhotos] = useState<FilesI[] | undefined>([]);
+  const [files, setFiles] = useState<FilesI[] | undefined>([]);
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -27,44 +45,28 @@ export default function ManageFileBodySection() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  const getFiles = async () => {
-    setLoading(true);
-
-    await http
-      .get("Panel/File", {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-        params: {
-          Size: 6,
-          Page: currentPage,
-          Sort: "filename",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        // filtering images from resullt
-        const photosArr: FilesI[] = response.data.data.result.filter(
-          (item: FilesI) => item.contentType.slice(0, 5) === "image"
-        );
-        setPhotos(photosArr);
-        // filtering files from result
-        const filesArr: FilesI[] = response.data.data.result.filter(
-          (item: FilesI) => item.contentType.slice(0, 11) === "application"
-        );
-        setFiles(filesArr);
-
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
-  };
+  const { data, isLoading, isError } = useQuery<HttpResponseList<FilesI>>({
+    queryKey: ["manage_file", currentPage],
+    queryFn: () => getFiles(currentPage),
+    retry: false,
+    refetchOnWindowFocus: true,
+  });
 
   useEffect(() => {
-    getFiles();
-  }, [currentPage]);
+    if (data) {
+      setPhotos(
+        data.data.result.filter(
+          (item: FilesI) => item.contentType.slice(0, 5) === "image"
+        )
+      );
+      setFiles(
+        data.data.result.filter(
+          (item: FilesI) => item.contentType.slice(0, 11) === "application"
+        )
+      );
+      setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
+    }
+  }, [data]);
 
   return (
     <>
@@ -93,7 +95,7 @@ export default function ManageFileBodySection() {
             </div>
           </div>
           <div className="h-[92%] grid grid-cols-3 gap-6 mt-3">
-            {loading ? (
+            {isLoading ? (
               <Skeleton />
             ) : tab === "photo" ? (
               <Photos photos={photos} />

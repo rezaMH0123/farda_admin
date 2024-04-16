@@ -5,10 +5,18 @@ import Modal from "@/components/Modal";
 import IconDelete from "@/components/Icons/DeleteIcon";
 import Button from "@/components/Button";
 import CardFile from "./Cards/CardFile";
+import Loading from "@/components/Loading";
 
-export default function Files({ files }: { files: FilesI[] }) {
+export default function Files({ files }: { files: FilesI[] | undefined }) {
   const { isDeleteModalOpen, closeDeleteModal } = useModal();
-  const { itemFile } = useGlobalState();
+  const { itemFile, loading, deleteFiles, setItemFile } = useGlobalState();
+
+  const DeleteFile = async () => {
+    if (itemFile && itemFile.id) {
+      await deleteFiles(itemFile.id);
+      setItemFile(undefined);
+    }
+  };
 
   return (
     <>
@@ -37,7 +45,14 @@ export default function Files({ files }: { files: FilesI[] }) {
                   <Button
                     className="text-sm w-[50%]"
                     model="fill_red"
-                    title="حذف شود"
+                    title={
+                      loading ? (
+                        <Loading className={"bg-PrimaryBlack-200"} />
+                      ) : (
+                        "حذف شود"
+                      )
+                    }
+                    onClick={DeleteFile}
                   />
                 </div>
               </div>
