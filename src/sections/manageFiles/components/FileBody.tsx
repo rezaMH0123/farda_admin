@@ -8,7 +8,7 @@ import Files from "./File";
 import { FilesI } from "@/types/models/Files.type";
 import { useQuery } from "@tanstack/react-query";
 import { HttpResponseList } from "@/types/httpResponse";
-import { manageFileController } from "@/controllers/manageFile.controller";
+import { fileController } from "@/controllers/file.controller";
 
 export default function ManageFileBodySection() {
   const [tab, setTab] = useState<"photo" | "file">("photo");
@@ -24,9 +24,9 @@ export default function ManageFileBodySection() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  const { data, isLoading, isError } = useQuery<HttpResponseList<FilesI>>({
+  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file", currentPage],
-    queryFn: () => manageFileController.getFiles(currentPage),
+    queryFn: () => fileController.getFiles(currentPage),
     retry: false,
     refetchOnWindowFocus: true,
   });
