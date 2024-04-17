@@ -26,9 +26,6 @@ export const fileController = {
           "Content-Type": "multipart/form-data",
         },
       });
-      // if (res.status === 200) {
-      //   closeModal();
-      // }
       return res.data;
     } catch (error) {
       console.log(error);
