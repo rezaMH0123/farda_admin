@@ -1,5 +1,5 @@
 import http from "@/core/services/httpServices";
-import { HttpResponseList } from "@/types/httpResponse";
+import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
 import { Advertisement } from "@/types/models/Content.type";
 
 export const contentController = {
@@ -14,6 +14,18 @@ export const contentController = {
             Sort: "createdOn",
           },
         }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error("Failed to fetch content");
+    }
+  },
+
+  deleteContent: async (contentId: string) => {
+    try {
+      const res = await http.delete<HttpApiResponse>(
+        `Panel/Content/${contentId}`
       );
       return res.data;
     } catch (err) {
