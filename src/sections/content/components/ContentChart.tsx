@@ -4,8 +4,8 @@ import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import TailSpinner from "@/components/Loading/TailSpinner";
 import { Advertisement } from "@/types/models/Content.type";
-import { HttpResponseList } from "@/types/httpResponse";
-import { useQuery } from "@tanstack/react-query";
+import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { contentController } from "@/controllers/content.controller";
 
 export default function ContentChart() {
@@ -13,11 +13,21 @@ export default function ContentChart() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, isLoading } = useQuery<HttpResponseList<Advertisement>>({
+  const { data, isLoading, refetch } = useQuery<
+    HttpResponseList<Advertisement>
+  >({
     queryKey: ["content", currentPage],
     queryFn: () => contentController.getContent(currentPage),
     retry: false,
     refetchOnWindowFocus: true,
+  });
+
+  const { mutateAsync: deleteMutation } = useMutation<
+    HttpApiResponse,
+    unknown,
+    string
+  >({
+    mutationFn: contentController.deleteContent,
   });
 
   useEffect(() => {
@@ -25,6 +35,15 @@ export default function ContentChart() {
       setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
   }, [data]);
+
+  const handleDelete = async (contentId: string) => {
+    try {
+      await deleteMutation(contentId);
+      await refetch();
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -82,12 +101,12 @@ export default function ContentChart() {
                 </div>
                 <div className="flex items-center justify-center gap-x-4  w-[15%] h-[40px]">
                   <Edit
-                    onClick={() => console.log(`Edit:${item.id}`)}
+                    onClick={() => console.log(`edit:${item.id}`)}
                     fill="#41CD92"
                     className="cursor-pointer"
                   />
                   <RecycleBin
-                    onClick={() => console.log(`RecycleBin:${item.id}`)}
+                    onClick={() => handleDelete(item.id)}
                     fill="#FF8A8A"
                     className="cursor-pointer"
                   />
