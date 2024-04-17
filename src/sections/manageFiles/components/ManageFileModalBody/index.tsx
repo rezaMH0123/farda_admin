@@ -121,6 +121,7 @@ export default function ManageFileModalBody() {
             )
           }
           onClick={submitFile}
+          disable={isPending ? true : false}
         />
       </div>
     </div>

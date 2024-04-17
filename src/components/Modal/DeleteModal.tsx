@@ -35,6 +35,7 @@ export default function DeleteModal({ title, onClick, loading }: Props) {
               )
             }
             onClick={onClick}
+            disable={loading ? true : false}
           />
         </div>
       </div>
