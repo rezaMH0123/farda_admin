@@ -92,7 +92,7 @@ export default function SignInForm() {
         <Button
           type="submit"
           model="fill_blue"
-          className="mt-8 w-full font-bold disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
+          className="mt-8 w-full font-bold"
           title={
             loading ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
           }
