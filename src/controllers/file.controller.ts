@@ -32,4 +32,17 @@ export const fileController = {
       throw error;
     }
   },
+  deleteFiles: async (id: string) => {
+    try {
+      const res = await http.delete("Panel/File", {
+        params: {
+          id,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
