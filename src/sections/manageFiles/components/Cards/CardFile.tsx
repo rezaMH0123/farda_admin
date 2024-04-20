@@ -7,6 +7,7 @@ import Exel from "@/assets/img/tools/exel.svg";
 import PdfFile from "@/assets/img/tools/file.svg";
 import WordFile from "@/assets/img/tools/wordFile.svg";
 import ExelFile from "@/assets/img/tools/excelFile.svg";
+import { Link } from "react-router-dom";
 
 interface CardFileProps {
   item: FilesI;
@@ -39,20 +40,22 @@ export default function CardFile({ item }: CardFileProps) {
         </div>
         <DropDownMenu items={item} menuItemsT={FileMenuItems} />
       </div>
-      <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
-        <img
-          src={
-            fileType === ".pdf"
-              ? PdfFile
-              : fileType === ".docx"
-              ? WordFile
-              : fileType === ".xlsx" || fileType === ".xls"
-              ? ExelFile
-              : ""
-          }
-          alt="file"
-        />
-      </div>
+      <Link to={item.fileUrl} target="_blank">
+        <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
+          <img
+            src={
+              fileType === ".pdf"
+                ? PdfFile
+                : fileType === ".docx"
+                ? WordFile
+                : fileType === ".xlsx" || fileType === ".xls"
+                ? ExelFile
+                : ""
+            }
+            alt="file"
+          />
+        </div>
+      </Link>
       <div className="w-full h-[20%] flex items-center justify-center">
         <p className="font-normal text-PrimaryBlack-500">
           سه‌شنبه 21 فروردین 1403
