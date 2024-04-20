@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// http://46.224.6.83:8082/api/v1/
+//31.214.229.211:8082/api/v1/
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_ADMINFARDA,
 });
