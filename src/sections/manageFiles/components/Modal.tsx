@@ -5,18 +5,55 @@ import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import Button from "@/components/Button";
 import CustomToast from "@/components/Toast";
-import http from "@/core/services/httpServices";
-import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import { useModal } from "@/context/modalContext";
-import { useGlobalState } from "@/context/globalStateContext";
+import { fileController } from "@/controllers/file.controller";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HttpApiResponse } from "@/types/httpResponse";
 
-export default function ManageFileModalBody() {
+export default function ManageFileModal() {
   const [file, setFile] = useState<File | undefined>();
-  const [loading, setLoading] = useState<boolean>(false);
   const { closeModal } = useModal();
+  const queryClient = useQueryClient();
 
-  const access_token: string | undefined = Cookies.get("access_token");
+  const { mutateAsync: filepostmutate, isPending } = useMutation<
+    HttpApiResponse,
+    unknown,
+    FormData
+  >({
+    mutationFn: fileController.postFiles,
+  });
+
+  const submitFile = async () => {
+    if (file === undefined) {
+      toast.custom((t) => (
+        <CustomToast
+          text="!لطفا فایل مورد نظر را انتخاب نمایید"
+          animation={t}
+          status="error"
+        />
+      ));
+    } else {
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await filepostmutate(formData);
+        if (res.isSuccess) {
+          queryClient.invalidateQueries({ queryKey: ["manage_file"] });
+          closeModal();
+          toast.custom((t) => (
+            <CustomToast
+              text="!فایل با موفقیت اضافه شد"
+              animation={t}
+              status="success"
+            />
+          ));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const userFile = e.target.files?.[0];
@@ -32,54 +69,6 @@ export default function ManageFileModalBody() {
       } else {
         setFile(userFile);
       }
-    }
-  };
-
-  const addFile = async () => {
-    setLoading(true);
-    if (file === undefined) {
-      setLoading(false);
-      toast.custom((t) => (
-        <CustomToast
-          text="!لطفا فایل مورد نظر را انتخاب نمایید"
-          animation={t}
-          status="error"
-        />
-      ));
-    } else {
-      const formData = new FormData();
-      formData.append("file", file);
-      await http
-        .post("Panel/File", formData, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          closeModal();
-          setLoading(false);
-          toast.custom((t) => (
-            <CustomToast
-              text="!فایل با موفقیت اضافه شد"
-              animation={t}
-              status="success"
-            />
-          ));
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-          toast.custom((t) => (
-            <CustomToast
-              text="!مشکلی پیش آمده است"
-              animation={t}
-              status="error"
-            />
-          ));
-        });
     }
   };
 
@@ -125,13 +114,14 @@ export default function ManageFileModalBody() {
           className="text-sm w-[50%] font-bold"
           model="fill_blue"
           title={
-            loading ? (
+            isPending ? (
               <Loading className={"bg-PrimaryBlack-200"} />
             ) : (
               SHARED_STRINGS[StringsE.AddFile]
             )
           }
-          onClick={addFile}
+          onClick={submitFile}
+          disable={isPending ? true : false}
         />
       </div>
     </div>

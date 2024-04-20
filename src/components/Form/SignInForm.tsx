@@ -10,11 +10,11 @@ import Button from "../Button";
 import Loading from "../Loading";
 import { SigninI } from "@/types/forms/signin";
 import http from "@/core/services/httpServices";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import CustomToast from "../Toast";
 import "../../../yup.config";
+import { SetToStorage } from "@/utils/storage";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -40,7 +40,11 @@ export default function SignInForm() {
       .then((response) => {
         const data = response.data;
         const access_token = data.data.access_token;
-        Cookies.set("access_token", access_token, { expires: 2 });
+        SetToStorage({
+          key: "access_token",
+          value: access_token,
+          expireTime: 2,
+        });
         methods.reset();
         navigate("/");
         setLoading(false);
@@ -92,7 +96,7 @@ export default function SignInForm() {
         <Button
           type="submit"
           model="fill_blue"
-          className="mt-8 w-full font-bold disabled:bg-[#a2e5fd] disabled:cursor-not-allowed"
+          className="mt-8 w-full font-bold"
           title={
             loading ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
           }

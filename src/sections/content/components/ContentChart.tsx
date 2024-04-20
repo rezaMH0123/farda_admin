@@ -7,11 +7,16 @@ import { Advertisement } from "@/types/models/Content.type";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { contentController } from "@/controllers/content.controller";
+import Modal from "@/components/Modal";
+import { useModal } from "@/context/modalContext";
+import DeleteModal from "@/components/Modal/DeleteModal";
 
 export default function ContentChart() {
+  const { isDeleteModalOpen, closeDeleteModal, openDeleteModal } = useModal();
   const [allPage, setAllPage] = useState<number | undefined>();
-
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [deleteItemTitle, setDeleteItemTitle] = useState<string>();
+  const [deleteItemId, setDeleteItemId] = useState<string>();
 
   const { data, isLoading, refetch } = useQuery<
     HttpResponseList<Advertisement>
@@ -22,7 +27,7 @@ export default function ContentChart() {
     refetchOnWindowFocus: true,
   });
 
-  const { mutateAsync: deleteMutation } = useMutation<
+  const { mutateAsync: deleteMutation, isPending } = useMutation<
     HttpApiResponse,
     unknown,
     string
@@ -36,10 +41,18 @@ export default function ContentChart() {
     }
   }, [data]);
 
-  const handleDelete = async (contentId: string) => {
+  const handleDelete = async (contentId: string, title: string) => {
+    openDeleteModal();
+    setDeleteItemTitle(title);
+    setDeleteItemId(contentId);
+  };
+  const handleDeleteModal = async () => {
     try {
-      await deleteMutation(contentId);
-      await refetch();
+      if (deleteItemId) {
+        await deleteMutation(deleteItemId);
+        closeDeleteModal();
+        await refetch();
+      }
     } catch (error) {
       console.error("Error deleting post:", error);
     }
@@ -68,7 +81,7 @@ export default function ContentChart() {
         <div className="flex justify-center items-center w-[15%] ">
           <span>کامنت گذاری</span>
         </div>
-        <div className="flex justify-center items-center w-[15%] ">
+        <div className="flex justify-end items-center w-[15%] ">
           <span>عملیات</span>
         </div>
       </div>
@@ -99,14 +112,14 @@ export default function ContentChart() {
                 <div className="flex items-center justify-center  w-[15%] h-[40px]">
                   {item.isCommentAvailable ? "می شود" : "نمی شود"}
                 </div>
-                <div className="flex items-center justify-center gap-x-4  w-[15%] h-[40px]">
+                <div className="flex items-center justify-end gap-x-4  w-[15%] h-[40px]">
                   <Edit
                     onClick={() => console.log(`edit:${item.id}`)}
                     fill="#41CD92"
                     className="cursor-pointer"
                   />
                   <RecycleBin
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() => handleDelete(item.id, item.title)}
                     fill="#FF8A8A"
                     className="cursor-pointer"
                   />
@@ -116,6 +129,15 @@ export default function ContentChart() {
           </>
         )}
       </div>
+      {isDeleteModalOpen && (
+        <Modal height={40} width={25}>
+          <DeleteModal
+            title={deleteItemTitle}
+            onClick={handleDeleteModal}
+            loading={isPending}
+          />
+        </Modal>
+      )}
 
       <div className="flex gap-x-5 justify-end items-center  h-[15%]">
         <Pagination

@@ -3,40 +3,20 @@ import Skeleton from "@/components/Skeleton";
 import Pagination from "@/components/Pagination";
 import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
-import Photos from "./Photo";
-import Files from "./File";
-import http from "@/core/services/httpServices";
-import Cookies from "js-cookie";
 import { FilesI } from "@/types/models/Files.type";
 import { useQuery } from "@tanstack/react-query";
 import { HttpResponseList } from "@/types/httpResponse";
+import { fileController } from "@/controllers/file.controller";
+import { useGlobalState } from "@/context/globalStateContext";
+import FileTabs from "./Tabs";
 
-const access_token: string | undefined = Cookies.get("access_token");
-
-const getFiles = async (currentPage: number) => {
-  try {
-    const res = await http.get("Panel/File", {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      params: {
-        Size: 6,
-        Page: currentPage,
-        Sort: "createdOn desc",
-      },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export default function ManageFileBodySection() {
-  const [tab, setTab] = useState<"photo" | "file">("photo");
+export default function ManageFileBody() {
   const [allPage, setAllPage] = useState<number | undefined>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [photos, setPhotos] = useState<FilesI[] | undefined>([]);
   const [files, setFiles] = useState<FilesI[] | undefined>([]);
+
+  const { setTab, tab } = useGlobalState();
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -45,9 +25,9 @@ export default function ManageFileBodySection() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  const { data, isLoading, isError } = useQuery<HttpResponseList<FilesI>>({
+  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file", currentPage],
-    queryFn: () => getFiles(currentPage),
+    queryFn: () => fileController.getFiles(currentPage),
     retry: false,
     refetchOnWindowFocus: true,
   });
@@ -97,10 +77,8 @@ export default function ManageFileBodySection() {
           <div className="h-[92%] grid grid-cols-3 gap-6 mt-3">
             {isLoading ? (
               <Skeleton />
-            ) : tab === "photo" ? (
-              <Photos photos={photos} />
             ) : (
-              <Files files={files} />
+              <FileTabs photos={photos} files={files} />
             )}
           </div>
         </div>

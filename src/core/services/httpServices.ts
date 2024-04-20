@@ -1,14 +1,14 @@
+import { GetFromStorage } from "@/utils/storage";
 import axios from "axios";
-import Cookies from "js-cookie";
 
-// http://46.224.6.83:8082/api/v1/
+//31.214.229.211:8082/api/v1/
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_ADMINFARDA,
 });
 
 http.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("access_token");
+    const token = GetFromStorage("access_token");
     if (token) {
       config.headers["Authorization"] = "Bearer " + token;
     }
