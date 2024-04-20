@@ -17,6 +17,8 @@ import {
 import { useModal } from "@/context/modalContext";
 import TextInput from "@/components/Inputs/TextInput";
 import LableSelected from "@/sections/content/components/LableSelected";
+import UploadFile from "../Icons/UploadFile";
+import Modal from "../Modal";
 
 const weekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 type Inputs = {
@@ -281,19 +283,27 @@ export default function ContentsModalForm() {
                 />
               </div>
             </div>
-            <div className="flex gap-x-4 items-center justify-end b h-[8%]">
-              <Button
-                onClick={closeModal}
-                className="w-[180px]"
-                model="outline_red"
-                title={"بستن"}
-              />
-              <Button
-                type="submit"
-                className="w-[180px]"
-                model="fill_blue"
-                title={"افزودن"}
-              />
+            <div className="flex items-center justify-between b h-[8%]">
+              <div className="flex items-center gap-2 cursor-pointer">
+                <div className="w-fit border-b border-PrimaryBlue-100">
+                  <span className="text-PrimaryBlue-100">بارگذاری فایل</span>
+                </div>
+                <UploadFile className="fill-PrimaryBlue-100" />
+              </div>
+              <div className="flex gap-x-4 ">
+                <Button
+                  onClick={closeModal}
+                  className="w-[180px]"
+                  model="outline_red"
+                  title={"بستن"}
+                />
+                <Button
+                  type="submit"
+                  className="w-[180px]"
+                  model="fill_blue"
+                  title={"افزودن"}
+                />
+              </div>
             </div>
           </div>
         </form>

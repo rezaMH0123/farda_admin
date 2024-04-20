@@ -5,7 +5,6 @@ import { useModal } from "@/context/modalContext";
 import ContentsModalForm from "@/components/Form/ContentsModalForm";
 
 export default function Content() {
-  // const [openModal, setOpenModal] = useState(false);
   const { isModalOpen } = useModal();
   return (
     <div

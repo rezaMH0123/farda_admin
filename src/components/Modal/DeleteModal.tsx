@@ -5,8 +5,8 @@ import Loading from "../Loading";
 
 type Props = {
   title: string | undefined;
-  onClick: () => Promise<void>;
-  loading: boolean;
+  onClick: () => Promise<void> | void;
+  loading?: boolean;
 };
 
 export default function DeleteModal({ title, onClick, loading }: Props) {
