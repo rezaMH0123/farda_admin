@@ -3,19 +3,20 @@ import Skeleton from "@/components/Skeleton";
 import Pagination from "@/components/Pagination";
 import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
-import Photos from "./Photo";
-import Files from "./File";
 import { FilesI } from "@/types/models/Files.type";
 import { useQuery } from "@tanstack/react-query";
 import { HttpResponseList } from "@/types/httpResponse";
 import { fileController } from "@/controllers/file.controller";
+import { useGlobalState } from "@/context/globalStateContext";
+import FileTabs from "./Tabs";
 
-export default function ManageFileBodySection() {
-  const [tab, setTab] = useState<"photo" | "file">("photo");
+export default function ManageFileBody() {
   const [allPage, setAllPage] = useState<number | undefined>();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [photos, setPhotos] = useState<FilesI[] | undefined>([]);
   const [files, setFiles] = useState<FilesI[] | undefined>([]);
+
+  const { setTab, tab } = useGlobalState();
 
   const nextPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -76,10 +77,8 @@ export default function ManageFileBodySection() {
           <div className="h-[92%] grid grid-cols-3 gap-6 mt-3">
             {isLoading ? (
               <Skeleton />
-            ) : tab === "photo" ? (
-              <Photos photos={photos} />
             ) : (
-              <Files files={files} />
+              <FileTabs photos={photos} files={files} />
             )}
           </div>
         </div>
