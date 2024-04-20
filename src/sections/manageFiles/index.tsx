@@ -1,8 +1,8 @@
 import Modal from "@/components/Modal";
-import ManageFileModalBody from "@/sections/manageFiles/components/ManageFileModalBody";
 import ManageFileHeaderSection from "./components/Header";
-import ManageFileBodySection from "./components/FileBody";
 import { useModal } from "@/context/modalContext";
+import ManageFileModal from "./components/Modal";
+import ManageFileBody from "./components/Body";
 
 export default function ManageFile() {
   const { isModalOpen } = useModal();
@@ -13,11 +13,11 @@ export default function ManageFile() {
       className="border border-[#E1E1E1] w-[80%] h-[85%] rounded-xl "
     >
       <ManageFileHeaderSection />
-      <ManageFileBodySection />
+      <ManageFileBody />
       {isModalOpen && (
         <Modal width={35} height={55}>
           <div className="w-full h-full flex justify-center items-center">
-            <ManageFileModalBody />
+            <ManageFileModal />
           </div>
         </Modal>
       )}

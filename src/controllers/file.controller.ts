@@ -26,9 +26,19 @@ export const fileController = {
           "Content-Type": "multipart/form-data",
         },
       });
-      // if (res.status === 200) {
-      //   closeModal();
-      // }
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  deleteFiles: async (id: string) => {
+    try {
+      const res = await http.delete("Panel/File", {
+        params: {
+          id,
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error);

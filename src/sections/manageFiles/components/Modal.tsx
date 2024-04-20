@@ -11,7 +11,7 @@ import { fileController } from "@/controllers/file.controller";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpApiResponse } from "@/types/httpResponse";
 
-export default function ManageFileModalBody() {
+export default function ManageFileModal() {
   const [file, setFile] = useState<File | undefined>();
   const { closeModal } = useModal();
   const queryClient = useQueryClient();

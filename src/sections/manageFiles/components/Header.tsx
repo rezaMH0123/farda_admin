@@ -1,4 +1,3 @@
-import AdditionButton from "@/components/AdditionButton";
 import plusIcon from "@/assets/img/tools/plus.svg";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
