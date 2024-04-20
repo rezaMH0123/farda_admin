@@ -1,5 +1,5 @@
+import { GetFromStorage } from "@/utils/storage";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 //31.214.229.211:8082/api/v1/
 const http = axios.create({
@@ -8,7 +8,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("access_token");
+    const token = GetFromStorage("access_token");
     if (token) {
       config.headers["Authorization"] = "Bearer " + token;
     }
