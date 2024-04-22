@@ -4,13 +4,26 @@ import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import { useModal } from "@/context/modalContext";
 import PlusIcon from "@/components/Icons/PlusIcon";
-import UploadFile from "@/components/Modal/UploadFile";
 import "animate.css";
+import UploadFile from "@/components/UploadFile";
+import { HttpResponseList } from "@/types/httpResponse";
+import { FilesI } from "@/types/models/Files.type";
+import { fileController } from "@/controllers/file.controller";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AddContent() {
   const { openUploadFileModal, isUploadFileModal, closeUploadFileModal } =
     useModal();
   const { isModalOpen } = useModal();
+
+  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
+    queryKey: ["manage_file"],
+    queryFn: () => fileController.getFiles(1, 1000000),
+    retry: false,
+    refetchOnWindowFocus: true,
+  });
+  console.log(data);
+
   const mainCoverData = [
     {
       id: 1,
@@ -135,7 +148,7 @@ export default function AddContent() {
                   />
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
-                  <SwiperComponent row={1} data={mainCoverData} />
+                  <SwiperComponent row={1} data={data?.data.result} />
                 </div>
               </div>
               <div className="flex flex-col items-center justify-center  h-[42%]">
