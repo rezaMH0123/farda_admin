@@ -51,6 +51,13 @@ export default function UploadFile() {
         }
       } catch (err) {
         console.log(err);
+        toast.custom((t) => (
+          <CustomToast
+            animation={t}
+            status="error"
+            text="!مشکلی پیش آمده است"
+          />
+        ));
       }
     }
   };
