@@ -27,7 +27,7 @@ export default function ManageFileBody() {
 
   const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file", currentPage],
-    queryFn: () => fileController.getFiles(currentPage),
+    queryFn: () => fileController.getFiles(currentPage, 6),
     retry: false,
     refetchOnWindowFocus: true,
   });
