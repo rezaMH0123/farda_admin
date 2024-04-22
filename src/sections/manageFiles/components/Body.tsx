@@ -51,30 +51,30 @@ export default function ManageFileBody() {
   return (
     <>
       <div className="px-5 h-full">
-        <div className="h-[70%]">
-          <div className="flex">
-            <div
-              className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
-                tab === "photo"
-                  ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
-                  : "border-PrimaryBlack-300 text-PrimaryBlack-300"
-              }`}
-              onClick={() => setTab("photo")}
-            >
-              {SHARED_STRINGS[StringsE.Photo]}
-            </div>
-            <div
-              className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
-                tab === "file"
-                  ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
-                  : "border-PrimaryBlack-300 text-PrimaryBlack-300"
-              }`}
-              onClick={() => setTab("file")}
-            >
-              {SHARED_STRINGS[StringsE.File]}
-            </div>
+        <div className="flex">
+          <div
+            className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
+              tab === "photo"
+                ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
+                : "border-PrimaryBlack-300 text-PrimaryBlack-300"
+            }`}
+            onClick={() => setTab("photo")}
+          >
+            {SHARED_STRINGS[StringsE.Photo]}
           </div>
-          <div className="h-[92%] grid grid-cols-3 gap-6 mt-3">
+          <div
+            className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
+              tab === "file"
+                ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
+                : "border-PrimaryBlack-300 text-PrimaryBlack-300"
+            }`}
+            onClick={() => setTab("file")}
+          >
+            {SHARED_STRINGS[StringsE.File]}
+          </div>
+        </div>
+        <div className="h-[67%] overflow-auto">
+          <div className="h-fit grid grid-cols-3 gap-6 mt-3">
             {isLoading ? (
               <Skeleton />
             ) : (
