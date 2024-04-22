@@ -9,6 +9,7 @@ import ManageFile from "@/sections/manageFiles";
 import Categories from "@/sections/categories";
 import Comment from "@/sections/comment";
 import Labels from "@/sections/labels";
+import AddContent from "@/sections/content/AddContent";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,12 @@ export const router = createBrowserRouter([
               {
                 path: "/content",
                 element: <Content />,
+                children: [
+                  {
+                    path: "add",
+                    element: <AddContent />,
+                  },
+                ],
               },
               {
                 path: "/comment",
