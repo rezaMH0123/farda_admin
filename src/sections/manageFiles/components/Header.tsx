@@ -5,7 +5,7 @@ import { useModal } from "@/context/modalContext";
 import Button from "@/components/Button";
 
 export default function ManageFileHeaderSection() {
-  const { openModal } = useModal();
+  const { openUploadFileModal } = useModal();
 
   return (
     <div className="header flex justify-between items-center px-6 h-[15%]">
@@ -19,7 +19,7 @@ export default function ManageFileHeaderSection() {
           title={SHARED_STRINGS[StringsE.AdditionButton]}
           className="w-[152px] font-medium"
           model="fill_blue"
-          onClick={openModal}
+          onClick={openUploadFileModal}
           icon={<img src={plusIcon} alt="plusIcon" />}
         />
       </div>

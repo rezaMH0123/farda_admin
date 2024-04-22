@@ -8,6 +8,9 @@ interface ModalContextType {
   isDeleteModalOpen: boolean;
   openDeleteModal: () => void;
   closeDeleteModal: () => void;
+  isUploadFileModal: boolean;
+  openUploadFileModal: () => void;
+  closeUploadFileModal: () => void;
 }
 
 type MyComponentProps = {
@@ -27,12 +30,16 @@ export const useModal = () => {
 export const ModalProvider: React.FC<MyComponentProps> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isUploadFileModal, setIsUploadFileModal] = useState<boolean>(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const openDeleteModal = () => setIsDeleteModalOpen(true);
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
+
+  const openUploadFileModal = () => setIsUploadFileModal(true);
+  const closeUploadFileModal = () => setIsUploadFileModal(false);
 
   return (
     <ModalContext.Provider
@@ -43,6 +50,9 @@ export const ModalProvider: React.FC<MyComponentProps> = ({ children }) => {
         isDeleteModalOpen,
         openDeleteModal,
         closeDeleteModal,
+        isUploadFileModal,
+        openUploadFileModal,
+        closeUploadFileModal,
       }}
     >
       {children}

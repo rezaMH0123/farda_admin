@@ -9,12 +9,16 @@ import { useState } from "react";
 import Button from "../Button";
 import Loading from "../Loading";
 import { SigninI } from "@/types/forms/signin";
-import http from "@/core/services/httpServices";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import CustomToast from "../Toast";
-import "../../../yup.config";
 import { SetToStorage } from "@/utils/storage";
+import { useMutation } from "@tanstack/react-query";
+import { SigninController } from "@/controllers/signin.controller";
+import { HttpApiResponse } from "@/types/httpResponse";
+import { SiginData } from "@/types/signin";
+import { AxiosError } from "axios";
+import "../../../yup.config";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -23,23 +27,26 @@ const siginSchema = yup.object().shape({
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const methods = useForm<SigninI>({
     resolver: yupResolver(siginSchema),
   });
 
-  const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
-    setLoading(true);
+  const { mutateAsync: signinMutate, isPending } = useMutation<
+    HttpApiResponse<SiginData>,
+    unknown,
+    SigninI
+  >({
+    mutationFn: SigninController,
+  });
 
-    await http
-      .post("Panel/Login", {
-        username: inputsData.username,
-        password: inputsData.password,
-      })
-      .then((response) => {
-        const data = response.data;
-        const access_token = data.data.access_token;
+  const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
+    try {
+      const res = await signinMutate(inputsData);
+      console.log(res);
+      if (res.data && res.isSuccess) {
+        const access_token = res.data.access_token;
+        console.log(access_token);
         SetToStorage({
           key: "access_token",
           value: access_token,
@@ -47,7 +54,6 @@ export default function SignInForm() {
         });
         methods.reset();
         navigate("/");
-        setLoading(false);
         toast.custom((t) => (
           <CustomToast
             text="!با موفقیت وارد شدید"
@@ -55,10 +61,11 @@ export default function SignInForm() {
             status="success"
           />
         ));
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.response.status === 400) {
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.log(err);
+        if (err.response && err.response.status === 400) {
           toast.custom((t) => (
             <CustomToast
               text="!نام کاربری یا رمز عبور صحیح نمی‌باشد"
@@ -75,7 +82,8 @@ export default function SignInForm() {
             />
           ));
         }
-      });
+      }
+    }
   };
 
   return (
@@ -98,9 +106,9 @@ export default function SignInForm() {
           model="fill_blue"
           className="mt-8 w-full font-bold"
           title={
-            loading ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
+            isPending ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
           }
-          disable={loading ? true : false}
+          disable={isPending ? true : false}
         />
       </form>
     </FormProvider>

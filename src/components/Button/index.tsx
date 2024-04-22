@@ -7,7 +7,12 @@ type ButtonPropsT = {
   disable?: boolean;
   onClick?: (() => Promise<void>) | (() => void);
   icon?: ReactNode;
-  model?: "fill_blue" | "fill_red" | "outline_gray" | "outline_red";
+  model?:
+    | "fill_blue"
+    | "fill_red"
+    | "outline_gray"
+    | "outline_red"
+    | "outline_blue";
 };
 
 export default function Button({
@@ -22,7 +27,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-2 leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed ${
+      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-3 leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed ${
         model === "fill_blue"
           ? "bg-PrimaryBlue-100 text-white"
           : model === "outline_gray"
@@ -31,6 +36,8 @@ export default function Button({
           ? "text-PrimaryRed-100 border border-PrimaryRed-100"
           : model === "fill_red"
           ? "bg-PrimaryRed-100 text-white"
+          : model === "outline_blue"
+          ? "text-PrimaryBlue-100 border border-PrimaryBlue-100"
           : "bg-black text-white"
       } ${className} `}
       disabled={disable}

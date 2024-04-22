@@ -16,17 +16,24 @@ export default function SideBar() {
           <Link key={index} to={item.link}>
             <li
               className={`${
-                location.pathname === item.link && active
+                (location.pathname === item.link ||
+                  location.pathname === item?.childLink) &&
+                active
               } w-[75%] text-[#565656] flex gap-x-3 mr-5 p-2 cursor-pointer rounded-md `}
             >
               <item.icon
                 fill={`${
-                  location.pathname === item.link ? "#33BDF1" : "#565656"
+                  location.pathname === item.link ||
+                  location.pathname === item?.childLink
+                    ? "#33BDF1"
+                    : "#565656"
                 }`}
               />
               <span
                 className={`${
-                  location.pathname === item.link && "text-[#33BDF1]"
+                  (location.pathname === item.link ||
+                    location.pathname === item?.childLink) &&
+                  "text-[#33BDF1]"
                 }`}
               >
                 {item.title}
