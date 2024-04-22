@@ -2,13 +2,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import { FilesI } from "@/types/models/Files.type";
 
-type DataItem = {
-  id: number;
-  filename: string;
-};
 type SwiperComponentProps = {
-  data: DataItem[];
+  data: FilesI[] | undefined;
   row?: number;
 };
 
@@ -16,8 +13,8 @@ export default function SwiperComponent({
   data,
   row = 1,
 }: SwiperComponentProps) {
-  const chunkArray = (array: DataItem[], size: number): DataItem[][] => {
-    const chunkedArray: DataItem[][] = [];
+  const chunkArray = (array: FilesI[], size: number): FilesI[][] => {
+    const chunkedArray: FilesI[][] = [];
     for (let i = 0; i < array.length; i += size) {
       chunkedArray.push(array.slice(i, i + size));
     }
