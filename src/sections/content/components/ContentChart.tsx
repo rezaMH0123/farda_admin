@@ -64,7 +64,6 @@ export default function ContentChart() {
   const prevPageClick = () => {
     setCurrentPage((prev) => prev - 1);
   };
-  console.log("test reza");
 
   return (
     <div className="chartContetnt px-6 h-full w-full">

@@ -7,6 +7,7 @@ import { IconProps } from "@/types/IconProps";
 
 type SideBarItem = {
   link: string;
+  childLink?: string;
   icon: React.FC<IconProps>;
   title: string;
 };
@@ -14,6 +15,7 @@ type SideBarItem = {
 export const sidebarItems: SideBarItem[] = [
   {
     link: "/content",
+    childLink: "/content/add",
     icon: IconContent,
     title: "محتوا",
   },

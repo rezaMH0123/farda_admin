@@ -18,7 +18,7 @@ import { useModal } from "@/context/modalContext";
 import TextInput from "@/components/Inputs/TextInput";
 import LableSelected from "@/sections/content/components/LableSelected";
 import UploadFile from "../Icons/UploadFile";
-import Modal from "../Modal";
+import { useNavigate } from "react-router-dom";
 
 const weekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 type Inputs = {
@@ -36,7 +36,8 @@ type Inputs = {
 };
 
 export default function ContentsModalForm() {
-  const { closeModal } = useModal();
+  const navigate = useNavigate();
+  const { openModal } = useModal();
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const methods = useForm<Inputs>();
@@ -70,6 +71,9 @@ export default function ContentsModalForm() {
       return data.toISOString();
     }
   };
+  const goBackHandle = () => {
+    navigate("/content");
+  };
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -92,7 +96,7 @@ export default function ContentsModalForm() {
           className="flex justify-center items-center w-full h-full "
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <div className="h-full w-[90%] py-4 ">
+          <div className="flex flex-col gap-y-10 h-full w-[90%] py-4 ">
             <div className="h-[25%]">
               <span className="font-ShabnamBold text-[20px]">افزودن محتوا</span>
               <TextInput
@@ -177,12 +181,14 @@ export default function ContentsModalForm() {
                       locale={persian_fa}
                       calendarPosition="bottom-right"
                       style={{
+                        overflow: "hidden",
                         outline: "none",
                         background: "transparent",
+                        height: "100%",
                         padding: "6px",
                         width: "350px",
                         paddingRight: "30px",
-                        color: "#B3B3B3",
+                        color: "#423B6F",
                         margin: "0px",
                       }}
                       value={dateEnd}
@@ -284,18 +290,21 @@ export default function ContentsModalForm() {
               </div>
             </div>
             <div className="flex items-center justify-between b h-[8%]">
-              <div className="flex items-center gap-2 cursor-pointer">
+              <div
+                onClick={openModal}
+                className="flex  items-center gap-2 cursor-pointer"
+              >
                 <div className="w-fit border-b border-PrimaryBlue-100">
                   <span className="text-PrimaryBlue-100">بارگذاری فایل</span>
                 </div>
                 <UploadFile className="fill-PrimaryBlue-100" />
               </div>
-              <div className="flex gap-x-4 ">
+              <div className="flex gap-x-4 mb-6">
                 <Button
-                  onClick={closeModal}
+                  onClick={goBackHandle}
                   className="w-[180px]"
                   model="outline_red"
-                  title={"بستن"}
+                  title={"بازگشت"}
                 />
                 <Button
                   type="submit"
