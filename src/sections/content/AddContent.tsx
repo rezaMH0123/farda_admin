@@ -5,7 +5,6 @@ import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import { useModal } from "@/context/modalContext";
 import PlusIcon from "@/components/Icons/PlusIcon";
 import { useState } from "react";
-import ManageFileModal from "../manageFiles/components/Modal";
 export default function AddContent() {
   const [openModal, setOpenModal] = useState(false);
   const { isModalOpen } = useModal();
@@ -168,9 +167,7 @@ export default function AddContent() {
             }}
             className="w-full h-full absolute top-0 left-0"
           ></div>
-          <div className=" w-[35%] h-[55%] bg-white rounded-md z-50">
-            <ManageFileModal />
-          </div>
+          <div className=" w-[35%] h-[55%] bg-white rounded-md z-50"></div>
         </div>
       )}
     </div>
