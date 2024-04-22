@@ -1,11 +1,11 @@
 import Modal from "@/components/Modal";
 import ManageFileHeaderSection from "./components/Header";
 import { useModal } from "@/context/modalContext";
-import ManageFileModal from "./components/Modal";
+import UploadFile from "../../components/Modal/UploadFile";
 import ManageFileBody from "./components/Body";
 
 export default function ManageFile() {
-  const { isModalOpen } = useModal();
+  const { isUploadFileModal } = useModal();
 
   return (
     <div
@@ -14,10 +14,10 @@ export default function ManageFile() {
     >
       <ManageFileHeaderSection />
       <ManageFileBody />
-      {isModalOpen && (
+      {isUploadFileModal && (
         <Modal width={35} height={55}>
           <div className="w-full h-full flex justify-center items-center">
-            <ManageFileModal />
+            <UploadFile />
           </div>
         </Modal>
       )}

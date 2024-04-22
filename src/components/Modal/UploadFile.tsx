@@ -11,9 +11,9 @@ import { fileController } from "@/controllers/file.controller";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpApiResponse } from "@/types/httpResponse";
 
-export default function ManageFileModal() {
+export default function UploadFile() {
   const [file, setFile] = useState<File | undefined>();
-  const { closeModal } = useModal();
+  const { closeUploadFileModal } = useModal();
   const queryClient = useQueryClient();
 
   const { mutateAsync: filepostmutate, isPending } = useMutation<
@@ -40,7 +40,7 @@ export default function ManageFileModal() {
         const res = await filepostmutate(formData);
         if (res.isSuccess) {
           queryClient.invalidateQueries({ queryKey: ["manage_file"] });
-          closeModal();
+          closeUploadFileModal();
           toast.custom((t) => (
             <CustomToast
               text="!فایل با موفقیت اضافه شد"
@@ -106,7 +106,7 @@ export default function ManageFileModal() {
         <Button
           className="text-sm w-[50%] font-bold"
           title={SHARED_STRINGS[StringsE.Close]}
-          onClick={closeModal}
+          onClick={closeUploadFileModal}
           model="outline_red"
         />
         <Button
