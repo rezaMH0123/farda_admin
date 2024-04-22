@@ -4,9 +4,10 @@ import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import { useModal } from "@/context/modalContext";
 import PlusIcon from "@/components/Icons/PlusIcon";
-import { useState } from "react";
+import UploadFile from "@/components/Modal/UploadFile";
 export default function AddContent() {
-  const [openModal, setOpenModal] = useState(false);
+  const { openUploadFileModal, isUploadFileModal, closeUploadFileModal } =
+    useModal();
   const { isModalOpen } = useModal();
   const mainCoverData = [
     {
@@ -111,10 +112,6 @@ export default function AddContent() {
     },
   ];
 
-  const handleOpenUploadModal = () => {
-    setOpenModal(true);
-  };
-
   return (
     <div className=" h-full overflow-y-scroll">
       <ContentsModalForm />
@@ -132,7 +129,7 @@ export default function AddContent() {
                     model="outline_blue"
                     className="px-4"
                     icon={<PlusIcon className="fill-PrimaryBlue-100 w-3 h-3" />}
-                    onClick={handleOpenUploadModal}
+                    onClick={openUploadFileModal}
                   />
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
@@ -158,16 +155,18 @@ export default function AddContent() {
         </>
       )}
 
-      {openModal && (
+      {isUploadFileModal && (
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50  flex justify-center items-center z-40">
           <div
             onClick={(e) => {
-              setOpenModal(false);
+              closeUploadFileModal();
               e.stopPropagation;
             }}
             className="w-full h-full absolute top-0 left-0"
           ></div>
-          <div className=" w-[35%] h-[55%] bg-white rounded-md z-50"></div>
+          <div className=" w-[35%] h-[55%] bg-white rounded-md z-50">
+            <UploadFile />
+          </div>
         </div>
       )}
     </div>
