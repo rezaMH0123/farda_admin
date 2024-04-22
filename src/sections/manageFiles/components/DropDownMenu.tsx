@@ -4,6 +4,7 @@ import More from "@/assets/img/tools/more.svg";
 import { useModal } from "@/context/modalContext";
 import { useGlobalState } from "@/context/globalStateContext";
 import { FilesI } from "@/types/models/Files.type";
+import ShareMenu from "./ShareMenu";
 
 type MenuItemsT = {
   name: string;
@@ -18,7 +19,7 @@ export default function DropDownMenu({ menuItemsT, items }: DropDownMenuProps) {
   const { openDeleteModal } = useModal();
   const { setItemFile } = useGlobalState();
 
-  const DeleteModal = (name: string) => {
+  const HandleDropDownMenu = (name: string) => {
     setItemFile(items);
     if (name === "حذف") {
       openDeleteModal();
@@ -40,16 +41,20 @@ export default function DropDownMenu({ menuItemsT, items }: DropDownMenuProps) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="origin-top-right absolute left-[-10px] mt-1 w-56 rounded-md shadow-lg bg-PrimaryBlack-300 ring-1 ring-black ring-opacity-5 divide-y divide-gray-300 focus:outline-none">
+          <Menu.Items className="origin-top-right absolute left-[-8px] mt-1 w-36 rounded-md shadow-lg bg-PrimaryBlack-300 ring-1 ring-black ring-opacity-5 divide-y divide-gray-300 focus:outline-none z-10">
             {menuItemsT.map((item, index) => (
               <div key={index} className="py-1">
                 <Menu.Item>
-                  <p
-                    className="cursor-pointer"
-                    onClick={() => DeleteModal(item.name)}
-                  >
-                    {item.name}
-                  </p>
+                  {item.name === "اشتراک‌گذاری" ? (
+                    <ShareMenu items={items} />
+                  ) : (
+                    <p
+                      className="cursor-pointer"
+                      onClick={() => HandleDropDownMenu(item.name)}
+                    >
+                      {item.name}
+                    </p>
+                  )}
                 </Menu.Item>
               </div>
             ))}
