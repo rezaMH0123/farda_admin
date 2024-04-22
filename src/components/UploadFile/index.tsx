@@ -22,6 +22,7 @@ export default function UploadFile() {
     FormData
   >({
     mutationFn: fileController.postFiles,
+    retry: false,
   });
 
   const submitFile = async () => {

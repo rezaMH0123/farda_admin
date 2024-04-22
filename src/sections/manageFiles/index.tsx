@@ -1,7 +1,7 @@
 import Modal from "@/components/Modal";
 import ManageFileHeaderSection from "./components/Header";
 import { useModal } from "@/context/modalContext";
-import UploadFile from "../../components/Modal/UploadFile";
+import UploadFile from "../../components/UploadFile";
 import ManageFileBody from "./components/Body";
 
 export default function ManageFile() {
