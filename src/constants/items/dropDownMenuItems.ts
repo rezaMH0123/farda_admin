@@ -1,11 +1,5 @@
 export const FileMenuItems = [
   {
-    name: "ویرایش",
-  },
-  {
-    name: "تغییر اسم",
-  },
-  {
     name: "اشتراک‌گذاری",
   },
   {
@@ -14,9 +8,6 @@ export const FileMenuItems = [
 ];
 
 export const PhotoMenuItems = [
-  {
-    name: "ویرایش",
-  },
   {
     name: "اشتراک‌گذاری",
   },
