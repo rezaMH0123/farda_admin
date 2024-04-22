@@ -15,6 +15,9 @@ import toast from "react-hot-toast";
 import CustomToast from "../Toast";
 import "../../../yup.config";
 import { SetToStorage } from "@/utils/storage";
+import { useMutation } from "@tanstack/react-query";
+import { SigninController } from "@/controllers/signin.controller";
+import { HttpApiResponse } from "@/types/httpResponse";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -29,53 +32,72 @@ export default function SignInForm() {
     resolver: yupResolver(siginSchema),
   });
 
-  const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
-    setLoading(true);
+  const {
+    mutateAsync: signinMutate,
+    isPending,
+    isError,
+    data,
+  } = useMutation<HttpApiResponse, unknown, SigninI>({
+    mutationFn: SigninController,
+  });
 
-    await http
-      .post("Panel/Login", {
-        username: inputsData.username,
-        password: inputsData.password,
-      })
-      .then((response) => {
-        const data = response.data;
-        const access_token = data.data.access_token;
-        SetToStorage({
-          key: "access_token",
-          value: access_token,
-          expireTime: 2,
-        });
-        methods.reset();
-        navigate("/");
-        setLoading(false);
-        toast.custom((t) => (
-          <CustomToast
-            text="!با موفقیت وارد شدید"
-            animation={t}
-            status="success"
-          />
-        ));
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.response.status === 400) {
-          toast.custom((t) => (
-            <CustomToast
-              text="!نام کاربری یا رمز عبور صحیح نمی‌باشد"
-              animation={t}
-              status="error"
-            />
-          ));
-        } else {
-          toast.custom((t) => (
-            <CustomToast
-              text="!مشکلی پیش آمده است"
-              animation={t}
-              status="error"
-            />
-          ));
-        }
-      });
+  console.log(data);
+
+  const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
+    try {
+      const res = await signinMutate(inputsData);
+      if (res.isSuccess) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    // setLoading(true);
+    // await http
+    //   .post("Panel/Login", {
+    //     username: inputsData.username,
+    //     password: inputsData.password,
+    //   })
+    // .then((response) => {
+    //   const data = response.data;
+    //   const access_token = data.data.access_token;
+    //   SetToStorage({
+    //     key: "access_token",
+    //     value: access_token,
+    //     expireTime: 2,
+    //   });
+    //   methods.reset();
+    //   navigate("/");
+    //   setLoading(false);
+    //   toast.custom((t) => (
+    //     <CustomToast
+    //       text="!با موفقیت وارد شدید"
+    //       animation={t}
+    //       status="success"
+    //     />
+    //   ));
+    // })
+    // .catch((error) => {
+    //   setLoading(false);
+    //   if (error.response.status === 400) {
+    //     toast.custom((t) => (
+    //       <CustomToast
+    //         text="!نام کاربری یا رمز عبور صحیح نمی‌باشد"
+    //         animation={t}
+    //         status="error"
+    //       />
+    //     ));
+    //   } else {
+    //     toast.custom((t) => (
+    //       <CustomToast
+    //         text="!مشکلی پیش آمده است"
+    //         animation={t}
+    //         status="error"
+    //       />
+    //     ));
+    //   }
+    // });
   };
 
   return (
