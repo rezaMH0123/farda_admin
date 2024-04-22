@@ -5,6 +5,8 @@ import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import { useModal } from "@/context/modalContext";
 import PlusIcon from "@/components/Icons/PlusIcon";
 import UploadFile from "@/components/Modal/UploadFile";
+import "animate.css";
+
 export default function AddContent() {
   const { openUploadFileModal, isUploadFileModal, closeUploadFileModal } =
     useModal();
@@ -164,7 +166,7 @@ export default function AddContent() {
             }}
             className="w-full h-full absolute top-0 left-0"
           ></div>
-          <div className=" w-[35%] h-[55%] bg-white rounded-md z-50">
+          <div className="animate__animated animate__fadeInUp w-[35%] h-[55%] bg-white rounded-md z-50">
             <UploadFile />
           </div>
         </div>
