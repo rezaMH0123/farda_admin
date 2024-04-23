@@ -38,7 +38,7 @@ export default function AddContent() {
   // console.log(selectedMainImage);
   // console.log(selectedsecondImage);
   return (
-    <div className="h-full overflow-y-scroll">
+    <div className="h-full">
       <ContentsModalForm />
       {isModalOpen && (
         <>
