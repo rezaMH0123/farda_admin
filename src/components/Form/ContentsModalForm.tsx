@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
@@ -19,6 +19,10 @@ import TextInput from "@/components/Inputs/TextInput";
 import LableSelected from "@/sections/content/components/LableSelected";
 import UploadFile from "../Icons/UploadFile";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { HttpApiResponse } from "@/types/httpResponse";
+import { CategorieItem } from "@/types/models/Categories.type";
+import { CategorieController } from "@/controllers/categorie.contoroller";
 
 const weekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 type Inputs = {
@@ -41,8 +45,54 @@ export default function ContentsModalForm() {
   const [dateStart, setDateStart] = useState<Date | null>(null);
   const [dateEnd, setDateEnd] = useState<Date | null>(null);
   const methods = useForm<Inputs>();
+  const [categorys, setCategorys] = useState<string[] | string | undefined>([]);
+  const [option1, setOption1] = useState<{ value: string; label: string }[]>(
+    []
+  );
+  const [option2, setOption2] = useState<{ value: string; label: string }[]>(
+    []
+  );
+  const { data, isFetched } = useQuery<HttpApiResponse<CategorieItem[]>>({
+    queryKey: ["categori"],
+    queryFn: () => CategorieController.getCategorie(),
+    retry: false,
+    refetchOnWindowFocus: true,
+  });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  useEffect(() => {
+    if (isFetched) {
+      const updatedOptions =
+        data?.data?.map((item) => ({
+          value: item.id,
+          label: item.title,
+        })) ?? [];
+
+      setOption1(updatedOptions);
+    }
+  }, [isFetched, data]);
+  console.log(data?.data);
+
+  const getSubCategories = () => {
+    const subCategories: { id: string; title: string }[] = [];
+    data?.data?.forEach((category) => {
+      if (categorys?.includes(category.id)) {
+        subCategories.push(...category.subCategories);
+      }
+    });
+    return subCategories;
+  };
+
+  useEffect(() => {
+    const op = getSubCategories();
+
+    const subcategoriOP =
+      op.map((item) => ({
+        value: item.id,
+        label: item.title,
+      })) ?? [];
+
+    setOption2(subcategoriOP);
+  }, [categorys]);
 
   const handleDateChangeStart = (
     data: Date | DateObject | DateObject[] | null
@@ -74,21 +124,8 @@ export default function ContentsModalForm() {
   const goBackHandle = () => {
     navigate("/content");
   };
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "ali", label: "ali" },
-    { value: "reza", label: "reza" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-    { value: "mamad", label: "mamad" },
-  ];
   return (
     <div className="flex justify-center items-center w-full h-full overflow-auto">
       <FormProvider {...methods}>
@@ -227,9 +264,10 @@ export default function ContentsModalForm() {
                 render={({ field }) => (
                   <MyDropDown
                     setCategory={field.onChange}
+                    setCategorys={setCategorys}
                     placeholder="دسته بندی‌ها*"
                     isMulti={true}
-                    options={options}
+                    options={option1}
                   />
                 )}
               />
@@ -242,7 +280,7 @@ export default function ContentsModalForm() {
                     setCategory={field.onChange}
                     placeholder="دسته بندی زیر مجموعه"
                     isMulti={true}
-                    // options={options}
+                    options={option2}
                   />
                 )}
               />

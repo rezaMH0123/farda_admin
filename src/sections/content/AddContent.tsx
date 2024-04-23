@@ -10,11 +10,18 @@ import { HttpResponseList } from "@/types/httpResponse";
 import { FilesI } from "@/types/models/Files.type";
 import { fileController } from "@/controllers/file.controller";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function AddContent() {
-  const { openUploadFileModal, isUploadFileModal, closeUploadFileModal } =
-    useModal();
-  const { isModalOpen } = useModal();
+  const {
+    isModalOpen,
+    openUploadFileModal,
+    isUploadFileModal,
+    closeUploadFileModal,
+    closeModal,
+  } = useModal();
+  const [selectedMainImage, setSelectedMainImage] = useState<string>();
+  const [selectedsecondImage, setSelectedsecondImage] = useState<string[]>([]);
 
   const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file"],
@@ -22,111 +29,14 @@ export default function AddContent() {
     retry: false,
     refetchOnWindowFocus: true,
   });
-  console.log(data);
 
-  const mainCoverData = [
-    {
-      id: 1,
-      filename: "reza",
-    },
-    {
-      id: 2,
-      filename: "reza",
-    },
-    {
-      id: 3,
-      filename: "reza",
-    },
-    {
-      id: 14,
-      filename: "reza",
-    },
-    {
-      id: 16,
-      filename: "reza",
-    },
-    {
-      id: 15,
-      filename: "reza",
-    },
-    {
-      id: 18,
-      filename: "reza",
-    },
-    {
-      id: 134,
-      filename: "reza",
-    },
-    {
-      id: 143,
-      filename: "reza",
-    },
-    {
-      id: 111,
-      filename: "reza",
-    },
-    {
-      id: 176,
-      filename: "reza",
-    },
-    {
-      id: 567,
-      filename: "reza",
-    },
-    {
-      id: 135,
-      filename: "reza",
-    },
-    {
-      id: 138,
-      filename: "reza",
-    },
-    {
-      id: 199,
-      filename: "reza",
-    },
-    {
-      id: 145,
-      filename: "reza",
-    },
-    {
-      id: 1,
-      filename: "dfe",
-    },
-    {
-      id: 1,
-      filename: "hyf",
-    },
-    {
-      id: 1,
-      filename: "aFLI",
-    },
-    {
-      id: 1,
-      filename: "rCRTGeza",
-    },
-    {
-      id: 1,
-      filename: "GHII",
-    },
-    {
-      id: 1,
-      filename: "YY",
-    },
-    {
-      id: 1,
-      filename: "CCC",
-    },
-    {
-      id: 1,
-      filename: "TTRR",
-    },
-    {
-      id: 1,
-      filename: "JHYa",
-    },
-  ];
-
+  const handleCloseModal = () => {
+    closeModal();
+    setSelectedMainImage("");
+    setSelectedsecondImage([]);
+  };
+  // console.log(selectedMainImage);
+  // console.log(selectedsecondImage);
   return (
     <div className="h-full overflow-y-scroll">
       <ContentsModalForm />
@@ -150,7 +60,13 @@ export default function AddContent() {
                   />
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
-                  <SwiperComponent row={1} data={data?.data.result} />
+                  <SwiperComponent
+                    setSelecteditem={setSelectedMainImage}
+                    selecteditem={selectedMainImage}
+                    row={1}
+                    data={data?.data.result}
+                    type={"radio"}
+                  />
                 </div>
               </div>
               <div className="flex flex-col items-center justify-center h-[42%]">
@@ -160,12 +76,28 @@ export default function AddContent() {
                   </span>
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
-                  <SwiperComponent row={2} data={mainCoverData} />
+                  <SwiperComponent
+                    setSelecteditems={setSelectedsecondImage}
+                    selecteditems={selectedsecondImage}
+                    row={2}
+                    data={data?.data.result}
+                    type={"checkbox"}
+                  />
                 </div>
               </div>
-              <div className="flex items-center px-6 justify-end gap-x-4 h-[10%]">
-                <Button title={"بستن"} model="outline_red" className="px-12" />
-                <Button title={"افزودن"} model="fill_blue" className="px-12" />
+              <div className="flex items-center px-6 justify-end  gap-x-4  h-[10%]">
+                <Button
+                  title={"بستن"}
+                  model="outline_red"
+                  className="px-12"
+                  onClick={handleCloseModal}
+                />
+                <Button
+                  onClick={closeModal}
+                  title={"افزودن"}
+                  model="fill_blue"
+                  className="px-12"
+                />
               </div>
             </div>
           </Modal>
