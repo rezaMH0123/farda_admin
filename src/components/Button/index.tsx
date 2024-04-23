@@ -31,7 +31,7 @@ export default function Button({
         model === "fill_blue"
           ? "bg-Blue-PrimaryBlue text-W1 hover:bg-Blue-BlueHover"
           : model === "outline_gray"
-          ? "text-Black-B3 border border-Black-text-Black-B3"
+          ? "text-Black-B3 border border-Black-B3"
           : model === "outline_red"
           ? "text-Red-R1 border border-Red-R1"
           : model === "fill_red"
