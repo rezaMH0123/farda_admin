@@ -10,6 +10,9 @@ type SelectInputProps = {
   setCategory: React.Dispatch<
     React.SetStateAction<string | string[] | undefined>
   >;
+  setCategorys?: React.Dispatch<
+    React.SetStateAction<string[] | string | undefined>
+  >;
 };
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
@@ -35,7 +38,7 @@ const customStyles: StylesConfig = {
   }),
   input: (provided) => ({
     ...provided,
-    paddingRight: "17px", // Add padding to the input
+    paddingRight: "17px",
   }),
 };
 
@@ -43,6 +46,7 @@ const MyDropDown = ({
   options,
   placeholder,
   setCategory,
+  setCategorys,
   isMulti,
 }: SelectInputProps) => {
   const handleChange = (newValue: unknown) => {
@@ -51,11 +55,14 @@ const MyDropDown = ({
       if (Array.isArray(selectedOption)) {
         const values = selectedOption.map((option) => option.value);
         setCategory(values);
+        setCategorys && setCategorys(values);
       } else {
         setCategory(selectedOption.value);
+        setCategorys && setCategorys(selectedOption.value);
       }
     } else {
       setCategory(undefined);
+      setCategorys && setCategorys(undefined);
     }
   };
 
