@@ -16,7 +16,7 @@ export default function DeleteModal({ title, onClick, loading }: Props) {
     <div className="w-full h-full">
       <div className="w-full h-full flex items-center flex-col">
         <IconDelete className="mt-[82px]" />
-        <p className="mt-4 text-PrimaryBlack-800 text-xs">{title}</p>
+        <p className="mt-4 text-Black-B4 text-xs">{title}</p>
         <div className="w-[70%] h-[44px] m-auto flex gap-5 mt-12">
           <Button
             className="text-sm w-[50%]"
@@ -27,13 +27,7 @@ export default function DeleteModal({ title, onClick, loading }: Props) {
           <Button
             className="text-sm w-[50%]"
             model="fill_red"
-            title={
-              loading ? (
-                <Loading className={"bg-PrimaryBlack-200"} />
-              ) : (
-                "حذف شود"
-              )
-            }
+            title={loading ? <Loading className={"bg-Black-B2"} /> : "حذف شود"}
             onClick={onClick}
             disable={loading ? true : false}
           />

@@ -19,7 +19,7 @@ export default function RadioButton({
     <>
       <label
         htmlFor="previewRadio"
-        className={`flex items-center gap-x-3 text-PrimaryBlack-700 cursor-pointer`}
+        className={`flex items-center gap-x-3 text-Black-B3 cursor-pointer`}
       >
         پیش نمایش
         <input
@@ -45,7 +45,7 @@ export default function RadioButton({
 
       <label
         htmlFor="publishRadio"
-        className={`flex items-center gap-x-3 text-PrimaryBlack-700 cursor-pointer`}
+        className={`flex items-center gap-x-3 text-Black-B3 cursor-pointer`}
       >
         انتشار
         <input

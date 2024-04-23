@@ -12,7 +12,7 @@ export default function CardPhoto({ item }: CardPhotoProps) {
   return (
     <div
       key={item.id}
-      className="h-[200px] w-[100%] rounded-[20px] bg-[#DEE8FF] custom-shadow"
+      className="h-[190px] w-[100%] rounded-[20px] bg-Blue-CardBack custom-shadow"
     >
       <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
         <img src={Square} alt="square" className="cursor-pointer" />
@@ -24,10 +24,8 @@ export default function CardPhoto({ item }: CardPhotoProps) {
           style={{ backgroundImage: `url(${item.fileUrl})` }}
         />
       </Link>
-      <div className="w-full h-[20%] flex items-center justify-center">
-        <p className="font-normal text-PrimaryBlack-500">
-          سه‌شنبه 21 فروردین 1403
-        </p>
+      <div className="w-full h-[15%] flex items-center justify-center">
+        <p className="font-normal text-[#667085]">سه‌شنبه 21 فروردین 1403</p>
       </div>
     </div>
   );

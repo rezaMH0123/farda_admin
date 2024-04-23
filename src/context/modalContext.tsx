@@ -11,6 +11,9 @@ interface ModalContextType {
   isUploadFileModal: boolean;
   openUploadFileModal: () => void;
   closeUploadFileModal: () => void;
+  isLogoutModal: boolean;
+  openLogoutModal: () => void;
+  closeLogoutModal: () => void;
 }
 
 type MyComponentProps = {
@@ -31,6 +34,7 @@ export const ModalProvider: React.FC<MyComponentProps> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isUploadFileModal, setIsUploadFileModal] = useState<boolean>(false);
+  const [isLogoutModal, setIsLogoutModal] = useState<boolean>(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -40,6 +44,9 @@ export const ModalProvider: React.FC<MyComponentProps> = ({ children }) => {
 
   const openUploadFileModal = () => setIsUploadFileModal(true);
   const closeUploadFileModal = () => setIsUploadFileModal(false);
+
+  const openLogoutModal = () => setIsLogoutModal(true);
+  const closeLogoutModal = () => setIsLogoutModal(false);
 
   return (
     <ModalContext.Provider
@@ -53,6 +60,9 @@ export const ModalProvider: React.FC<MyComponentProps> = ({ children }) => {
         isUploadFileModal,
         openUploadFileModal,
         closeUploadFileModal,
+        isLogoutModal,
+        openLogoutModal,
+        closeLogoutModal,
       }}
     >
       {children}

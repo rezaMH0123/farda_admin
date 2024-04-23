@@ -90,31 +90,34 @@ export default function ContentsModalForm() {
     { value: "mamad", label: "mamad" },
   ];
   return (
-    <div className="flex justify-center items-center w-full h-full overflow-auto  ">
+    <div className="flex justify-center items-center w-full h-full overflow-auto">
       <FormProvider {...methods}>
         <form
-          className="flex justify-center items-center w-full h-full "
+          className="flex justify-center items-center w-full h-full"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-y-10 h-full w-[90%] py-4 ">
+          <div className="flex flex-col gap-y-10 h-full w-[90%] py-4">
             <div className="h-[25%]">
-              <span className="font-ShabnamBold text-[20px]">افزودن محتوا</span>
+              <span className="font-bold text-[20px] text-Black-PrimaryBlack">
+                افزودن محتوا
+              </span>
               <TextInput
                 type="text"
                 name="title"
                 placeholder="عنوان*"
-                className="border border-PrimaryBlack-300 mt-4 rounded-md pr-3 w-full h-[44px] outline-none"
+                className="mt-4 pr-3"
               />
-
               <TextInput
                 type="text"
                 name="summary"
                 placeholder="خلاصه*"
-                className="border border-PrimaryBlack-300 mt-4 rounded-md pr-3 w-full h-[44px] outline-none"
+                className="mt-4 pr-3"
               />
             </div>
             <div className="h-fit  mt-3">
-              <span className="font-ShabnamRegular block mb-4">توضیحات</span>
+              <span className="font-normal block mb-4 text-Black-B2">
+                توضیحات
+              </span>
               <Controller
                 name="ckDescription"
                 control={methods.control}
@@ -135,9 +138,9 @@ export default function ContentsModalForm() {
                 )}
               />
             </div>
-            <div className="flex justify-between items-center  h-[8%]  mt-3">
-              <div className="relative  w-[47%]  ">
-                <div className="flex justify-between overflow-hidden items-center h-[38px] w-[100%] border border-PrimaryBlack-300 rounded-lg ">
+            <div className="flex justify-between items-center h-[8%] mt-3">
+              <div className="relative w-[47%]">
+                <div className="flex justify-between overflow-hidden items-center h-[38px] w-[100%] border border-Black-B3 rounded-lg">
                   <div style={{ direction: "rtl" }}>
                     <DatePicker
                       inputClass="custom-input"
@@ -167,11 +170,11 @@ export default function ContentsModalForm() {
                       }
                     />
                   </div>
-                  <IconDatePicker className="fill-[#B3B3B3] ml-3 absolute top-[50%] left-0 -translate-y-[50%]" />
+                  <IconDatePicker className="fill-Black-B3 ml-3 absolute top-[50%] left-0 -translate-y-[50%]" />
                 </div>
               </div>
               <div className="relative w-[47%]">
-                <div className="flex justify-between items-center overflow-hidden h-[38px] w-[100%] border border-PrimaryBlack-300 rounded-lg ">
+                <div className="flex justify-between items-center overflow-hidden h-[38px] w-[100%] border border-Black-B3 rounded-lg">
                   <div style={{ direction: "rtl" }}>
                     <DatePicker
                       inputClass="custom-input"
@@ -199,11 +202,11 @@ export default function ContentsModalForm() {
                       }
                     />
                   </div>
-                  <IconDatePicker className="fill-[#B3B3B3] ml-3 absolute top-[50%] left-0 -translate-y-[50%]" />
+                  <IconDatePicker className="fill-Black-B3 ml-3 absolute top-[50%] left-0 -translate-y-[50%]" />
                 </div>
               </div>
             </div>
-            <div className=" h-[8%] flex items-center font-light  text-PrimaryBlack-600 mt-3">
+            <div className="h-[8%] flex items-center font-light text-Black-B2 mt-3">
               <Controller
                 name="selectedItem"
                 control={methods.control}
@@ -216,7 +219,7 @@ export default function ContentsModalForm() {
                 )}
               />
             </div>
-            <div className="w-full  h-[8%] flex justify-between items-center gap-x-3 mt-3">
+            <div className="w-full h-[8%] flex justify-between items-center gap-x-3 mt-3">
               <Controller
                 name="category"
                 defaultValue={""}
@@ -244,8 +247,8 @@ export default function ContentsModalForm() {
                 )}
               />
             </div>
-            <div className="flex  justify-between items-center  h-[8%] text-[13.5px]">
-              <div className="flex gap-10 items-center ">
+            <div className="flex justify-between items-center h-[8%] text-[13.5px]">
+              <div className="flex gap-10 items-center">
                 <Controller
                   name="isShare"
                   defaultValue={false}
@@ -274,7 +277,7 @@ export default function ContentsModalForm() {
                 />
               </div>
               <div className="flex items-center gap-x-3">
-                <span className="text-PrimaryBlack-400">وضعیت نمایش*</span>
+                <span className="text-Black-B2">وضعیت نمایش*</span>
                 <Controller
                   name="selectedOption"
                   defaultValue="preview"
@@ -289,15 +292,15 @@ export default function ContentsModalForm() {
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between b h-[8%]">
+            <div className="flex items-center justify-between h-[8%]">
               <div
                 onClick={openModal}
-                className="flex  items-center gap-2 cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <div className="w-fit border-b border-PrimaryBlue-100">
-                  <span className="text-PrimaryBlue-100">بارگذاری فایل</span>
+                <div className="w-fit border-b border-Blue-PrimaryBlue">
+                  <span className="text-Blue-PrimaryBlue">بارگذاری فایل</span>
                 </div>
-                <UploadFile className="fill-PrimaryBlue-100" />
+                <UploadFile className="fill-Blue-PrimaryBlue" />
               </div>
               <div className="flex gap-x-4 mb-6">
                 <Button

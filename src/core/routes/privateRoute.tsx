@@ -3,8 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function PrivateRoutes() {
   const location = useLocation();
-  // const access_token = GetFromStorage("access_token");
-  const access_token = true;
+  const access_token = GetFromStorage("access_token");
 
   return access_token ? (
     <Outlet />
