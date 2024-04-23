@@ -9,11 +9,18 @@ type ModalProps = {
   height: number;
 };
 export default function Modal({ children, width, height }: ModalProps) {
-  const { closeModal, closeDeleteModal } = useModal();
+  const {
+    closeModal,
+    closeDeleteModal,
+    closeUploadFileModal,
+    closeLogoutModal,
+  } = useModal();
   const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     closeModal();
     closeDeleteModal();
+    closeUploadFileModal();
+    closeLogoutModal();
   };
 
   return createPortal(

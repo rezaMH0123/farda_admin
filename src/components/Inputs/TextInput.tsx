@@ -26,8 +26,8 @@ const TextInput = ({
         type={type}
         placeholder={placeholder}
         {...register(name)}
-        className={`w-full h-[44px] text-base  font-ShabnamRegular leading-6 border px-[14px] rounded-lg outline-none ${
-          errors[name] ? "border-PrimaryRed-200" : "border-PrimaryBlack-300"
+        className={`w-full h-[44px] text-base font-normal leading-6 border px-[14px] rounded-lg outline-none ${
+          errors[name] ? "border-Red-R2" : "border-Black-B3"
         } ${className}`}
       />
       <span
@@ -37,8 +37,8 @@ const TextInput = ({
         <img src={icon} />
       </span>
       {errors[name]?.message && (
-        <span className="text-PrimaryRed-200 text-xs font-ShabnamRegular leading-5 mt-1">
-          {errors[name]?.message.toString()}
+        <span className="text-Red-R2 text-xs font-normal leading-5 mt-1">
+          {errors[name]?.message?.toString()}
         </span>
       )}
     </>

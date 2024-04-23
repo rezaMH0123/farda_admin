@@ -105,9 +105,7 @@ export default function SignInForm() {
           type="submit"
           model="fill_blue"
           className="mt-8 w-full font-bold"
-          title={
-            isPending ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
-          }
+          title={isPending ? <Loading className={"bg-Black-B2"} /> : "ورود"}
           disable={isPending ? true : false}
         />
       </form>

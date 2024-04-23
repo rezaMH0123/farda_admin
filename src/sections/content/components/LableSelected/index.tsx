@@ -19,10 +19,10 @@ export default function LableSelected({
             onClick={() => setSelectedItem(item)}
             className={`${
               item === selectedItem
-                ? "text-white bg-PrimaryBlue-100 border border-PrimaryBlue-100"
-                : "bg-PrimaryBlue-400 border border-PrimaryBlue-400"
+                ? "text-W1 bg-Blue-PrimaryBlue border border-Blue-PrimaryBlue"
+                : "bg-Back-Back1 border border-Backbg-Back-Back1"
             } py-1 px-3 rounded-2xl cursor-pointer 
-           text-PrimaryBlack-700 `}
+           text-Black-B2`}
           >
             {item}
           </span>

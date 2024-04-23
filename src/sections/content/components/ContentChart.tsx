@@ -67,25 +67,25 @@ export default function ContentChart() {
 
   return (
     <div className="chartContetnt px-6 h-full w-full">
-      <div className="headChart flex  h-[60px] font-ShabnamMedium pt-3">
+      <div className="headChart flex h-[60px] font-medium pt-3 text-Black-B2">
         <div className="flex items-center w-[40%]">
           <span className="mr-5 ">عنوان</span>
         </div>
-        <div className="flex justify-center items-center w-[15%] ">
+        <div className="flex justify-center items-center w-[15%]">
           <span>وضعیت</span>
         </div>
-        <div className="flex justify-center items-center w-[15%] ">
+        <div className="flex justify-center items-center w-[15%]">
           <span>اشتراک گذاری</span>
         </div>
-        <div className="flex justify-center items-center w-[15%] ">
+        <div className="flex justify-center items-center w-[15%]">
           <span>کامنت گذاری</span>
         </div>
-        <div className="flex justify-end items-center w-[15%] ">
+        <div className="flex justify-end items-center w-[15%]">
           <span>عملیات</span>
         </div>
       </div>
 
-      <div className="haedBody order-b border-t border-PrimaryBlack-300 h-[60%] w-full ">
+      <div className="haedBody border-b border-t border-Black-B6 h-[60%] w-full">
         {isLoading ? (
           <div className="w-full h-full flex justify-center items-center">
             <TailSpinner />
@@ -95,9 +95,9 @@ export default function ContentChart() {
             {data?.data.result.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center h-[14%] text-PrimaryBlack-400  mt-2 "
+                className="flex items-center h-[14%] text-Black-B2 mt-2"
               >
-                <div className="flex items-center   w-[40%] h-[40px]">
+                <div className="flex items-center w-[40%] h-[40px]">
                   {item.title.length > 50
                     ? item.title.slice(0, 50) + "..."
                     : item.title}
@@ -114,13 +114,11 @@ export default function ContentChart() {
                 <div className="flex items-center justify-end gap-x-4  w-[15%] h-[40px]">
                   <Edit
                     onClick={() => console.log(`edit:${item.id}`)}
-                    fill="#41CD92"
-                    className="cursor-pointer"
+                    className="cursor-pointer fill-Green-G1"
                   />
                   <RecycleBin
                     onClick={() => handleDelete(item.id, item.title)}
-                    fill="#FF8A8A"
-                    className="cursor-pointer"
+                    className="cursor-pointer fill-Red-R1"
                   />
                 </div>
               </div>
@@ -138,7 +136,7 @@ export default function ContentChart() {
         </Modal>
       )}
 
-      <div className="flex gap-x-5 justify-end items-center  h-[15%]">
+      <div className="flex gap-x-5 justify-end items-center h-[15%]">
         <Pagination
           allPage={allPage}
           currentPage={currentPage}

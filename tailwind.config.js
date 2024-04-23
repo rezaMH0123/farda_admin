@@ -37,28 +37,47 @@ export default {
         Shabnam: ["Shabnam"],
       },
       colors: {
-        PrimaryBlue: {
-          100: "#33BDF1",
-          200: "#19B6F1",
-          300: "#00ABEB",
-          400: "#EFF4FF",
+        W1: "#FFFFFF",
+        Gray: "#E1E1E1",
+        Blue: {
+          PrimaryBlue: "#33BDF1",
+          BlueHover: "#19B6F1",
+          BlueClick: "#00ABEB",
+          CardBack: "#DEE8FF",
         },
-        PrimaryBlack: {
-          100: "#525252",
-          200: "#565656",
-          300: "#B3B3B3",
-          400: "#616161",
-          500: "#667085",
-          600: "#696969",
-          700: "#868686",
-          800: "#A9A5A5",
+        Red: {
+          R1: "#FF8A8A",
+          R2: "#F93838"
         },
-        PrimaryGreen: {
-          100: "#76f18b",
+        Black: {
+          PrimaryBlack: "#525252",
+          B2: "#565656",
+          B3: "#B3B3B3",
+          B4: "#A9A5A5",
+          B5: "#EBEBEB",
+          B6: "#E6E6E6"
         },
-        PrimaryRed: {
-          100: "#ff8a8a",
-          200: "#f93838",
+        Green: {
+          G1: "#41CD92",
+          G2: "#D8FBDE",
+          G3: "#35B17D"
+        },
+        Linear: {
+          L1: {
+            1: "#0575E6",
+            2: "#02298A",
+            3: "#021B79"
+          }
+        },
+        Back: {
+          Back1: "#EFF4FF",
+          Back2: "#EFF4FF",
+          Back3: "#919EAB"
+        },
+        Error: {
+          Error1: "#7A4100",
+          Error2: "#FFAB00",
+          Error3: "#FFE9D5"
         },
       },
     },

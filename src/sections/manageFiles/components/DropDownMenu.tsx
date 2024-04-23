@@ -41,7 +41,7 @@ export default function DropDownMenu({ menuItemsT, items }: DropDownMenuProps) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="origin-top-right absolute left-[-8px] mt-1 w-36 rounded-md shadow-lg bg-PrimaryBlack-300 ring-1 ring-black ring-opacity-5 divide-y divide-gray-300 focus:outline-none z-10">
+          <Menu.Items className="origin-top-right absolute left-[-8px] mt-1 w-36 rounded-md shadow-lg bg-Black-B3 ring-1 ring-black ring-opacity-5 divide-y divide-gray-300 focus:outline-none z-10">
             {menuItemsT.map((item, index) => (
               <div key={index} className="py-1">
                 <Menu.Item>

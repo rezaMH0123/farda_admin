@@ -16,7 +16,7 @@ export default function CustomToast({
   return (
     <div
       style={{
-        backgroundColor: `${status === "success" ? "#76f18b" : "#f93838"}`,
+        backgroundColor: `${status === "success" ? "#D8FBDE" : "#FF8A8A"}`,
       }}
       className={`${
         animation.visible ? "animate-enter" : "animate-leave"

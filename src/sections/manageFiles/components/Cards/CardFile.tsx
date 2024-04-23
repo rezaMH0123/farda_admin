@@ -18,7 +18,7 @@ export default function CardFile({ item }: CardFileProps) {
   return (
     <div
       key={item.id}
-      className="h-[200px] w-[100%] rounded-[20px] bg-[#DEE8FF] custom-shadow"
+      className="h-[190px] w-[100%] rounded-[20px] bg-Blue-CardBack custom-shadow"
     >
       <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -34,9 +34,7 @@ export default function CardFile({ item }: CardFileProps) {
             }
             alt="fileType"
           />
-          <p className="font-normal text-xs text-PrimaryBlack-300">
-            {item.filename}
-          </p>
+          <p className="font-normal text-xs text-Black-B3">{item.filename}</p>
         </div>
         <DropDownMenu items={item} menuItemsT={FileMenuItems} />
       </div>
@@ -56,10 +54,8 @@ export default function CardFile({ item }: CardFileProps) {
           />
         </div>
       </Link>
-      <div className="w-full h-[20%] flex items-center justify-center">
-        <p className="font-normal text-PrimaryBlack-500">
-          سه‌شنبه 21 فروردین 1403
-        </p>
+      <div className="w-full h-[15%] flex items-center justify-center">
+        <p className="font-normal text-[#667085]">سه‌شنبه 21 فروردین 1403</p>
       </div>
     </div>
   );

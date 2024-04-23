@@ -38,22 +38,24 @@ export default function AddContent() {
   // console.log(selectedMainImage);
   // console.log(selectedsecondImage);
   return (
-    <div className=" h-full overflow-y-scroll">
+    <div className="h-full overflow-y-scroll">
       <ContentsModalForm />
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>
             <div className="w-full h-full flex flex-col gap-y-3">
               <div className="flex flex-col items-center justify-center  h-[42%]">
-                <div className="flex justify-between items-center  rounded-lg h-[30%] w-[95%]">
-                  <span className="text-[#525252] text-[18px]">
+                <div className="flex justify-between items-center rounded-lg h-[30%] w-[95%]">
+                  <span className="text-Black-B2 text-[18px]">
                     عکس کاور اصلی
                   </span>
                   <Button
                     title={"مدیریت فایل"}
                     model="outline_blue"
                     className="px-4"
-                    icon={<PlusIcon className="fill-PrimaryBlue-100 w-3 h-3" />}
+                    icon={
+                      <PlusIcon className="fill-Blue-PrimaryBlue w-3 h-3" />
+                    }
                     onClick={openUploadFileModal}
                   />
                 </div>
@@ -67,9 +69,9 @@ export default function AddContent() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-center justify-center  h-[42%]">
-                <div className=" flex items-center  h-[30%] w-[95%]">
-                  <span className="text-[#525252] text-[18px]">
+              <div className="flex flex-col items-center justify-center h-[42%]">
+                <div className=" flex items-center h-[30%] w-[95%]">
+                  <span className="text-Black-B2 text-[18px]">
                     عکس‌ و فایل‌ها
                   </span>
                 </div>
@@ -111,7 +113,7 @@ export default function AddContent() {
             }}
             className="w-full h-full absolute top-0 left-0"
           ></div>
-          <div className="animate__animated animate__fadeInUp w-[35%] h-[55%] bg-white rounded-md z-50">
+          <div className="animate__animated animate__fadeInUp w-[35%] h-[55%] bg-W1 rounded-md z-50">
             <UploadFile />
           </div>
         </div>

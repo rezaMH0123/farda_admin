@@ -83,7 +83,7 @@ export default function UploadFile() {
   return (
     <div className="h-[90%] w-full flex flex-col gap-y-2 p-5">
       <div className="h-fit">
-        <p className="text-[20px] font-bold mr-10 text-PrimaryBlack-100">
+        <p className="text-[20px] font-bold mr-10 text-Black-PrimaryBlack">
           {SHARED_STRINGS[StringsE.AddFile]}
         </p>
       </div>
@@ -123,7 +123,7 @@ export default function UploadFile() {
           model="fill_blue"
           title={
             isPending ? (
-              <Loading className={"bg-PrimaryBlack-200"} />
+              <Loading className={"bg-Black-B2"} />
             ) : (
               SHARED_STRINGS[StringsE.AddFile]
             )

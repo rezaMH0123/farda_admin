@@ -14,7 +14,7 @@ export default function Layout() {
           <GlobalStateProvider>
             <div className="w-[1440px] h-full">
               <Header />
-              <div className="flex justify-between gap-x-3  h-full mt-6">
+              <div className="flex justify-between gap-x-3 h-full mt-6">
                 <Outlet />
                 <SideBar />
               </div>
