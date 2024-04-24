@@ -1,7 +1,7 @@
 import StringsE from "@/types/strings";
 
 const SHARED_STRINGS: Record<StringsE, string> = {
-  // public strings
+  // public
   [StringsE.AdditionButton]: "اضافه کردن",
   [StringsE.Close]: "بستن",
   [StringsE.Add]: "افزودن",
@@ -49,7 +49,7 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.MostImportant]: "مهم‌ترین",
   [StringsE.Sports]: "ورزشی",
   
-  // manage file sectoin
+  // manage file section
   [StringsE.ManageFiles]: "مدیریت فایل‌ها",
   [StringsE.Photo]: "عکس",
   [StringsE.File]: "فایل",
