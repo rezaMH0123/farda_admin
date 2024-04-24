@@ -1,4 +1,5 @@
-import React from "react";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 type RadioButtonProps = {
   selectedOption: string;
@@ -21,7 +22,7 @@ export default function RadioButton({
         htmlFor="previewRadio"
         className={`flex items-center gap-x-3 text-Black-B3 cursor-pointer`}
       >
-        پیش نمایش
+        {SHARED_STRINGS[StringsE.Previw]}
         <input
           id="previewRadio"
           type="radio"
@@ -47,7 +48,7 @@ export default function RadioButton({
         htmlFor="publishRadio"
         className={`flex items-center gap-x-3 text-Black-B3 cursor-pointer`}
       >
-        انتشار
+        {SHARED_STRINGS[StringsE.Realease]}
         <input
           id="publishRadio"
           type="radio"

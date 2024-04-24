@@ -7,9 +7,16 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Add]: "افزودن",
   [StringsE.Filter]: "فیلتر",
   [StringsE.Tags]: "برچسب‌‌ها",
+  [StringsE.SelectFile]: "!لطفا فایل مورد نظر را انتخاب نمایید",
+  [StringsE.FileTypeUnsupported]: ".نوع فایل مجاز نمی‌باشد",
   [StringsE.DeletedSuccessfully]: "!فایل با موفقیت حذف شد",
+  [StringsE.AddedSuccessfully]: "!فایل با موفقیت اضافه شد",
   [StringsE.Share]: "اشتراک‌گذاری",
   [StringsE.SomethingWentWrong]: "!مشکلی پیش آمده است",
+  [StringsE.Cancel]: "منصرف شدم",
+  [StringsE.Delete]: "حذف شود",
+  [StringsE.Previw]: "پیش‌نمایش",
+  [StringsE.Realease]: "انتشار",
 
   // singin page
   [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",
@@ -20,6 +27,10 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.UserName]: "نام کاربری",
   [StringsE.Password]: "رمز عبور",
   [StringsE.Login]: "ورود",
+
+  // logout section
+  [StringsE.Logout]: "خروج",
+  [StringsE.ConfirmLogoutMessage]: "از خروج خود اطمینان دارید؟",
 
   // content section
   [StringsE.Content]: "محتوا",

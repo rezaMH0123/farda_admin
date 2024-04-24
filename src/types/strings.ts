@@ -8,6 +8,13 @@ enum StringsE {
   DeletedSuccessfully,
   Share,
   SomethingWentWrong,
+  Cancel,
+  AddedSuccessfully,
+  SelectFile,
+  FileTypeUnsupported,
+  Delete,
+  Previw,
+  Realease,
 
   // signin page
   INSFardaAdminPanel,
@@ -18,6 +25,10 @@ enum StringsE {
   UserName,
   Password,
   Login,
+
+  // logout section
+  Logout,
+  ConfirmLogoutMessage,
   
   // content section
   Content,
@@ -41,8 +52,6 @@ enum StringsE {
   Photo,
   File,
   AddFile,
-
-  
 }
 
 export default StringsE;

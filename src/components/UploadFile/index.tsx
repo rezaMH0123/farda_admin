@@ -29,7 +29,7 @@ export default function UploadFile() {
     if (file === undefined) {
       toast.custom((t) => (
         <CustomToast
-          text="!لطفا فایل مورد نظر را انتخاب نمایید"
+          text={SHARED_STRINGS[StringsE.SelectFile]}
           animation={t}
           status="error"
         />
@@ -44,7 +44,7 @@ export default function UploadFile() {
           closeUploadFileModal();
           toast.custom((t) => (
             <CustomToast
-              text="!فایل با موفقیت اضافه شد"
+              text={SHARED_STRINGS[StringsE.AddedSuccessfully]}
               animation={t}
               status="success"
             />
@@ -56,7 +56,7 @@ export default function UploadFile() {
           <CustomToast
             animation={t}
             status="error"
-            text="!مشکلی پیش آمده است"
+            text={SHARED_STRINGS[StringsE.SomethingWentWrong]}
           />
         ));
       }
@@ -71,7 +71,7 @@ export default function UploadFile() {
           <CustomToast
             animation={t}
             status="error"
-            text=".نوع فایل مجاز نمی‌باشد"
+            text={SHARED_STRINGS[StringsE.FileTypeUnsupported]}
           />
         ));
       } else {
