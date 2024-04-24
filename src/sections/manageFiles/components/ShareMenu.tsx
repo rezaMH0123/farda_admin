@@ -11,6 +11,8 @@ import {
   EmailShareButton,
 } from "react-share";
 import { FilesI } from "@/types/models/Files.type";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 type Props = {
   items: FilesI;
@@ -20,7 +22,7 @@ export default function ShareMenu({ items }: Props) {
   return (
     <div>
       <Menu as="div" className="relative text-center">
-        <Menu.Button>اشتراک‌گذاری</Menu.Button>
+        <Menu.Button>{SHARED_STRINGS[StringsE.Share]}</Menu.Button>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"

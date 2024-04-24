@@ -5,6 +5,8 @@ import { useGlobalState } from "@/context/globalStateContext";
 import toast from "react-hot-toast";
 import CustomToast from "@/components/Toast";
 import { HttpApiResponse } from "@/types/httpResponse";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 export async function DeleteFile() {
   const { setItemFile, itemFile } = useGlobalState();
@@ -27,7 +29,7 @@ export async function DeleteFile() {
         closeDeleteModal();
         toast.custom((t) => (
           <CustomToast
-            text="!فایل با موفقیت حذف شد"
+            text={SHARED_STRINGS[StringsE.DeletedSuccessfully]}
             animation={t}
             status="success"
           />
