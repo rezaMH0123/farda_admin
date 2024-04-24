@@ -19,6 +19,8 @@ import { HttpApiResponse } from "@/types/httpResponse";
 import { SiginData } from "@/types/signin";
 import { AxiosError } from "axios";
 import "../../../yup.config";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -56,7 +58,7 @@ export default function SignInForm() {
         navigate("/");
         toast.custom((t) => (
           <CustomToast
-            text="!با موفقیت وارد شدید"
+            text={SHARED_STRINGS[StringsE.SigninSuccessMessage]}
             animation={t}
             status="success"
           />
@@ -68,7 +70,7 @@ export default function SignInForm() {
         if (err.response && err.response.status === 400) {
           toast.custom((t) => (
             <CustomToast
-              text="!نام کاربری یا رمز عبور صحیح نمی‌باشد"
+              text={SHARED_STRINGS[StringsE.UserNamePasswordWrong]}
               animation={t}
               status="error"
             />
@@ -76,7 +78,7 @@ export default function SignInForm() {
         } else {
           toast.custom((t) => (
             <CustomToast
-              text="!مشکلی پیش آمده است"
+              text={SHARED_STRINGS[StringsE.SomethingWentWrong]}
               animation={t}
               status="error"
             />
@@ -90,13 +92,17 @@ export default function SignInForm() {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="relative h-[44px] mt-6">
-          <TextInput name="username" icon={person} placeholder="نام کاربری" />
+          <TextInput
+            name="username"
+            icon={person}
+            placeholder={SHARED_STRINGS[StringsE.UserName]}
+          />
         </div>
         <div className="relative h-[44px] mt-6">
           <TextInput
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="رمز عبور"
+            placeholder={SHARED_STRINGS[StringsE.Password]}
             icon={showPassword ? closedEye : openEye}
             spanOnclick={() => setShowPassword(!showPassword)}
           />
@@ -105,7 +111,13 @@ export default function SignInForm() {
           type="submit"
           model="fill_blue"
           className="mt-8 w-full font-bold"
-          title={isPending ? <Loading className={"bg-Black-B2"} /> : "ورود"}
+          title={
+            isPending ? (
+              <Loading className={"bg-Black-B2"} />
+            ) : (
+              <>{SHARED_STRINGS[StringsE.Login]}</>
+            )
+          }
           disable={isPending ? true : false}
         />
       </form>

@@ -3,6 +3,8 @@ import fardaIns from "@/assets/img/logo/signinFardaBg.svg";
 import SignInForm from "@/components/Form/SignInForm";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GetFromStorage } from "@/utils/storage";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 export default function SignIn() {
   const location = useLocation();
@@ -21,15 +23,15 @@ export default function SignIn() {
             <div dir="rtl" className="w-full flex items-center justify-center">
               <div className="w-[55%]">
                 <p className="text-[26px] font-bold leading-[35.55px] text-Black-PrimaryBlack">
-                  پنل ادمین بیمه هوشمند فردا
+                  {SHARED_STRINGS[StringsE.INSFardaAdminPanel]}
                 </p>
                 <p className="mt-2 text-lg font-normal leading-6 text-Black-B2">
-                  خوش آمدید!
+                  {SHARED_STRINGS[StringsE.WelcomeMessage]}
                 </p>
                 {/* signin form */}
                 <SignInForm />
                 <p className="mt-8 text-sm font-normal leading-5 text-Black-B2">
-                  در صورت فراموش کردن رمز عبور با واحد فنی ارتباط برقرار نمایید.
+                  {SHARED_STRINGS[StringsE.ForgetPassword]}
                 </p>
               </div>
             </div>

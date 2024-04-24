@@ -7,6 +7,17 @@ enum StringsE {
   Tags,
   DeletedSuccessfully,
   Share,
+  SomethingWentWrong,
+
+  // signin page
+  INSFardaAdminPanel,
+  WelcomeMessage,
+  ForgetPassword,
+  SigninSuccessMessage,
+  UserNamePasswordWrong,
+  UserName,
+  Password,
+  Login,
   
   // content section
   Content,

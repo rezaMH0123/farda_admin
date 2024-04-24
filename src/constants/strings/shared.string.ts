@@ -9,6 +9,17 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Tags]: "برچسب‌‌ها",
   [StringsE.DeletedSuccessfully]: "!فایل با موفقیت حذف شد",
   [StringsE.Share]: "اشتراک‌گذاری",
+  [StringsE.SomethingWentWrong]: "!مشکلی پیش آمده است",
+
+  // singin page
+  [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",
+  [StringsE.WelcomeMessage]: "خوش آمدید!",
+  [StringsE.ForgetPassword]: "در صورت فراموش کردن رمز عبور با واحد فنی ارتباط برقرار نمایید.",
+  [StringsE.SigninSuccessMessage]: "!با موفقیت وارد شدید",
+  [StringsE.UserNamePasswordWrong]: "!نام کاربری یا رمز عبور صحیح نمی‌باشد",
+  [StringsE.UserName]: "نام کاربری",
+  [StringsE.Password]: "رمز عبور",
+  [StringsE.Login]: "ورود",
 
   // content section
   [StringsE.Content]: "محتوا",
