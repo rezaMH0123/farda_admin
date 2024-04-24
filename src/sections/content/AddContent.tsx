@@ -11,6 +11,8 @@ import { FilesI } from "@/types/models/Files.type";
 import { fileController } from "@/controllers/file.controller";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 export default function AddContent() {
   const {
@@ -47,10 +49,10 @@ export default function AddContent() {
               <div className="flex flex-col items-center justify-center  h-[42%]">
                 <div className="flex justify-between items-center rounded-lg h-[30%] w-[95%]">
                   <span className="text-Black-B2 text-[18px]">
-                    عکس کاور اصلی
+                    {SHARED_STRINGS[StringsE.OriginalCoverPhoto]}
                   </span>
                   <Button
-                    title={"مدیریت فایل"}
+                    title={SHARED_STRINGS[StringsE.ManageFile]}
                     model="outline_blue"
                     className="px-4"
                     icon={
@@ -72,7 +74,7 @@ export default function AddContent() {
               <div className="flex flex-col items-center justify-center h-[42%]">
                 <div className=" flex items-center h-[30%] w-[95%]">
                   <span className="text-Black-B2 text-[18px]">
-                    عکس‌ و فایل‌ها
+                    {SHARED_STRINGS[StringsE.PhotosAndFiles]}
                   </span>
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
@@ -87,14 +89,14 @@ export default function AddContent() {
               </div>
               <div className="flex items-center px-6 justify-end  gap-x-4  h-[10%]">
                 <Button
-                  title={"بستن"}
+                  title={SHARED_STRINGS[StringsE.Close]}
                   model="outline_red"
                   className="px-12"
                   onClick={handleCloseModal}
                 />
                 <Button
                   onClick={closeModal}
-                  title={"افزودن"}
+                  title={SHARED_STRINGS[StringsE.Add]}
                   model="fill_blue"
                   className="px-12"
                 />
