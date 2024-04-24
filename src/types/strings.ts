@@ -5,6 +5,8 @@ enum StringsE {
   Add,
   Filter,
   Tags,
+  DeletedSuccessfully,
+  Share,
   
   // content section
   Content,
@@ -13,7 +15,6 @@ enum StringsE {
   PhotosAndFiles,
   Title,
   Status,
-  Share,
   Commenting,
   Operation,
   Published,

@@ -7,6 +7,8 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Add]: "افزودن",
   [StringsE.Filter]: "فیلتر",
   [StringsE.Tags]: "برچسب‌‌ها",
+  [StringsE.DeletedSuccessfully]: "!فایل با موفقیت حذف شد",
+  [StringsE.Share]: "اشتراک‌گذاری",
 
   // content section
   [StringsE.Content]: "محتوا",
@@ -15,7 +17,6 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.PhotosAndFiles]: "عکس‌ و فایل‌ها",
   [StringsE.Title]: "عنوان",
   [StringsE.Status]: "وضعیت",
-  [StringsE.Share]: "اشتراک‌گذاری",
   [StringsE.Commenting]: "کامنت‌گذاری",
   [StringsE.Operation]: "عملیات",
   [StringsE.Published]: "منتشر شده",
