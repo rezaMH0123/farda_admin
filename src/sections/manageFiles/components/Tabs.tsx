@@ -10,6 +10,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import CardPhoto from "./Cards/CardPhoto";
 import CardFile from "./Cards/CardFile";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 type Props = {
   photos: FilesI[] | undefined;
@@ -41,7 +43,7 @@ export default function FileTabs({ photos, files }: Props) {
           closeDeleteModal();
           toast.custom((t) => (
             <CustomToast
-              text="!فایل با موفقیت حذف شد"
+              text={SHARED_STRINGS[StringsE.DeletedSuccessfully]}
               animation={t}
               status="success"
             />

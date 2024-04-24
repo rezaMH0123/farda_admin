@@ -2,6 +2,8 @@ import IconDelete from "@/components/Icons/DeleteIcon";
 import Button from "@/components/Button";
 import { useModal } from "@/context/modalContext";
 import Loading from "../Loading";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 type Props = {
   title: string | undefined;
@@ -21,13 +23,19 @@ export default function DeleteModal({ title, onClick, loading }: Props) {
           <Button
             className="text-sm w-[50%]"
             model="outline_gray"
-            title="منصرف شدم"
+            title={SHARED_STRINGS[StringsE.Cancel]}
             onClick={closeDeleteModal}
           />
           <Button
             className="text-sm w-[50%]"
             model="fill_red"
-            title={loading ? <Loading className={"bg-Black-B2"} /> : "حذف شود"}
+            title={
+              loading ? (
+                <Loading className={"bg-Black-B2"} />
+              ) : (
+                SHARED_STRINGS[StringsE.Delete]
+              )
+            }
             onClick={onClick}
             disable={loading ? true : false}
           />

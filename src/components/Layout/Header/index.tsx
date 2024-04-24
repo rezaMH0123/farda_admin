@@ -8,11 +8,13 @@ import {
 } from "@/utils/helper";
 
 export default function Header() {
+  const userName: string = "سبحان کاظمی";
+
   return (
     <div className="flex justify-between bg-Back-Back1 w-full h-[80px] rounded-[14px] font-medium">
       <div className="flex items-center justify-between gap-x-4  min-w-[17%] ml-8">
         <img className="cursor-pointer" src={dropDownicon} alt="dropDownicon" />
-        <span className="text-Black-B2">سبحان کاظمی </span>
+        <span className="text-Black-B2">{userName}</span>
         <div className="border border-Red-R2 rounded-full w-[45px] h-[45px]"></div>
       </div>
       <div className="flex items-center gap-x-8 mr-8 ">

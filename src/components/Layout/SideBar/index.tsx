@@ -5,6 +5,8 @@ import { RemoveFromStorage } from "@/utils/storage";
 import Modal from "@/components/Modal";
 import { useModal } from "@/context/modalContext";
 import Button from "@/components/Button";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 export default function SideBar() {
   const location = useLocation();
@@ -59,25 +61,25 @@ export default function SideBar() {
         onClick={openLogoutModal}
       >
         <Logout className="fill-Red-R1" />
-        <span>خروج</span>
+        <span>{SHARED_STRINGS[StringsE.Logout]}</span>
       </div>
       {isLogoutModal && (
         <Modal width={25} height={30}>
           <div className="w-full h-full flex items-center flex-col">
             <div className="h-[40%] text-Black-B4 flex items-end">
-              از خروج خود اطمینان دارید؟
+              {SHARED_STRINGS[StringsE.ConfirmLogoutMessage]}
             </div>
             <div className="w-[70%] h-[60%] m-auto flex gap-5 fles items-center">
               <Button
                 className="text-sm w-[50%]"
                 model="outline_gray"
-                title="منصرف شدم"
+                title={SHARED_STRINGS[StringsE.Cancel]}
                 onClick={closeLogoutModal}
               />
               <Button
                 className="text-sm w-[50%]"
                 model="fill_red"
-                title={"خروج"}
+                title={SHARED_STRINGS[StringsE.Logout]}
                 onClick={HandleLogout}
               />
             </div>
