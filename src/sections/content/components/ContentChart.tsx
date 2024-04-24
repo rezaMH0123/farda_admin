@@ -10,6 +10,8 @@ import { contentController } from "@/controllers/content.controller";
 import Modal from "@/components/Modal";
 import { useModal } from "@/context/modalContext";
 import DeleteModal from "@/components/Modal/DeleteModal";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 export default function ContentChart() {
   const { isDeleteModalOpen, closeDeleteModal, openDeleteModal } = useModal();
@@ -69,19 +71,19 @@ export default function ContentChart() {
     <div className="chartContetnt px-6 h-full w-full">
       <div className="headChart flex h-[60px] font-medium pt-3 text-Black-B2">
         <div className="flex items-center w-[40%]">
-          <span className="mr-5 ">عنوان</span>
+          <span className="mr-5 ">{SHARED_STRINGS[StringsE.Title]}</span>
         </div>
         <div className="flex justify-center items-center w-[15%]">
-          <span>وضعیت</span>
+          <span>{SHARED_STRINGS[StringsE.Status]}</span>
         </div>
         <div className="flex justify-center items-center w-[15%]">
-          <span>اشتراک گذاری</span>
+          <span>{SHARED_STRINGS[StringsE.Share]}</span>
         </div>
         <div className="flex justify-center items-center w-[15%]">
-          <span>کامنت گذاری</span>
+          <span>{SHARED_STRINGS[StringsE.Commenting]}</span>
         </div>
         <div className="flex justify-end items-center w-[15%]">
-          <span>عملیات</span>
+          <span>{SHARED_STRINGS[StringsE.Operation]}</span>
         </div>
       </div>
 
@@ -103,13 +105,25 @@ export default function ContentChart() {
                     : item.title}
                 </div>
                 <div className="flex items-center justify-center  w-[15%] h-[40px]">
-                  {item.status === "Publish" ? "منتشر شده" : "منتشر نشده"}
+                  {item.status === "Publish" ? (
+                    <>{SHARED_STRINGS[StringsE.Published]}</>
+                  ) : (
+                    <>{SHARED_STRINGS[StringsE.UnPublished]}</>
+                  )}
                 </div>
                 <div className="flex items-center justify-center  w-[15%] h-[40px]">
-                  {item.isShareAvailable ? "می شود" : "نمی شود"}
+                  {item.isShareAvailable ? (
+                    <>{SHARED_STRINGS[StringsE.IsAvailable]}</>
+                  ) : (
+                    <>{SHARED_STRINGS[StringsE.NotAvailable]}</>
+                  )}
                 </div>
                 <div className="flex items-center justify-center  w-[15%] h-[40px]">
-                  {item.isCommentAvailable ? "می شود" : "نمی شود"}
+                  {item.isCommentAvailable ? (
+                    <>{SHARED_STRINGS[StringsE.IsAvailable]}</>
+                  ) : (
+                    <>{SHARED_STRINGS[StringsE.NotAvailable]}</>
+                  )}
                 </div>
                 <div className="flex items-center justify-end gap-x-4  w-[15%] h-[40px]">
                   <Edit
