@@ -29,7 +29,7 @@ export default function DeleteModal({
           <Button
             className="text-sm w-[50%]"
             model="outline_gray"
-            title="منصرف شدم"
+            title={SHARED_STRINGS[StringsE.Cancel]}
             onClick={() => {
               onCloaseModal && onCloaseModal(), closeDeleteModal();
             }}

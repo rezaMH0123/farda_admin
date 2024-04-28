@@ -4,7 +4,7 @@ import TailSpinner from "@/components/Loading/TailSpinner";
 import { HttpResponseList } from "@/types/httpResponse";
 import { useQuery } from "@tanstack/react-query";
 
-type ContentChartProps<T> = {
+type TableWithApiProps<T> = {
   title: string[];
   children: (row: T) => ReactElement | ReactElement[];
   controller: (currentPage: number) => Promise<HttpResponseList<T>>;
@@ -16,7 +16,7 @@ export default function TableWithApi<T>({
   children,
   controller,
   keyNme,
-}: ContentChartProps<T>) {
+}: TableWithApiProps<T>) {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, isLoading } = useQuery<HttpResponseList<T>>({
