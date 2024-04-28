@@ -86,7 +86,7 @@ export default function TableWithApi<T>({
             <TailSpinner />
           </div>
         ) : (
-          <>
+          <div className="flex flex-col gap-y-2">
             {data ? (
               data?.data?.result?.map((item, index) => (
                 <div key={index}>{children(item)}</div>
@@ -94,7 +94,7 @@ export default function TableWithApi<T>({
             ) : (
               <div>empty state</div>
             )}
-          </>
+          </div>
         )}
       </div>
 
