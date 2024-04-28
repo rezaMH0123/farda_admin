@@ -1,3 +1,4 @@
+import TagForm from "@/components/Form/TagForm";
 import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
@@ -17,7 +18,9 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   setModal,
   ...props
 }) => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [editModal, setEditModal] = useState<boolean>(false);
+
   const [deleteItemTitle, setDeleteItemTitle] = useState<string>();
   const [deleteItemId, setDeleteItemId] = useState<string>();
   const queryClient = useQueryClient();
@@ -53,6 +56,14 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
+
+  const handleEdit = () => {
+    setEditModal(true);
+  };
+
+  const HandleCloseEditModal = () => {
+    setEditModal(false);
+  };
   return (
     <div
       key={props.id}
@@ -67,10 +78,7 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
         {props.isPin ? "بله" : "خیر"}
       </div>
       <div className="flex items-center justify-end gap-x-4 w-[15%] h-[40px]">
-        <Edit
-          onClick={() => console.log(`edit:${props.id}`)}
-          className="cursor-pointer fill-Green-G1"
-        />
+        <Edit onClick={handleEdit} className="cursor-pointer fill-Green-G1" />
         <RecycleBin
           onClick={() => handleDelete(props.id, props.title)}
           className="cursor-pointer fill-Red-R1"
@@ -85,6 +93,12 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
             onCloaseModal={handleCloseModal}
             loading={false}
           />
+        </Modal>
+      )}
+
+      {editModal && (
+        <Modal onCloseModal={HandleCloseEditModal} height={45} width={30}>
+          <TagForm onCloseModal={HandleCloseEditModal} value={props} />
         </Modal>
       )}
     </div>
