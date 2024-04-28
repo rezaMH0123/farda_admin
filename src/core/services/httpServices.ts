@@ -1,7 +1,7 @@
 import { GetFromStorage } from "@/utils/storage";
 import axios from "axios";
 
-//31.214.229.211:8082/api/v1/
+//http://31.214.229.211:8082/api/v1/
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_ADMINFARDA,
 });

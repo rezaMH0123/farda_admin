@@ -3,16 +3,20 @@ import IconChevron from "../Icons/Chevron";
 interface PaginationProps {
   allPage: number | undefined;
   currentPage: number;
-  prevPageClick: () => void;
-  nextPageClick: () => void;
+  onChangePage: (page: number) => void;
 }
 
 export default function Pagination({
   allPage,
   currentPage,
-  nextPageClick,
-  prevPageClick,
+  onChangePage,
 }: PaginationProps) {
+  const nextPageClick = () => {
+    onChangePage(currentPage + 1);
+  };
+  const prevPageClick = () => {
+    onChangePage(currentPage - 1);
+  };
   return (
     <>
       {currentPage === allPage ? (
