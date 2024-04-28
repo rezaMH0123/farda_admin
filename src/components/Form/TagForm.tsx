@@ -9,9 +9,11 @@ import SwitchToggle from "../SwitchToggle";
 import * as yup from "yup";
 import "../../../yup.config";
 import FormE from "@/types/form";
+import { LabelI } from "@/types/models/Label.type";
 
 type Props = {
   onCloseModal: () => void;
+  value?: LabelI;
 };
 
 interface InputI {
@@ -22,7 +24,7 @@ const tagsSchema = yup.object().shape({
   tagTitle: yup.string().required(),
 });
 
-export default function TagForm({ onCloseModal }: Props) {
+export default function TagForm({ onCloseModal, value }: Props) {
   const methods = useForm<InputI>({
     resolver: yupResolver(tagsSchema),
   });
@@ -32,12 +34,20 @@ export default function TagForm({ onCloseModal }: Props) {
     console.log(inputData, isPin);
   };
 
+  console.log(methods.getValues());
+
+  const inputValue = methods.getValues();
+
   return (
     <div className="h-[80%] w-[70%] flex flex-col justify-center">
       <p className="text-Black-B2 font-bold mb-[32px]">افزودن</p>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <TextInput name="tagTitle" placeholder="عنوان*" />
+          <TextInput
+            name="tagTitle"
+            placeholder="عنوان*"
+            value={value?.title}
+          />
           <div className="mt-[32px]">
             <SwitchToggle
               isActive={isPin}
