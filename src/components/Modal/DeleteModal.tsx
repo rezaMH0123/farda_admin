@@ -6,10 +6,16 @@ import Loading from "../Loading";
 type Props = {
   title: string | undefined;
   onClick: () => Promise<void> | void;
+  onCloaseModal?: () => Promise<void> | void;
   loading?: boolean;
 };
 
-export default function DeleteModal({ title, onClick, loading }: Props) {
+export default function DeleteModal({
+  title,
+  onClick,
+  loading,
+  onCloaseModal,
+}: Props) {
   const { closeDeleteModal } = useModal();
 
   return (
@@ -22,7 +28,9 @@ export default function DeleteModal({ title, onClick, loading }: Props) {
             className="text-sm w-[50%]"
             model="outline_gray"
             title="منصرف شدم"
-            onClick={closeDeleteModal}
+            onClick={() => {
+              onCloaseModal && onCloaseModal(), closeDeleteModal();
+            }}
           />
           <Button
             className="text-sm w-[50%]"

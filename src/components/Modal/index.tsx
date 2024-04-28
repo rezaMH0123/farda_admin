@@ -30,7 +30,7 @@ export default function Modal({ children, width, height }: ModalProps) {
     >
       <div
         onClick={handleModalClick}
-        className="absolute top-0 left-0  bg-black bg-opacity-60 w-full h-full z-20 "
+        className="absolute top-0 left-0  bg-black  bg-opacity-60 w-full h-full z-20 "
       ></div>
       <div
         style={{ width: `${width}%`, height: `${height}%` }}
