@@ -7,12 +7,8 @@ type SelectInputProps = {
   placeholder: string;
   options?: OptionType[];
   isMulti: boolean;
-  setCategory: React.Dispatch<
-    React.SetStateAction<string | string[] | undefined>
-  >;
-  setCategorys?: React.Dispatch<
-    React.SetStateAction<string[] | string | undefined>
-  >;
+  value: string | string[] | undefined;
+  onChange: (value: string | string[]) => void;
 };
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
@@ -45,35 +41,32 @@ const customStyles: StylesConfig = {
 const MyDropDown = ({
   options,
   placeholder,
-  setCategory,
-  setCategorys,
+  value,
   isMulti,
+  onChange,
 }: SelectInputProps) => {
-  const handleChange = (newValue: unknown) => {
-    if (newValue !== null && typeof newValue !== "undefined") {
-      const selectedOption = newValue as OptionType;
-      if (Array.isArray(selectedOption)) {
-        const values = selectedOption.map((option) => option.value);
-        setCategory(values);
-        setCategorys && setCategorys(values);
-      } else {
-        setCategory(selectedOption.value);
-        setCategorys && setCategorys(selectedOption.value);
-      }
-    } else {
-      setCategory(undefined);
-      setCategorys && setCategorys(undefined);
-    }
-  };
-
+  const valueObj = isMulti
+    ? value
+      ? (value as string[]).map((item) => {
+          return options?.find((o) => o.value === item) || [];
+        })
+      : []
+    : options?.find((item) => item.value === value);
   return (
     <div className="w-[47%] h-[38px]">
       <Select
         options={options}
+        onChange={(data) => {
+          if (isMulti) {
+            onChange((data as OptionType[]).map((item) => item.value));
+          } else {
+            onChange((data as OptionType).value);
+          }
+        }}
+        value={valueObj}
         noOptionsMessage={() => "یافت نشد"}
         styles={customStyles}
         placeholder={placeholder}
-        onChange={handleChange}
         isMulti={isMulti}
         maxMenuHeight={105}
       />

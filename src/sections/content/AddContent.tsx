@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
+import ContentForm from "@/components/Form/ContentForm";
 
 export default function AddContent() {
   const {
@@ -41,7 +42,8 @@ export default function AddContent() {
   // console.log(selectedsecondImage);
   return (
     <div className="h-full">
-      <ContentsModalForm />
+      {/* <ContentsModalForm /> */}
+      <ContentForm />
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>

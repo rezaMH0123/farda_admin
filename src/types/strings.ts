@@ -29,7 +29,7 @@ enum StringsE {
   // logout section
   Logout,
   ConfirmLogoutMessage,
-  
+
   // content section
   Content,
   OriginalCoverPhoto,

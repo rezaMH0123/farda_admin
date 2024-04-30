@@ -1,26 +1,22 @@
 type SwitchToggleProps = {
-  isActive: boolean;
-  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  value: boolean;
   toggleBackground: string;
   toggleText: string;
+  onChange: (value: boolean) => void;
 };
 export default function SwitchToggle({
-  isActive,
-  setIsActive,
   toggleBackground,
   toggleText,
+  onChange,
+  value,
 }: SwitchToggleProps) {
-  const handleToggle = () => {
-    setIsActive(!isActive);
-  };
-
   return (
     <div className="flex items-center gap-x-4">
       <span className="text-Black-B2 font-light">{toggleText}</span>
       <label className="relative inline-flex cursor-pointer items-center">
         <input
-          checked={isActive}
-          onChange={handleToggle}
+          checked={value}
+          onChange={(event) => onChange(event.target.checked)}
           id="switch"
           type="checkbox"
           className="peer sr-only"
@@ -28,7 +24,7 @@ export default function SwitchToggle({
         <label htmlFor="switch" className="hidden"></label>
         <div
           style={
-            isActive
+            value
               ? { backgroundColor: toggleBackground }
               : { backgroundColor: "" }
           }

@@ -23,6 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { CategorieItem } from "@/types/models/Categories.type";
 import { CategorieController } from "@/controllers/categorie.contoroller";
+import Datepicker from "../Inputs/Datepicker";
 
 const weekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 type Inputs = {
@@ -70,7 +71,6 @@ export default function ContentsModalForm() {
       setOption1(updatedOptions);
     }
   }, [isFetched, data]);
-  console.log(data?.data);
 
   const getSubCategories = () => {
     const subCategories: { id: string; title: string }[] = [];
@@ -155,24 +155,19 @@ export default function ContentsModalForm() {
               <span className="font-normal block mb-4 text-Black-B2">
                 توضیحات
               </span>
-              <Controller
-                name="ckDescription"
-                control={methods.control}
-                defaultValue=""
-                render={({ field }) => (
-                  <CKEditor
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    editor={(window as any).ClassicEditor}
-                    onChange={(_event, editor) => {
-                      const data = editor.getData();
-                      // console.log("Content changed:", data);
-                      field.onChange(data);
-                    }}
-                    config={{
-                      placeholder: "توضیحات...",
-                    }}
-                  />
-                )}
+
+              <CKEditor
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                editor={(window as any).ClassicEditor}
+                onChange={(_event, editor) => {
+                  const data = editor.getData();
+
+                  methods.setValue("ckDescription", data);
+                }}
+                data={methods.getValues("ckDescription")}
+                config={{
+                  placeholder: "توضیحات...",
+                }}
               />
             </div>
             <div className="flex justify-between items-center h-[8%] mt-3">

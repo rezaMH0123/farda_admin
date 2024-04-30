@@ -1,4 +1,4 @@
-import { useFormContext, useFormState } from "react-hook-form";
+import { useController, useFormContext, useFormState } from "react-hook-form";
 
 type Props = {
   name: string;
@@ -17,7 +17,7 @@ const TextInput = ({
   spanOnclick,
   placeholder,
 }: Props) => {
-  const { register } = useFormContext();
+  const { field } = useController({ name });
   const { errors } = useFormState();
 
   return (
@@ -25,7 +25,7 @@ const TextInput = ({
       <input
         type={type}
         placeholder={placeholder}
-        {...register(name)}
+        {...field}
         className={`w-full h-[44px] text-base font-normal leading-6 border px-[14px] rounded-lg outline-none ${
           errors[name] ? "border-Red-R2" : "border-Black-B3"
         } ${className}`}
