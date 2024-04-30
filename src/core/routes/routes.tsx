@@ -50,6 +50,12 @@ export const router = createBrowserRouter([
               {
                 path: "/categories",
                 element: <Categories />,
+                children: [
+                  {
+                    path: ":name",
+                    element: <CategoryPage />,
+                  },
+                ],
               },
               {
                 path: "/labels",
