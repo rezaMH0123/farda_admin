@@ -52,6 +52,9 @@ enum StringsE {
   Photo,
   File,
   AddFile,
+
+  // labels page
+  Edit,
 }
 
 export default StringsE;
