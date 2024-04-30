@@ -1,7 +1,11 @@
-export default function Skeleton() {
+type Props = {
+  value?: number;
+};
+
+export default function Skeleton({ value }: Props) {
   return (
     <>
-      {[...Array(6)].map((_item, index) => (
+      {[...Array(value ? value : 6)].map((_item, index) => (
         <div
           key={index}
           role="status"
