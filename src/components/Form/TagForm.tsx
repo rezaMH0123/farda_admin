@@ -126,6 +126,7 @@ export default function TagForm({
               model="outline_red"
               className="w-[50%]"
               onClick={onCloseModal}
+              type="button"
             />
             <Button
               type="submit"

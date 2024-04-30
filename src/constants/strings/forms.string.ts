@@ -19,6 +19,7 @@ const FORM_STRINGS: Record<
     label: "عنوان",
     placeholder: "عنوان*",
   },
+
   [FormE.Summary]: {
     label: "خلاصه",
     placeholder: "خلاصه*",
@@ -43,6 +44,7 @@ const FORM_STRINGS: Record<
     label: "برچسب ها",
     placeholder: "برچسب ها*",
   },
+
 };
 
 export default FORM_STRINGS;
