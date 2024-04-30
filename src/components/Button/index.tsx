@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type ButtonPropsT = {
-  type?: "submit";
+  type?: "submit" | "button";
   className?: string;
   title: string | ReactNode;
   disable?: boolean;

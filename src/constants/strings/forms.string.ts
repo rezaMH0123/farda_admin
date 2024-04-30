@@ -15,6 +15,10 @@ const FORM_STRINGS: Record<
     label: "رمز عبور",
     placeholder: "رمز عبور",
   },
+  [FormE.Title]: {
+    label: "عنوان",
+    placeholder: "عنوان*",
+  },
 };
 
 export default FORM_STRINGS;

@@ -71,7 +71,7 @@ export default function TableWithApi<T>({
                     : index === title.length - 1
                     ? "justify-end"
                     : "justify-center"
-                }  flex-1 border border-red-500`}
+                }  flex-1`}
               >
                 <span className="mr-5 ">{item}</span>
               </div>

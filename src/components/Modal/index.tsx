@@ -7,8 +7,14 @@ type ModalProps = {
   children: ReactNode;
   width: number;
   height: number;
+  onCloseModal?: () => void;
 };
-export default function Modal({ children, width, height }: ModalProps) {
+export default function Modal({
+  children,
+  width,
+  height,
+  onCloseModal,
+}: ModalProps) {
   const {
     closeModal,
     closeDeleteModal,
@@ -21,6 +27,7 @@ export default function Modal({ children, width, height }: ModalProps) {
     closeDeleteModal();
     closeUploadFileModal();
     closeLogoutModal();
+    onCloseModal && onCloseModal();
   };
 
   return createPortal(

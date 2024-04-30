@@ -18,13 +18,6 @@ export default function ManageFileBody() {
 
   const { setTab, tab } = useGlobalState();
 
-  const nextPageClick = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-  const prevPageClick = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
-
   const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file", currentPage],
     queryFn: () => fileController.getFiles(currentPage, 6),
@@ -47,6 +40,10 @@ export default function ManageFileBody() {
       setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
   }, [data]);
+
+  const onChangePage = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -86,8 +83,7 @@ export default function ManageFileBody() {
           <Pagination
             allPage={allPage}
             currentPage={currentPage}
-            nextPageClick={nextPageClick}
-            prevPageClick={prevPageClick}
+            onChangePage={onChangePage}
           />
         </div>
       </div>
