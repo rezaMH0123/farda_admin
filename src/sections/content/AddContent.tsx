@@ -24,7 +24,9 @@ export default function AddContent() {
     closeModal,
   } = useModal();
   const [selectedMainImage, setSelectedMainImage] = useState<string>();
-  const [selectedsecondImage, setSelectedsecondImage] = useState<string[]>([]);
+  const [selectedsecondImages, setSelectedsecondImages] = useState<string[]>(
+    []
+  );
 
   const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file"],
@@ -36,14 +38,15 @@ export default function AddContent() {
   const handleCloseModal = () => {
     closeModal();
     setSelectedMainImage("");
-    setSelectedsecondImage([]);
+    setSelectedsecondImages([]);
   };
-  // console.log(selectedMainImage);
-  // console.log(selectedsecondImage);
+
   return (
     <div className="h-full">
-      {/* <ContentsModalForm /> */}
-      <ContentForm />
+      <ContentForm
+        selectedMainImage={selectedMainImage}
+        selectedsecondImages={selectedsecondImages}
+      />
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>
@@ -81,8 +84,8 @@ export default function AddContent() {
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
                   <SwiperComponent
-                    setSelecteditems={setSelectedsecondImage}
-                    selecteditems={selectedsecondImage}
+                    setSelecteditems={setSelectedsecondImages}
+                    selecteditems={selectedsecondImages}
                     row={2}
                     data={data?.data.result}
                     type={"checkbox"}

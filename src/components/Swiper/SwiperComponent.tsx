@@ -81,7 +81,7 @@ export default function SwiperComponent({
                       <label
                         className={`${
                           selecteditem === item.id ? "bg-PrimaryBlue-100" : ""
-                        } w-5 h-5 border border-PrimaryBlue-100 rounded-full absolute top-2 right-2 flex justify-center items-center`}
+                        } w-5 h-5 border border-Blue-PrimaryBlue rounded-full absolute top-2 right-2 flex justify-center items-center`}
                         htmlFor={`radio_${item.id}`}
                       >
                         {selecteditem === item.id && (
@@ -89,7 +89,7 @@ export default function SwiperComponent({
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="white"
-                            className="w-4 h-4 fill-white"
+                            className="w-4 h-4 fill-Blue-PrimaryBlue"
                           >
                             <path d="M16.288 4.712a1 1 0 0 1 1.414 1.414l-9 9a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L8 12.586l8.288-8.288a1 1 0 0 1 1.414 0z" />
                           </svg>
@@ -113,7 +113,7 @@ export default function SwiperComponent({
                           selecteditems && selecteditems.includes(item.id)
                             ? "bg-PrimaryBlue-100"
                             : ""
-                        } w-5 h-5 border border-PrimaryBlue-100 rounded-full absolute top-2 right-2 flex justify-center items-center`}
+                        } w-5 h-5 border border-Blue-PrimaryBlue rounded-full absolute top-2 right-2 flex justify-center items-center`}
                         htmlFor={`checkbox_${item.id}`}
                       >
                         {selecteditems && selecteditems.includes(item.id) && (
@@ -121,7 +121,7 @@ export default function SwiperComponent({
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="white"
-                            className="w-4 h-4 fill-white"
+                            className="w-4 h-4 fill-Blue-PrimaryBlue"
                           >
                             <path d="M16.288 4.712a1 1 0 0 1 1.414 1.414l-9 9a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L8 12.586l8.288-8.288a1 1 0 0 1 1.414 0z" />
                           </svg>
