@@ -19,6 +19,32 @@ const FORM_STRINGS: Record<
     label: "عنوان",
     placeholder: "عنوان*",
   },
+
+  [FormE.Summary]: {
+    label: "خلاصه",
+    placeholder: "خلاصه*",
+  },
+  [FormE.IsShare]: {
+    label: "قابلیت اشتراک گذاری",
+    placeholder: "قابلیت اشتراک گذاری*",
+  },
+  [FormE.IsComment]: {
+    label: "قابلیت کامنت گذاری",
+    placeholder: "قابلیت کامنت گذاری*",
+  },
+  [FormE.Category]: {
+    label: "دسته بندی‌ها",
+    placeholder: "دسته بندی‌ها*",
+  },
+  [FormE.Subcategory]: {
+    label: "زیر دسته بندی‌ها",
+    placeholder: "زیر دسته بندی‌ها*",
+  },
+  [FormE.SelectedLable]: {
+    label: "برچسب ها",
+    placeholder: "برچسب ها*",
+  },
+
 };
 
 export default FORM_STRINGS;

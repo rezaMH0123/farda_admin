@@ -1,6 +1,6 @@
 import http from "@/core/services/httpServices";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
-import { Advertisement } from "@/types/models/Content.type";
+import { Advertisement, postContentT } from "@/types/models/Content.type";
 
 export const contentController = {
   getContent: async (currentPage: number) => {
@@ -11,7 +11,7 @@ export const contentController = {
           params: {
             Size: 6,
             Page: currentPage,
-            Sort: "createdOn",
+            Sort: "createdOn desc",
           },
         }
       );
@@ -31,6 +31,16 @@ export const contentController = {
     } catch (err) {
       console.log(err);
       throw new Error("Failed to fetch content");
+    }
+  },
+
+  postContent: async (data: postContentT) => {
+    try {
+      const res = await http.post<HttpApiResponse>("Panel/Content", data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error("Failed to post content");
     }
   },
 };

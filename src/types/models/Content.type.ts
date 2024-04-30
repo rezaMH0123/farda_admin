@@ -44,3 +44,20 @@ interface File {
   extension: string;
   contentType: string;
 }
+
+export type postContentT = {
+  title: string;
+  description: string | undefined;
+  summary: string;
+  fileId: string | null;
+  fromDate: string | undefined;
+  toDate: string | undefined;
+  isCommentAvailable: boolean;
+  isShareAvailable: boolean;
+  status: string;
+  categoriesId: string[];
+  tagsId: string[] | undefined;
+  sectionsId: string[];
+  fileIds: string[] | [];
+  languageId: string;
+};

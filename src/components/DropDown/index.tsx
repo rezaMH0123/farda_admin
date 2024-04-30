@@ -1,3 +1,4 @@
+import { FieldError } from "react-hook-form";
 import Select, { StylesConfig } from "react-select";
 export type OptionType = {
   value: string;
@@ -7,12 +8,9 @@ type SelectInputProps = {
   placeholder: string;
   options?: OptionType[];
   isMulti: boolean;
-  setCategory: React.Dispatch<
-    React.SetStateAction<string | string[] | undefined>
-  >;
-  setCategorys?: React.Dispatch<
-    React.SetStateAction<string[] | string | undefined>
-  >;
+  value: string | string[] | undefined;
+  onChange: (value: string | string[]) => void;
+  error?: FieldError | undefined;
 };
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
@@ -45,38 +43,43 @@ const customStyles: StylesConfig = {
 const MyDropDown = ({
   options,
   placeholder,
-  setCategory,
-  setCategorys,
+  value,
   isMulti,
+  onChange,
+  error,
 }: SelectInputProps) => {
-  const handleChange = (newValue: unknown) => {
-    if (newValue !== null && typeof newValue !== "undefined") {
-      const selectedOption = newValue as OptionType;
-      if (Array.isArray(selectedOption)) {
-        const values = selectedOption.map((option) => option.value);
-        setCategory(values);
-        setCategorys && setCategorys(values);
-      } else {
-        setCategory(selectedOption.value);
-        setCategorys && setCategorys(selectedOption.value);
-      }
-    } else {
-      setCategory(undefined);
-      setCategorys && setCategorys(undefined);
-    }
-  };
-
+  const valueObj = isMulti
+    ? value
+      ? (value as string[]).map((item) => {
+          return options?.find((o) => o.value === item) || [];
+        })
+      : []
+    : options?.find((item) => item.value === value);
   return (
     <div className="w-[47%] h-[38px]">
-      <Select
-        options={options}
-        noOptionsMessage={() => "یافت نشد"}
-        styles={customStyles}
-        placeholder={placeholder}
-        onChange={handleChange}
-        isMulti={isMulti}
-        maxMenuHeight={105}
-      />
+      <div className="w-full h-full">
+        <Select
+          options={options}
+          onChange={(data) => {
+            if (isMulti) {
+              onChange((data as OptionType[]).map((item) => item.value));
+            } else {
+              onChange((data as OptionType).value);
+            }
+          }}
+          value={valueObj}
+          noOptionsMessage={() => "یافت نشد"}
+          styles={customStyles}
+          placeholder={placeholder}
+          isMulti={isMulti}
+          maxMenuHeight={105}
+        />
+      </div>
+      {error?.message && (error.type === "required" || error.type == "min") && (
+        <span className="text-Red-R2 text-xs font-normal leading-5">
+          {error?.message.toString()}
+        </span>
+      )}
     </div>
   );
 };

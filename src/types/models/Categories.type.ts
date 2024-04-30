@@ -1,10 +1,10 @@
-export type CategorieItem = {
+export interface CategorieItem {
   id: string;
   title: string;
   parentId: string;
   isPin: boolean;
   subCategories: CategorieItem[];
-};
+}
 
 export type CategoryMain = {
   title: string;
