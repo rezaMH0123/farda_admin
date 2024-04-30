@@ -27,7 +27,7 @@ export default function AddContent() {
     []
   );
 
-  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
+  const { data } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file"],
     queryFn: () => fileController.getFiles(1, 1000000),
     retry: false,

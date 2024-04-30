@@ -1,7 +1,6 @@
 import http from "@/core/services/httpServices";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
 import { Advertisement, postContentT } from "@/types/models/Content.type";
-import async from "node_modules/react-select/dist/declarations/src/async";
 
 export const contentController = {
   getContent: async (currentPage: number) => {
