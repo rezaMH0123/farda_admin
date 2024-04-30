@@ -1,7 +1,7 @@
 enum FormE {
   Username = "username",
   Password = "password",
-  TagTitle = "tagTitle",
+  Title = "title",
 }
 
 export default FormE;

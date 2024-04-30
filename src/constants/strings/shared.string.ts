@@ -21,7 +21,8 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   // singin page
   [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",
   [StringsE.WelcomeMessage]: "خوش آمدید!",
-  [StringsE.ForgetPassword]: "در صورت فراموش کردن رمز عبور با واحد فنی ارتباط برقرار نمایید.",
+  [StringsE.ForgetPassword]:
+    "در صورت فراموش کردن رمز عبور با واحد فنی ارتباط برقرار نمایید.",
   [StringsE.SigninSuccessMessage]: "!با موفقیت وارد شدید",
   [StringsE.UserNamePasswordWrong]: "!نام کاربری یا رمز عبور صحیح نمی‌باشد",
   [StringsE.UserName]: "نام کاربری",
@@ -48,13 +49,15 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Newest]: "جدیدترین",
   [StringsE.MostImportant]: "مهم‌ترین",
   [StringsE.Sports]: "ورزشی",
-  
+
   // manage file section
   [StringsE.ManageFiles]: "مدیریت فایل‌ها",
   [StringsE.Photo]: "عکس",
   [StringsE.File]: "فایل",
   [StringsE.AddFile]: "افزودن فایل",
 
+  // labels page
+  [StringsE.Edit]: "تغییر",
 };
 
 export default SHARED_STRINGS;

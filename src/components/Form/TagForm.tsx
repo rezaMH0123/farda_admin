@@ -1,53 +1,117 @@
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../Button";
 import TextInput from "../Inputs/TextInput";
 import SwitchToggle from "../SwitchToggle";
+import { LabelI, TagI } from "@/types/models/Label.type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HttpApiResponse } from "@/types/httpResponse";
+import toast from "react-hot-toast";
+import CustomToast from "../Toast";
+import { AxiosError } from "axios";
+import { labelController } from "@/controllers/label.controller";
+import Loading from "../Loading";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "../../../yup.config";
-import FormE from "@/types/form";
-import { LabelI } from "@/types/models/Label.type";
 
 type Props = {
   onCloseModal: () => void;
   value?: LabelI;
+  title: string;
+  controller: "post" | "put";
 };
 
-interface InputI {
-  [FormE.TagTitle]: string;
-}
-
 const tagsSchema = yup.object().shape({
-  tagTitle: yup.string().required(),
+  title: yup.string().required(),
 });
 
-export default function TagForm({ onCloseModal, value }: Props) {
-  const methods = useForm<InputI>({
+export default function TagForm({
+  onCloseModal,
+  value,
+  title,
+  controller,
+}: Props) {
+  const methods = useForm<TagI>({
     resolver: yupResolver(tagsSchema),
+    defaultValues: { isPin: value?.isPin, title: value?.title },
   });
   const [isPin, setIsPin] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
-  const onSubmit: SubmitHandler<InputI> = (inputData) => {
-    console.log(inputData, isPin);
+  // POST
+  const { mutateAsync: labelPostMutate, isPending: postPending } = useMutation<
+    HttpApiResponse,
+    unknown,
+    TagI
+  >({
+    mutationFn: labelController.postLabel,
+    retry: false,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  // PUT
+  const { mutateAsync: labelPutMutate, isPending: putPending } = useMutation<
+    HttpApiResponse,
+    unknown,
+    LabelI
+  >({
+    mutationFn: labelController.putLabel,
+    retry: false,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+
+  const onSubmit: SubmitHandler<TagI> = async (inputData) => {
+    let mutateOption;
+    if (controller === "post") {
+      mutateOption = labelPostMutate(inputData);
+    } else if (controller === "put") {
+      mutateOption = labelPutMutate({
+        title: inputData.title,
+        isPin: inputData.isPin,
+        id: value?.id,
+        createdOn: value?.createdOn,
+        modifiedOn: value?.modifiedOn,
+        createdBy: value?.createdBy,
+        modifiedBy: value?.modifiedBy,
+      });
+    }
+    try {
+      const res = await mutateOption;
+      if (res?.isSuccess) {
+        onCloseModal();
+        toast.custom((t) => (
+          <CustomToast
+            text={SHARED_STRINGS[StringsE.AddedSuccessfully]}
+            animation={t}
+            status="success"
+          />
+        ));
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.log(err);
+        const errorMessage = err.response?.data.message;
+        console.log(errorMessage);
+        toast.custom((t) => (
+          <CustomToast text={errorMessage} animation={t} status="error" />
+        ));
+      }
+    }
   };
-
-  console.log(methods.getValues());
-
-  const inputValue = methods.getValues();
 
   return (
     <div className="h-[80%] w-[70%] flex flex-col justify-center">
-      <p className="text-Black-B2 font-bold mb-[32px]">افزودن</p>
+      <p className="text-Black-B2 font-bold mb-[32px]">{title}</p>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <TextInput
-            name="tagTitle"
-            placeholder="عنوان*"
-            value={value?.title}
-          />
+          <TextInput name="title" placeholder="عنوان*" />
           <div className="mt-[32px]">
             <SwitchToggle
               isActive={isPin}
@@ -64,10 +128,17 @@ export default function TagForm({ onCloseModal, value }: Props) {
               onClick={onCloseModal}
             />
             <Button
-              title={SHARED_STRINGS[StringsE.Add]}
+              type="submit"
               model="fill_blue"
               className="w-[50%]"
-              type="submit"
+              title={
+                postPending || putPending ? (
+                  <Loading className={"bg-Black-B2"} />
+                ) : (
+                  title
+                )
+              }
+              disable={postPending}
             />
           </div>
         </form>

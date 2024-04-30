@@ -3,9 +3,15 @@ import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
 import DeleteModal from "@/components/Modal/DeleteModal";
+import CustomToast from "@/components/Toast";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import { labelController } from "@/controllers/label.controller";
+import { HttpApiResponse } from "@/types/httpResponse";
 import { LabelI } from "@/types/models/Label.type";
-import { useQueryClient } from "@tanstack/react-query";
+import StringsE from "@/types/strings";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   modal: boolean;
@@ -24,32 +30,42 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   const [deleteItemTitle, setDeleteItemTitle] = useState<string>();
   const [deleteItemId, setDeleteItemId] = useState<string>();
   const queryClient = useQueryClient();
-  //   const { mutateAsync: deleteMutation, isPending } = useMutation<
-  //     HttpApiResponse,
-  //     unknown,
-  //     string
-  //   >({
-  //     mutationFn: contentController.deleteContent,
-  //   });
+  const { mutateAsync: deleteMutation, isPending } = useMutation<
+    HttpApiResponse,
+    unknown,
+    string
+  >({
+    mutationFn: labelController.deleteTag,
+  });
 
-  const handleDelete = async (contentId: string, title: string) => {
+  const handleDelete = async (
+    id: string | undefined,
+    title: string | undefined
+  ) => {
     console.log(title);
     setDeleteItemTitle(title);
-    setDeleteItemId(contentId);
+    setDeleteItemId(id);
     setIsOpenModal(true);
   };
 
   const handleDeleteModal = async () => {
-    // console.log(deleteItemTitle);
-    // try {
-    //   if (deleteItemId) {
-    //     await deleteMutation(deleteItemId);
-    //     await queryClient.invalidateQueries({ queryKey: [keyName] });
-    //     setIsOpenModal(false);
-    //   }
-    // } catch (error) {
-    //   console.error("Error deleting post:", error);
-    // }
+    console.log(deleteItemTitle);
+    try {
+      if (deleteItemId) {
+        await deleteMutation(deleteItemId);
+        await queryClient.invalidateQueries({ queryKey: [keyName] });
+        setIsOpenModal(false);
+        toast.custom((t) => (
+          <CustomToast
+            text={SHARED_STRINGS[StringsE.DeletedSuccessfully]}
+            animation={t}
+            status="success"
+          />
+        ));
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
     console.log("deleted test");
   };
 
@@ -70,7 +86,7 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
       className="flex items-center justify-between h-[14%] text-Black-B2 mt-2"
     >
       <div className="flex items-center w-[17%] h-[40px]">
-        {props.title.length > 50
+        {props.title && props.title?.length > 50
           ? props.title.slice(0, 50) + "..."
           : props.title}
       </div>
@@ -91,14 +107,19 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
             title={deleteItemTitle}
             onClick={handleDeleteModal}
             onCloaseModal={handleCloseModal}
-            loading={false}
+            loading={isPending}
           />
         </Modal>
       )}
 
       {editModal && (
         <Modal onCloseModal={HandleCloseEditModal} height={45} width={30}>
-          <TagForm onCloseModal={HandleCloseEditModal} value={props} />
+          <TagForm
+            onCloseModal={HandleCloseEditModal}
+            value={props}
+            title={SHARED_STRINGS[StringsE.Edit]}
+            controller="put"
+          />
         </Modal>
       )}
     </div>

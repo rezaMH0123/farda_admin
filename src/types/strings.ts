@@ -29,7 +29,7 @@ enum StringsE {
   // logout section
   Logout,
   ConfirmLogoutMessage,
-  
+
   // content section
   Content,
   OriginalCoverPhoto,
@@ -52,6 +52,9 @@ enum StringsE {
   Photo,
   File,
   AddFile,
+
+  // labels page
+  Edit,
 }
 
 export default StringsE;

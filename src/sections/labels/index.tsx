@@ -1,11 +1,10 @@
 import TagForm from "@/components/Form/TagForm";
-import TextInput from "@/components/Inputs/TextInput";
 import Modal from "@/components/Modal";
 import TableWithApi from "@/components/TableWithApi";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { labelController } from "@/controllers/label.controller";
-import { HttpResponseList } from "@/types/httpResponse";
 import { LabelI } from "@/types/models/Label.type";
-import { useQuery } from "@tanstack/react-query";
+import StringsE from "@/types/strings";
 import { useState } from "react";
 import LabelHeaderSection from "./components/Header";
 import RowLabel from "./components/RowLabel";
@@ -13,17 +12,7 @@ import RowLabel from "./components/RowLabel";
 const chartTitles = ["عنوان", "پین بودن", "عملیات"];
 
 export default function Labels() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [modal, setModal] = useState<boolean>(false);
-
-  const { data, isLoading } = useQuery<HttpResponseList<LabelI>>({
-    queryKey: ["labels", currentPage],
-    queryFn: () => labelController.getLabel(currentPage),
-    retry: false,
-    refetchOnWindowFocus: true,
-  });
-
-  console.log(data);
 
   const HandleCloseModal = () => {
     setModal(false);
@@ -38,21 +27,20 @@ export default function Labels() {
       <TableWithApi<LabelI>
         controller={labelController.getLabel}
         title={chartTitles}
-        keyNme="content"
+        keyNme="tags"
       >
         {(row) => (
-          <RowLabel
-            modal={modal}
-            setModal={setModal}
-            keyName="content"
-            {...row}
-          />
+          <RowLabel modal={modal} setModal={setModal} keyName="tags" {...row} />
         )}
       </TableWithApi>
 
       {modal && (
         <Modal onCloseModal={HandleCloseModal} height={45} width={30}>
-          <TagForm onCloseModal={HandleCloseModal} />
+          <TagForm
+            onCloseModal={HandleCloseModal}
+            title={SHARED_STRINGS[StringsE.Add]}
+            controller="post"
+          />
         </Modal>
       )}
     </div>
