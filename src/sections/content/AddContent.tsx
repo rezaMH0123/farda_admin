@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import ContentsModalForm from "@/components/Form/ContentsModalForm";
 import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import { useModal } from "@/context/modalContext";
@@ -13,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
+import ContentForm from "@/components/Form/ContentForm";
 
 export default function AddContent() {
   const {
@@ -23,9 +23,11 @@ export default function AddContent() {
     closeModal,
   } = useModal();
   const [selectedMainImage, setSelectedMainImage] = useState<string>();
-  const [selectedsecondImage, setSelectedsecondImage] = useState<string[]>([]);
+  const [selectedsecondImages, setSelectedsecondImages] = useState<string[]>(
+    []
+  );
 
-  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
+  const { data } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file"],
     queryFn: () => fileController.getFiles(1, 1000000),
     retry: false,
@@ -35,13 +37,15 @@ export default function AddContent() {
   const handleCloseModal = () => {
     closeModal();
     setSelectedMainImage("");
-    setSelectedsecondImage([]);
+    setSelectedsecondImages([]);
   };
-  // console.log(selectedMainImage);
-  // console.log(selectedsecondImage);
+
   return (
     <div className="h-full">
-      <ContentsModalForm />
+      <ContentForm
+        selectedMainImage={selectedMainImage}
+        selectedsecondImages={selectedsecondImages}
+      />
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>
@@ -79,8 +83,8 @@ export default function AddContent() {
                 </div>
                 <div className="rounded-lg h-[70%] w-[95%] ">
                   <SwiperComponent
-                    setSelecteditems={setSelectedsecondImage}
-                    selecteditems={selectedsecondImage}
+                    setSelecteditems={setSelectedsecondImages}
+                    selecteditems={selectedsecondImages}
                     row={2}
                     data={data?.data.result}
                     type={"checkbox"}

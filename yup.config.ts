@@ -8,6 +8,10 @@ setLocale({
     required: ({ path }) =>
       VALIDATION_STRINGS.required(FORM_STRINGS[path as FormE].label),
   },
+  array: {
+    min: ({ path }) =>
+      VALIDATION_STRINGS.minArray(1, FORM_STRINGS[path as FormE].label),
+  },
   string: {
     matches: ({ path }) => path,
   },

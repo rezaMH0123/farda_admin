@@ -46,6 +46,7 @@ enum StringsE {
   Newest,
   MostImportant,
   Sports,
+  AddContent,
 
   // manage file section
   ManageFiles,
