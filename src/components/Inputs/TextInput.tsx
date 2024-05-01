@@ -1,4 +1,4 @@
-import { useController, useFormContext, useFormState } from "react-hook-form";
+import { useController, useFormState } from "react-hook-form";
 
 type Props = {
   name: string;
@@ -7,7 +7,6 @@ type Props = {
   className?: string;
   spanOnclick?: () => void;
   placeholder?: string;
-  value?: string;
 };
 
 const TextInput = ({
