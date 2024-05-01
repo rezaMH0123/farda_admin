@@ -58,6 +58,14 @@ enum StringsE {
 
   // labels page
   Edit,
+  AddedTag,
+  EditedTag,
+  DeletedTag,
+
+  // category
+  AddedCategory,
+  EditedCategory,
+  DeletedCategory,
 }
 
 export default StringsE;
