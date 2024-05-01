@@ -1,16 +1,24 @@
 import http from "@/core/services/httpServices";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
-import { CategorieItem, CategoryMain } from "@/types/models/Categories.type";
+import { CategoryMain, CategoryPostT } from "@/types/models/Categories.type";
+import { AxiosError } from "axios";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
+import { ErrorToast, SuccessToast } from "@/components/Toast";
 
 export const CategorieController = {
   getCategorie: async () => {
     try {
-      const res = await http.get<HttpApiResponse<CategorieItem[]>>(
+      const res = await http.get<HttpApiResponse<CategoryMain>>(
         "Panel/Category/GetCategories"
       );
       return res.data;
     } catch (err) {
       console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
       throw new Error("Failed to fetch content");
     }
   },
@@ -29,17 +37,21 @@ export const CategorieController = {
       return res.data;
     } catch (err) {
       console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
       throw new Error("Failed to fetch category");
     }
   },
-  getChilds: async (parentId: string, Size: number, Page: number) => {
+  getChilds: async (parentId: string, Page: number) => {
     try {
-      const res = await http.get<HttpResponseList<CategorieItem>>(
+      const res = await http.get<HttpResponseList<CategoryMain>>(
         "Panel/Category/GetChilds",
         {
           params: {
             parentId,
-            Size,
+            Size: 6,
             Page,
             Sort: "createdOn desc",
           },
@@ -48,7 +60,53 @@ export const CategorieController = {
       return res.data;
     } catch (err) {
       console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
       throw new Error("Failed to fetch child of category");
+    }
+  },
+  postCategory: async (data: CategoryPostT) => {
+    try {
+      const res = await http.post<HttpApiResponse>("Panel/Category", data);
+      SuccessToast(SHARED_STRINGS[StringsE.AddedCategory]);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
+      throw new Error("Failed to post category");
+    }
+  },
+  putCategory: async (data: CategoryMain) => {
+    try {
+      const res = await http.put<HttpApiResponse>("Panel/Category", data);
+      SuccessToast(SHARED_STRINGS[StringsE.EditedCategory]);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
+      throw new Error("Failed to put category");
+    }
+  },
+  deleteCategory: async (id: string) => {
+    try {
+      const res = await http.delete<HttpApiResponse>(`Panel/Category/${id}`);
+      SuccessToast(SHARED_STRINGS[StringsE.DeletedCategory]);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        const errorMessage = err.response?.data.message;
+        ErrorToast(errorMessage);
+      }
+      throw new Error("Failed to delete category");
     }
   },
 };

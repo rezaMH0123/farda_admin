@@ -12,7 +12,7 @@ export default function Categories() {
 
   const { data, isLoading } = useQuery<HttpResponseList<CategoryMain>>({
     queryKey: ["category"],
-    queryFn: () => CategorieController.getMainCategory(1000, 1),
+    queryFn: () => CategorieController.getMainCategory(6, 1),
     retry: false,
     refetchOnWindowFocus: true,
   });
