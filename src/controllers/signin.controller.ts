@@ -1,5 +1,9 @@
+import { ErrorToast, SuccessToast } from "@/components/Toast";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
 import http from "@/core/services/httpServices";
 import { SigninI } from "@/types/forms/signin";
+import StringsE from "@/types/strings";
+import { AxiosError } from "axios";
 
 export async function SigninController(data: SigninI) {
   try {
@@ -7,9 +11,14 @@ export async function SigninController(data: SigninI) {
       username: data.username,
       password: data.password,
     });
+    SuccessToast(SHARED_STRINGS[StringsE.SigninSuccessMessage]);
     return res.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  } catch (err) {
+    console.log(err);
+    if (err instanceof AxiosError) {
+      const errorMessage = err.response?.data.message;
+      ErrorToast(errorMessage);
+    }
+    throw err;
   }
 }
