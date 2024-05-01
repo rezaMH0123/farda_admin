@@ -30,11 +30,11 @@ export const sidebarItems: SideBarItem[] = [
     title: "برچسب‌ها",
   },
 
-  {
-    link: "/comment",
-    icon: IconComment,
-    title: "کامنت ها",
-  },
+  // {
+  //   link: "/comment",
+  //   icon: IconComment,
+  //   title: "کامنت ها",
+  // },
   {
     link: "/manageFiles",
     icon: IconMageFiles,
