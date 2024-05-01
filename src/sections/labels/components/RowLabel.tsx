@@ -3,7 +3,6 @@ import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
 import DeleteModal from "@/components/Modal/DeleteModal";
-import CustomToast from "@/components/Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { labelController } from "@/controllers/label.controller";
 import { HttpApiResponse } from "@/types/httpResponse";
@@ -11,7 +10,6 @@ import { LabelI } from "@/types/models/Label.type";
 import StringsE from "@/types/strings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
-import toast from "react-hot-toast";
 
 type Props = {
   modal: boolean;
@@ -49,24 +47,11 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   };
 
   const handleDeleteModal = async () => {
-    console.log(deleteItemTitle);
-    try {
-      if (deleteItemId) {
-        await deleteMutation(deleteItemId);
-        await queryClient.invalidateQueries({ queryKey: [keyName] });
-        setIsOpenModal(false);
-        toast.custom((t) => (
-          <CustomToast
-            text={SHARED_STRINGS[StringsE.DeletedSuccessfully]}
-            animation={t}
-            status="success"
-          />
-        ));
-      }
-    } catch (error) {
-      console.error("Error deleting post:", error);
+    if (deleteItemId) {
+      await deleteMutation(deleteItemId);
+      await queryClient.invalidateQueries({ queryKey: [keyName] });
+      setIsOpenModal(false);
     }
-    console.log("deleted test");
   };
 
   const handleCloseModal = () => {
@@ -80,6 +65,7 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   const HandleCloseEditModal = () => {
     setEditModal(false);
   };
+
   return (
     <div
       key={props.id}
