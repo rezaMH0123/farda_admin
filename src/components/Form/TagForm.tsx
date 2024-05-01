@@ -1,6 +1,5 @@
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
-import { useState } from "react";
 import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../Button";
 import TextInput from "../Inputs/TextInput";
@@ -8,9 +7,6 @@ import SwitchToggle from "../SwitchToggle";
 import { LabelI, TagI } from "@/types/models/Label.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpApiResponse } from "@/types/httpResponse";
-import toast from "react-hot-toast";
-import CustomToast from "../Toast";
-import { AxiosError } from "axios";
 import { labelController } from "@/controllers/label.controller";
 import Loading from "../Loading";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -26,6 +22,7 @@ type Props = {
 
 const tagsSchema = yup.object().shape({
   title: yup.string().required(),
+  isPin: yup.boolean().required(),
 });
 
 export default function TagForm({
@@ -36,9 +33,11 @@ export default function TagForm({
 }: Props) {
   const methods = useForm<TagI>({
     resolver: yupResolver(tagsSchema),
-    defaultValues: { isPin: value?.isPin, title: value?.title },
+    defaultValues: {
+      isPin: value?.isPin ? value.isPin : false,
+      title: value?.title ? value.title : "",
+    },
   });
-  const [isPin, setIsPin] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   // POST
@@ -82,28 +81,8 @@ export default function TagForm({
         modifiedBy: value?.modifiedBy,
       });
     }
-    try {
-      const res = await mutateOption;
-      if (res?.isSuccess) {
-        onCloseModal();
-        toast.custom((t) => (
-          <CustomToast
-            text={SHARED_STRINGS[StringsE.AddedSuccessfully]}
-            animation={t}
-            status="success"
-          />
-        ));
-      }
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        console.log(err);
-        const errorMessage = err.response?.data.message;
-        console.log(errorMessage);
-        toast.custom((t) => (
-          <CustomToast text={errorMessage} animation={t} status="error" />
-        ));
-      }
-    }
+    await mutateOption;
+    onCloseModal();
   };
 
   return (
@@ -114,10 +93,12 @@ export default function TagForm({
           <TextInput name="title" placeholder="عنوان*" />
           <div className="mt-[32px]">
             <SwitchToggle
-              isActive={isPin}
-              setIsActive={setIsPin}
               toggleBackground="#36B37E"
               toggleText="پین کردن*"
+              value={methods.watch("isPin")}
+              onChange={(value) => {
+                methods.setValue("isPin", value);
+              }}
             />
           </div>
           <div className="flex w-full mt-[32px] gap-5">
