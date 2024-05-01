@@ -1,22 +1,25 @@
-import TagForm from "@/components/Form/TagForm";
+import CategoryForm from "@/components/Form/CategoryForm";
 import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
 import DeleteModal from "@/components/Modal/DeleteModal";
+import CustomToast from "@/components/Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
-import { labelController } from "@/controllers/label.controller";
+import { CategorieController } from "@/controllers/categorie.contoroller";
 import { HttpApiResponse } from "@/types/httpResponse";
-import { LabelI } from "@/types/models/Label.type";
+import { CategoryMain } from "@/types/models/Categories.type";
 import StringsE from "@/types/strings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   modal: boolean;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
+const RowCategory: FC<{ keyName: string } & Props & CategoryMain> = ({
   keyName,
   modal,
   setModal,
@@ -24,16 +27,17 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
 }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [editModal, setEditModal] = useState<boolean>(false);
-
   const [deleteItemTitle, setDeleteItemTitle] = useState<string>();
   const [deleteItemId, setDeleteItemId] = useState<string>();
   const queryClient = useQueryClient();
+
+  // delete
   const { mutateAsync: deleteMutation, isPending } = useMutation<
     HttpApiResponse,
     unknown,
     string
   >({
-    mutationFn: labelController.deleteTag,
+    mutationFn: CategorieController.deleteCategory,
   });
 
   const handleDelete = async (
@@ -65,7 +69,6 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   const HandleCloseEditModal = () => {
     setEditModal(false);
   };
-
   return (
     <div
       key={props.id}
@@ -100,7 +103,7 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
 
       {editModal && (
         <Modal onCloseModal={HandleCloseEditModal} height={45} width={30}>
-          <TagForm
+          <CategoryForm
             onCloseModal={HandleCloseEditModal}
             value={props}
             title={SHARED_STRINGS[StringsE.Edit]}
@@ -112,4 +115,4 @@ const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   );
 };
 
-export default RowLabel;
+export default RowCategory;

@@ -1,0 +1,21 @@
+.toast_error {
+  height: 40px;
+  width: 450px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  background-color: #ff8a8a;
+  color: #000;
+}
+
+.toast_success {
+  height: 40px;
+  width: 450px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  background-color: #d8fbde;
+  color: #000;
+}

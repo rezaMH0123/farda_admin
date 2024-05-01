@@ -1,6 +1,7 @@
 import Success from "@/assets/img/logo/success.svg";
 import Error from "@/assets/img/logo/error.svg";
-import { Toast } from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
+import "@/assets/css/toast.css";
 
 type CustomToastProps = {
   text: string;
@@ -27,3 +28,17 @@ export default function CustomToast({
     </div>
   );
 }
+
+export const ErrorToast = (message: string) => {
+  toast.error(message, {
+    className: "toast_error",
+    icon: null,
+  });
+};
+
+export const SuccessToast = (message: string) => {
+  toast.success(message, {
+    className: "toast_success",
+    icon: null,
+  });
+};

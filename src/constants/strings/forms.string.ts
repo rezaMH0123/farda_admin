@@ -19,12 +19,16 @@ const FORM_STRINGS: Record<
     label: "عنوان",
     placeholder: "عنوان*",
   },
+  [FormE.ParentId]: {
+    label: "دسته بندی اصلی",
+    placeholder: "دسته بندی اصلی*",
+  },
 
   [FormE.Summary]: {
     label: "خلاصه",
     placeholder: "خلاصه*",
   },
-  [FormE.IsShare]: {
+  [FormE.IsPin]: {
     label: "قابلیت اشتراک گذاری",
     placeholder: "قابلیت اشتراک گذاری*",
   },
@@ -44,7 +48,10 @@ const FORM_STRINGS: Record<
     label: "برچسب ها",
     placeholder: "برچسب ها*",
   },
-
+  [FormE.IsShare]: {
+    label: "قابلیت اشتراک گذاری",
+    placeholder: "قابلیت اشتراک گذاری*",
+  },
 };
 
 export default FORM_STRINGS;

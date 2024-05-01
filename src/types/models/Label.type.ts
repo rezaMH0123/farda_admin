@@ -10,5 +10,5 @@ export interface LabelI {
 
 export interface TagI {
   title: string;
-  isPin?: boolean;
+  isPin: boolean;
 }

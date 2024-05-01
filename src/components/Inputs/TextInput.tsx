@@ -1,4 +1,4 @@
-import { useController, useFormContext, useFormState } from "react-hook-form";
+import { useController, useFormState } from "react-hook-form";
 
 type Props = {
   name: string;
@@ -7,7 +7,6 @@ type Props = {
   className?: string;
   spanOnclick?: () => void;
   placeholder?: string;
-  value?: string;
 };
 
 const TextInput = ({
@@ -17,7 +16,6 @@ const TextInput = ({
   icon,
   spanOnclick,
   placeholder,
-  value,
 }: Props) => {
   const { field } = useController({ name });
   const { errors } = useFormState();
@@ -31,7 +29,6 @@ const TextInput = ({
         className={`w-full h-[44px] text-base font-normal leading-6 border px-[14px] rounded-lg outline-none ${
           errors[name] ? "border-Red-R2" : "border-Black-B3"
         } ${className}`}
-        value={value}
       />
       <span
         className="absolute left-0 top-[50%] translate-y-[-50%] pl-[14px] flex items-center"

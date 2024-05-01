@@ -10,14 +10,11 @@ import Button from "../Button";
 import Loading from "../Loading";
 import { SigninI } from "@/types/forms/signin";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import CustomToast from "../Toast";
 import { SetToStorage } from "@/utils/storage";
 import { useMutation } from "@tanstack/react-query";
 import { SigninController } from "@/controllers/signin.controller";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { SiginData } from "@/types/signin";
-import { AxiosError } from "axios";
 import "../../../yup.config";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
@@ -43,48 +40,18 @@ export default function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
-    try {
-      const res = await signinMutate(inputsData);
-      console.log(res);
-      if (res.data && res.isSuccess) {
-        const access_token = res.data.access_token;
-        console.log(access_token);
-        SetToStorage({
-          key: "access_token",
-          value: access_token,
-          expireTime: 2,
-        });
-        methods.reset();
-        navigate("/");
-        toast.custom((t) => (
-          <CustomToast
-            text={SHARED_STRINGS[StringsE.SigninSuccessMessage]}
-            animation={t}
-            status="success"
-          />
-        ));
-      }
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        console.log(err);
-        if (err.response && err.response.status === 400) {
-          toast.custom((t) => (
-            <CustomToast
-              text={SHARED_STRINGS[StringsE.UserNamePasswordWrong]}
-              animation={t}
-              status="error"
-            />
-          ));
-        } else {
-          toast.custom((t) => (
-            <CustomToast
-              text={SHARED_STRINGS[StringsE.SomethingWentWrong]}
-              animation={t}
-              status="error"
-            />
-          ));
-        }
-      }
+    const res = await signinMutate(inputsData);
+    console.log(res);
+    if (res.data && res.isSuccess) {
+      const access_token = res.data.access_token;
+      console.log(access_token);
+      SetToStorage({
+        key: "access_token",
+        value: access_token,
+        expireTime: 2,
+      });
+      methods.reset();
+      navigate("/");
     }
   };
 
