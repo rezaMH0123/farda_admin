@@ -11,6 +11,7 @@ type SelectInputProps = {
   value: string | string[] | undefined;
   onChange: (value: string | string[]) => void;
   error?: FieldError | undefined;
+  width: number;
 };
 const customStyles: StylesConfig = {
   // سلکت کننده تقسیم‌کننده را مخفی کنید
@@ -47,6 +48,7 @@ const MyDropDown = ({
   isMulti,
   onChange,
   error,
+  width,
 }: SelectInputProps) => {
   const valueObj = isMulti
     ? value
@@ -59,7 +61,7 @@ const MyDropDown = ({
     : options?.find((item) => item.value === value);
 
   return (
-    <div className="w-[47%] h-[38px]">
+    <div className="h-[38px]" style={{ width: `${width}%` }}>
       <div className="w-full h-full">
         <Select
           options={options}
