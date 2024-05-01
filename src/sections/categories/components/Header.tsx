@@ -1,4 +1,5 @@
 import plusIcon from "@/assets/img/tools/plus.svg";
+import backIcon from "@/assets/img/tools/back.svg";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
 import Button from "@/components/Button";
@@ -29,6 +30,7 @@ const PagesHeaderSection = ({ title, setModal }: LabelHeaderSectionProps) => {
           title="بازگشت"
           className="w-[152px] font-medium"
           onClick={() => router(-1)}
+          icon={<img src={backIcon} alt="backIcon" />}
         />
         <Button
           title={SHARED_STRINGS[StringsE.AdditionButton]}
