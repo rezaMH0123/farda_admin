@@ -27,11 +27,13 @@ export const contentController = {
     }
   },
 
-  deleteContent: async (contentId: string) => {
+  deleteContent: async (id: string) => {
     try {
-      const res = await http.delete<HttpApiResponse>(
-        `Panel/Content/${contentId}`
-      );
+      const res = await http.delete<HttpApiResponse>("Panel/Content", {
+        params: {
+          id,
+        },
+      });
       return res.data;
     } catch (err) {
       console.log(err);
