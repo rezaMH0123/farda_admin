@@ -15,7 +15,7 @@ import { ErrorToast, SuccessToast } from "@/components/Toast";
 export const CategorieController = {
   getCategorie: async () => {
     try {
-      const res = await http.get<HttpApiResponse<CategoryMain>>(
+      const res = await http.get<HttpApiResponse<CategorieItem[]>>(
         "Panel/Category/GetCategories"
       );
       return res.data;
