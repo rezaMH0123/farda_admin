@@ -97,7 +97,11 @@ export const CategorieController = {
   },
   deleteCategory: async (id: string) => {
     try {
-      const res = await http.delete<HttpApiResponse>(`Panel/Category/${id}`);
+      const res = await http.delete<HttpApiResponse>("Panel/Category", {
+        params: {
+          id,
+        },
+      });
       SuccessToast(SHARED_STRINGS[StringsE.DeletedCategory]);
       return res.data;
     } catch (err) {
