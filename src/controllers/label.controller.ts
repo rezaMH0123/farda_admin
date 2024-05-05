@@ -42,7 +42,11 @@ export const labelController = {
   },
   deleteTag: async (id: string) => {
     try {
-      const res = await http.delete<HttpApiResponse>(`Panel/Tag/${id}`);
+      const res = await http.delete<HttpApiResponse>("Panel/Tag", {
+        params: {
+          id,
+        },
+      });
       SuccessToast(SHARED_STRINGS[StringsE.DeletedTag]);
       return res.data;
     } catch (err) {
