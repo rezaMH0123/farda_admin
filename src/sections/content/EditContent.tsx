@@ -1,20 +1,24 @@
 import Button from "@/components/Button";
+import ContentForm from "@/components/Form/ContentForm";
+import PlusIcon from "@/components/Icons/PlusIcon";
 import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
-import { useModal } from "@/context/modalContext";
-import PlusIcon from "@/components/Icons/PlusIcon";
-import "animate.css";
 import UploadFile from "@/components/UploadFile";
-import { HttpResponseList } from "@/types/httpResponse";
-import { FilesI } from "@/types/models/Files.type";
-import { fileController } from "@/controllers/file.controller";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
+import { useModal } from "@/context/modalContext";
+import { contentController } from "@/controllers/content.controller";
+import { fileController } from "@/controllers/file.controller";
+import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
+import { SingleContentI } from "@/types/models/Content.type";
+import { FilesI } from "@/types/models/Files.type";
 import StringsE from "@/types/strings";
-import ContentForm from "@/components/Form/ContentForm";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function AddContent() {
+export default function EditContent() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const {
     isModalOpen,
     openUploadFileModal,
@@ -22,10 +26,16 @@ export default function AddContent() {
     closeUploadFileModal,
     closeModal,
   } = useModal();
-  const [selectedMainImage, setSelectedMainImage] = useState<string>();
-  const [selectedsecondImages, setSelectedsecondImages] = useState<string[]>(
-    []
-  );
+
+  const {
+    data: singleContent,
+    isError,
+    isLoading: singleContentLoading,
+  } = useQuery<HttpApiResponse<SingleContentI>>({
+    queryKey: ["singleContent", id],
+    queryFn: () => contentController.getContentWithId(id),
+    retry: false,
+  });
 
   const { data } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file"],
@@ -34,19 +44,45 @@ export default function AddContent() {
     refetchOnWindowFocus: true,
   });
 
+  const [selectedMainImage, setSelectedMainImage] = useState<string>();
+  const [selectedsecondImages, setSelectedsecondImages] = useState<string[]>(
+    []
+  );
+
   const handleCloseModal = () => {
     closeModal();
     setSelectedMainImage("");
     setSelectedsecondImages([]);
   };
 
+  useEffect(() => {
+    if (singleContent?.data?.files) {
+      const filesid = singleContent.data.files.map((file) => file.id);
+      setSelectedsecondImages(filesid);
+    }
+    if (singleContent?.data?.file) {
+      setSelectedMainImage(singleContent?.data?.file.split("/")[4]);
+    }
+  }, [singleContent]);
+
+  if (isError) {
+    navigate("/content");
+  }
   return (
     <div className="h-full">
-      <ContentForm
-        selectedMainImage={selectedMainImage}
-        selectedsecondImages={selectedsecondImages}
-        mode="add"
-      />
+      {singleContentLoading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          loading...
+        </div>
+      ) : (
+        <ContentForm
+          selectedMainImage={selectedMainImage}
+          selectedsecondImages={selectedsecondImages}
+          mode="edit"
+          singleContent={singleContent}
+        />
+      )}
+
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import Pagination from "@/components/Pagination";
 import TailSpinner from "@/components/Loading/TailSpinner";
 import { HttpResponseList } from "@/types/httpResponse";
@@ -41,7 +41,7 @@ export default function TableWithApi<T>({
         {title.length === 5 ? (
           <>
             {title.map((item, index) => (
-              <>
+              <Fragment key={index}>
                 {index < 1 ? (
                   <div className="flex items-center w-[40%]">
                     <span className="mr-5 ">{item}</span>
@@ -57,7 +57,7 @@ export default function TableWithApi<T>({
                     <span>{item}</span>
                   </div>
                 )}
-              </>
+              </Fragment>
             ))}
           </>
         ) : (

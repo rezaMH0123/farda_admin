@@ -26,8 +26,8 @@ export default function RadioButton({
         <input
           id="previewRadio"
           type="radio"
-          value="preview"
-          checked={value === "preview"}
+          value="Preview"
+          checked={value === "Preview"}
           onChange={handleChange}
           className={`hidden`}
         />
@@ -35,7 +35,7 @@ export default function RadioButton({
           style={{ border: `1px solid ${color}` }}
           className={`rounded-full w-5 h-5 flex justify-center items-center`}
         >
-          {value === "preview" && (
+          {value === "Preview" && (
             <span
               style={{ backgroundColor: `${color}` }}
               className={`w-3 h-3 rounded-full`}
@@ -52,8 +52,8 @@ export default function RadioButton({
         <input
           id="publishRadio"
           type="radio"
-          value="publish"
-          checked={value === "publish"}
+          value="Publish"
+          checked={value === "Publish"}
           onChange={handleChange}
           className={`hidden`}
         />
@@ -61,7 +61,7 @@ export default function RadioButton({
           style={{ border: `1px solid ${color}` }}
           className={`rounded-full w-5 h-5 flex justify-center items-center`}
         >
-          {value === "publish" && (
+          {value === "Publish" && (
             <span
               style={{ backgroundColor: `${color}` }}
               className={`w-3 h-3 rounded-full`}

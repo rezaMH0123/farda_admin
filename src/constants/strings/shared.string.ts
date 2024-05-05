@@ -17,6 +17,7 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Delete]: "حذف شود",
   [StringsE.Previw]: "پیش‌نمایش",
   [StringsE.Realease]: "انتشار",
+  [StringsE.EditButton]: "ویرایش",
 
   // singin page
   [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",
@@ -50,7 +51,7 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.MostImportant]: "مهم‌ترین",
   [StringsE.Sports]: "ورزشی",
   [StringsE.AddContent]: "محتوا با موفیت اضافه شد",
-
+  [StringsE.EditContent]: "محتوا با موفیت ویرایش شد",
 
   // manage file section
   [StringsE.ManageFiles]: "مدیریت فایل‌ها",
