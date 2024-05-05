@@ -5,8 +5,8 @@ import { Outlet } from "react-router-dom";
 import { GlobalStateProvider } from "@/context/globalStateContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 export default function Layout() {
-  const queryClient = new QueryClient();
   return (
     <div className="flex justify-center px-12 py-4 h-full w-screen">
       <QueryClientProvider client={queryClient}>
@@ -14,7 +14,7 @@ export default function Layout() {
           <GlobalStateProvider>
             <div className="w-[1440px] h-full">
               <Header />
-              <div className="flex justify-between gap-x-3  h-full mt-6">
+              <div className="flex justify-between gap-x-3 h-full mt-6">
                 <Outlet />
                 <SideBar />
               </div>

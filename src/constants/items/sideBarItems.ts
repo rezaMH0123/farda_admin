@@ -1,5 +1,4 @@
 import IconCategories from "@/components/Icons/CategoriesIcon";
-import IconComment from "@/components/Icons/CommentIcon";
 import IconContent from "@/components/Icons/ContentIcon";
 import IconLabels from "@/components/Icons/LabelsIcon";
 import IconMageFiles from "@/components/Icons/ManageFilesIcon";
@@ -30,11 +29,11 @@ export const sidebarItems: SideBarItem[] = [
     title: "برچسب‌ها",
   },
 
-  {
-    link: "/comment",
-    icon: IconComment,
-    title: "کامنت ها",
-  },
+  // {
+  //   link: "/comment",
+  //   icon: IconComment,
+  //   title: "کامنت ها",
+  // },
   {
     link: "/manageFiles",
     icon: IconMageFiles,

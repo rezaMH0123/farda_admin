@@ -29,7 +29,7 @@ export default function UploadFile() {
     if (file === undefined) {
       toast.custom((t) => (
         <CustomToast
-          text="!لطفا فایل مورد نظر را انتخاب نمایید"
+          text={SHARED_STRINGS[StringsE.SelectFile]}
           animation={t}
           status="error"
         />
@@ -44,7 +44,7 @@ export default function UploadFile() {
           closeUploadFileModal();
           toast.custom((t) => (
             <CustomToast
-              text="!فایل با موفقیت اضافه شد"
+              text={SHARED_STRINGS[StringsE.AddedSuccessfully]}
               animation={t}
               status="success"
             />
@@ -56,7 +56,7 @@ export default function UploadFile() {
           <CustomToast
             animation={t}
             status="error"
-            text="!مشکلی پیش آمده است"
+            text={SHARED_STRINGS[StringsE.SomethingWentWrong]}
           />
         ));
       }
@@ -71,7 +71,7 @@ export default function UploadFile() {
           <CustomToast
             animation={t}
             status="error"
-            text=".نوع فایل مجاز نمی‌باشد"
+            text={SHARED_STRINGS[StringsE.FileTypeUnsupported]}
           />
         ));
       } else {
@@ -83,7 +83,7 @@ export default function UploadFile() {
   return (
     <div className="h-[90%] w-full flex flex-col gap-y-2 p-5">
       <div className="h-fit">
-        <p className="text-[20px] font-bold mr-10 text-PrimaryBlack-100">
+        <p className="text-[20px] font-bold mr-10 text-Black-PrimaryBlack">
           {SHARED_STRINGS[StringsE.AddFile]}
         </p>
       </div>
@@ -123,7 +123,7 @@ export default function UploadFile() {
           model="fill_blue"
           title={
             isPending ? (
-              <Loading className={"bg-PrimaryBlack-200"} />
+              <Loading className={"bg-Black-B2"} />
             ) : (
               SHARED_STRINGS[StringsE.AddFile]
             )

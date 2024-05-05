@@ -10,7 +10,7 @@ export default function ManageFileHeaderSection() {
   return (
     <div className="header flex justify-between items-center px-6 h-[15%]">
       <div className="right">
-        <span className="text-[20px] font-ShabnamMedium font-semibold">
+        <span className="text-[20px] font-bold text-Black-B2">
           {SHARED_STRINGS[StringsE.ManageFiles]}
         </span>
       </div>

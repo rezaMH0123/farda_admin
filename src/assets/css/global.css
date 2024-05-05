@@ -2,14 +2,31 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "./font.css";
+/* @import "/font.css"; */
 @import "./ckEditor";
 @import "./datePicker";
 @import "./dropDown";
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 400;
+  src: url("/fonts/Shabnam-FD.ttf");
+}
 
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 500;
+  src: url("/fonts//Shabnam-Medium-FD.ttf");
+}
+
+@font-face {
+  font-family: "Shabnam";
+  font-weight: 700;
+  src: url("/fonts//Shabnam-Bold-FD.ttf");
+}
 html,
 body {
   font-family: "Shabnam";
+  background-color: #f7f7f7;
 }
 
 .swiper {
@@ -33,4 +50,9 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.fileUpload {
+  width: 50% !important;
+  height: 100% !important;
 }

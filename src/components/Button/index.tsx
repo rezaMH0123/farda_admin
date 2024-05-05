@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type ButtonPropsT = {
-  type?: "submit";
+  type?: "submit" | "button";
   className?: string;
   title: string | ReactNode;
   disable?: boolean;
@@ -27,18 +27,18 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-3 leading-5 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed ${
+      className={`h-[44px] text-base rounded-lg flex items-center justify-center gap-x-3 leading-5 transition-all duration-100 disabled:bg-[#a2e5fd] disabled:cursor-not-allowed ${
         model === "fill_blue"
-          ? "bg-PrimaryBlue-100 text-white"
+          ? "bg-Blue-PrimaryBlue text-W1 hover:bg-Blue-BlueHover"
           : model === "outline_gray"
-          ? "text-PrimaryBlack-300 border border-PrimaryBlack-300"
+          ? "text-Black-B3 border border-Black-B3"
           : model === "outline_red"
-          ? "text-PrimaryRed-100 border border-PrimaryRed-100"
+          ? "text-Red-R1 border border-Red-R1"
           : model === "fill_red"
-          ? "bg-PrimaryRed-100 text-white"
+          ? "bg-Red-R1 text-W1"
           : model === "outline_blue"
-          ? "text-PrimaryBlue-100 border border-PrimaryBlue-100"
-          : "bg-black text-white"
+          ? "text-Blue-PrimaryBlue border border-Blue-PrimaryBlue"
+          : "bg-black text-W1"
       } ${className} `}
       disabled={disable}
       onClick={onClick}

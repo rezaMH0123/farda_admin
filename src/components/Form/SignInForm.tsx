@@ -10,15 +10,14 @@ import Button from "../Button";
 import Loading from "../Loading";
 import { SigninI } from "@/types/forms/signin";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import CustomToast from "../Toast";
 import { SetToStorage } from "@/utils/storage";
 import { useMutation } from "@tanstack/react-query";
 import { SigninController } from "@/controllers/signin.controller";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { SiginData } from "@/types/signin";
-import { AxiosError } from "axios";
 import "../../../yup.config";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import StringsE from "@/types/strings";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -41,48 +40,18 @@ export default function SignInForm() {
   });
 
   const onSubmit: SubmitHandler<SigninI> = async (inputsData) => {
-    try {
-      const res = await signinMutate(inputsData);
-      console.log(res);
-      if (res.data && res.isSuccess) {
-        const access_token = res.data.access_token;
-        console.log(access_token);
-        SetToStorage({
-          key: "access_token",
-          value: access_token,
-          expireTime: 2,
-        });
-        methods.reset();
-        navigate("/");
-        toast.custom((t) => (
-          <CustomToast
-            text="!با موفقیت وارد شدید"
-            animation={t}
-            status="success"
-          />
-        ));
-      }
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        console.log(err);
-        if (err.response && err.response.status === 400) {
-          toast.custom((t) => (
-            <CustomToast
-              text="!نام کاربری یا رمز عبور صحیح نمی‌باشد"
-              animation={t}
-              status="error"
-            />
-          ));
-        } else {
-          toast.custom((t) => (
-            <CustomToast
-              text="!مشکلی پیش آمده است"
-              animation={t}
-              status="error"
-            />
-          ));
-        }
-      }
+    const res = await signinMutate(inputsData);
+    console.log(res);
+    if (res.data && res.isSuccess) {
+      const access_token = res.data.access_token;
+      console.log(access_token);
+      SetToStorage({
+        key: "access_token",
+        value: access_token,
+        expireTime: 2,
+      });
+      methods.reset();
+      navigate("/");
     }
   };
 
@@ -90,13 +59,17 @@ export default function SignInForm() {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="relative h-[44px] mt-6">
-          <TextInput name="username" icon={person} placeholder="نام کاربری" />
+          <TextInput
+            name="username"
+            icon={person}
+            placeholder={SHARED_STRINGS[StringsE.UserName]}
+          />
         </div>
         <div className="relative h-[44px] mt-6">
           <TextInput
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="رمز عبور"
+            placeholder={SHARED_STRINGS[StringsE.Password]}
             icon={showPassword ? closedEye : openEye}
             spanOnclick={() => setShowPassword(!showPassword)}
           />
@@ -106,7 +79,11 @@ export default function SignInForm() {
           model="fill_blue"
           className="mt-8 w-full font-bold"
           title={
-            isPending ? <Loading className={"bg-PrimaryBlack-200"} /> : "ورود"
+            isPending ? (
+              <Loading className={"bg-Black-B2"} />
+            ) : (
+              <>{SHARED_STRINGS[StringsE.Login]}</>
+            )
           }
           disable={isPending ? true : false}
         />

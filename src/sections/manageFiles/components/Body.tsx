@@ -18,13 +18,6 @@ export default function ManageFileBody() {
 
   const { setTab, tab } = useGlobalState();
 
-  const nextPageClick = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-  const prevPageClick = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
-
   const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
     queryKey: ["manage_file", currentPage],
     queryFn: () => fileController.getFiles(currentPage, 6),
@@ -48,25 +41,29 @@ export default function ManageFileBody() {
     }
   }, [data]);
 
+  const onChangePage = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <div className="px-5 h-full">
         <div className="flex">
           <div
-            className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
+            className={`h-[37px] w-16 font-bold flex justify-center cursor-pointer border-b ${
               tab === "photo"
-                ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
-                : "border-PrimaryBlack-300 text-PrimaryBlack-300"
+                ? "border-Blue-PrimaryBlue text-Blue-PrimaryBlue"
+                : "border-Black-B3 text-Black-B3"
             }`}
             onClick={() => setTab("photo")}
           >
             {SHARED_STRINGS[StringsE.Photo]}
           </div>
           <div
-            className={`h-[37px] w-16 font-ShabnamBold flex justify-center cursor-pointer border-b ${
+            className={`h-[37px] w-16 font-bold flex justify-center cursor-pointer border-b ${
               tab === "file"
-                ? "border-PrimaryBlue-100 text-PrimaryBlack-200"
-                : "border-PrimaryBlack-300 text-PrimaryBlack-300"
+                ? "border-Blue-PrimaryBlue text-Blue-PrimaryBlue"
+                : "border-Black-B3 text-Black-B3"
             }`}
             onClick={() => setTab("file")}
           >
@@ -82,12 +79,11 @@ export default function ManageFileBody() {
             )}
           </div>
         </div>
-        <div className="flex gap-x-5 justify-end items-center  h-[15%]">
+        <div className="flex gap-x-5 justify-end items-center h-[8%]">
           <Pagination
             allPage={allPage}
             currentPage={currentPage}
-            nextPageClick={nextPageClick}
-            prevPageClick={prevPageClick}
+            onChangePage={onChangePage}
           />
         </div>
       </div>
