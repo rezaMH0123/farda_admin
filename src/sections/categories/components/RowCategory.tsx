@@ -3,16 +3,13 @@ import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
 import DeleteModal from "@/components/Modal/DeleteModal";
-import CustomToast from "@/components/Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { CategorieController } from "@/controllers/categorie.contoroller";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { CategoryMain } from "@/types/models/Categories.type";
 import StringsE from "@/types/strings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { FC, useState } from "react";
-import toast from "react-hot-toast";
 
 type Props = {
   modal: boolean;
@@ -21,8 +18,6 @@ type Props = {
 
 const RowCategory: FC<{ keyName: string } & Props & CategoryMain> = ({
   keyName,
-  modal,
-  setModal,
   ...props
 }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);

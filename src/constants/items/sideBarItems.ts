@@ -1,5 +1,4 @@
 import IconCategories from "@/components/Icons/CategoriesIcon";
-import IconComment from "@/components/Icons/CommentIcon";
 import IconContent from "@/components/Icons/ContentIcon";
 import IconLabels from "@/components/Icons/LabelsIcon";
 import IconMageFiles from "@/components/Icons/ManageFilesIcon";
