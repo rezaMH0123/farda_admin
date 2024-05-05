@@ -36,8 +36,6 @@ import toast from "react-hot-toast";
 import CustomToast from "../Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
-import moment from "jalali-moment";
-import { isShamsiDate } from "@/utils/helper";
 
 export type Inputs = {
   title: string;
@@ -356,6 +354,7 @@ export default function ContentForm({
                 placeholder="دسته بندی‌ها*"
                 isMulti={false}
                 error={methods.formState.errors.category}
+                width={47.5}
               />
               <MyDropDown
                 value={methods.getValues("subcategory")}
@@ -367,6 +366,7 @@ export default function ContentForm({
                 placeholder="زیر دسته بندی‌ها*"
                 isMulti={true}
                 error={methods.formState.errors.subcategory as FieldError}
+                width={47.5}
               />
             </div>
 
