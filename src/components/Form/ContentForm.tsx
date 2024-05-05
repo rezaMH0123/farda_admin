@@ -26,8 +26,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useModal } from "@/context/modalContext";
 import UploadFile from "../Icons/UploadFile";
 import { contentController } from "@/controllers/content.controller";
-import { postContentT } from "@/types/models/Content.type";
-import { useNavigate } from "react-router-dom";
+import {
+  SingleContentI,
+  editContentT,
+  postContentT,
+} from "@/types/models/Content.type";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import CustomToast from "../Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
@@ -66,27 +70,37 @@ const formContentScherma = yup.object().shape({
 type ContentFormProps = {
   selectedMainImage?: string | undefined;
   selectedsecondImages: string[];
+  mode: string;
+  singleContent?: HttpApiResponse<SingleContentI>;
 };
 export default function ContentForm({
   selectedMainImage,
   selectedsecondImages,
+  singleContent,
+  mode,
 }: ContentFormProps) {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const subcategories = singleContent?.data?.categories
+    .slice(1)
+    .map((category) => category.id);
+  const tags = singleContent?.data?.tags.map((tags) => tags.id);
 
   const methods = useForm<Inputs>({
     resolver: yupResolver(formContentScherma),
     defaultValues: {
-      title: "",
-      summary: "",
-      ckDescription: "",
-      dateStart: "",
-      dateEnd: "",
-      selectedLable: [],
-      selectedOption: "preview",
-      category: "",
-      subcategory: [],
-      isShare: false,
-      isComment: false,
+      subcategory: singleContent ? subcategories : [],
+      title: singleContent ? singleContent.data?.title : "",
+      summary: singleContent ? singleContent.data?.summary : "",
+      ckDescription: singleContent ? singleContent.data?.description : "",
+      dateStart: singleContent ? singleContent.data?.fromDate : "",
+      dateEnd: singleContent ? singleContent.data?.toDate : "",
+      selectedLable: singleContent ? tags : [],
+      selectedOption: singleContent ? singleContent.data?.status : "Preview",
+      category: singleContent ? singleContent.data?.categories[0].id : "",
+
+      isShare: singleContent ? singleContent.data?.isShareAvailable : false,
+      isComment: singleContent ? singleContent.data?.isCommentAvailable : false,
     },
   });
   const { openModal } = useModal();
@@ -124,6 +138,14 @@ export default function ContentForm({
     mutationFn: contentController.postContent,
   });
 
+  const { mutateAsync: editMutation } = useMutation<
+    HttpApiResponse,
+    unknown,
+    editContentT
+  >({
+    mutationFn: contentController.editContent,
+  });
+
   useEffect(() => {
     setLabelItems(
       data?.data.result.map((item) => ({
@@ -148,7 +170,6 @@ export default function ContentForm({
   const getSubCategories = () => {
     const subCategories: { id: string; title: string }[] = [];
     const id = methods.watch("category");
-
     categorieData?.data?.forEach((category) => {
       if (id === category.id) {
         subCategories.push(...category.subCategories);
@@ -156,52 +177,84 @@ export default function ContentForm({
     });
     return subCategories;
   };
-  getSubCategories();
+
   useEffect(() => {
     const op = getSubCategories();
-    methods.setValue("subcategory", []);
     const subcategoriOP =
       op.map((item) => ({
         value: item.id,
         label: item.title,
       })) ?? [];
-
     setOption2(subcategoriOP);
-  }, [methods.watch("category")]);
+
+    if (mode === "add") {
+      methods.setValue("subcategory", []);
+    }
+  }, [methods.watch("category"), categorieData]);
+
   const goBackHandle = () => {
     navigate("/content");
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const combinedArray = [data.category ?? [], ...(data.subcategory ?? [])];
-    const res = await postMutation({
-      title: data.title,
-      description: data.ckDescription,
-      summary: data.summary,
-      fileId: selectedMainImage ? selectedMainImage : null,
-      fromDate: data.dateStart,
-      toDate: data.dateEnd,
-      isCommentAvailable: data.isComment,
-      isShareAvailable: data.isShare,
-      status: data.selectedOption,
-      categoriesId: combinedArray,
-      tagsId: data.selectedLable,
-      sectionsId: [],
-      fileIds: selectedsecondImages ? selectedsecondImages : [],
-      languageId: "43d6d5de-7f07-ee11-92c2-0050568129d7",
-    });
-    if (res.isSuccess) {
-      toast.custom((t) => (
-        <CustomToast
-          text={SHARED_STRINGS[StringsE.AddContent]}
-          animation={t}
-          status="success"
-        />
-      ));
+    if (mode === "add") {
+      const res = await postMutation({
+        title: data.title,
+        description: data.ckDescription,
+        summary: data.summary,
+        fileId: selectedMainImage ? selectedMainImage : null,
+        fromDate: data.dateStart,
+        toDate: data.dateEnd,
+        isCommentAvailable: data.isComment,
+        isShareAvailable: data.isShare,
+        status: data.selectedOption,
+        categoriesId: combinedArray,
+        tagsId: data.selectedLable,
+        sectionsId: [],
+        fileIds: selectedsecondImages ? selectedsecondImages : [],
+        languageId: "43d6d5de-7f07-ee11-92c2-0050568129d7",
+      });
+      if (res.isSuccess) {
+        methods.reset();
+        navigate("/content");
+        toast.custom((t) => (
+          <CustomToast
+            text={SHARED_STRINGS[StringsE.AddContent]}
+            animation={t}
+            status="success"
+          />
+        ));
+      }
+    } else {
+      const res = await editMutation({
+        id: id,
+        title: data.title,
+        description: data.ckDescription,
+        summary: data.summary,
+        fileId: selectedMainImage ? selectedMainImage : null,
+        fromDate: data.dateStart,
+        toDate: data.dateEnd,
+        isCommentAvailable: data.isComment,
+        isShareAvailable: data.isShare,
+        status: data.selectedOption,
+        categoriesId: combinedArray,
+        tagsId: data.selectedLable,
+        sectionsId: [],
+        fileIds: selectedsecondImages ? selectedsecondImages : [],
+      });
+      if (res.isSuccess) {
+        navigate("/content");
+        toast.custom((t) => (
+          <CustomToast
+            text={SHARED_STRINGS[StringsE.EditContent]}
+            animation={t}
+            status="success"
+          />
+        ));
+      }
     }
-    console.log(res);
   };
-
   return (
     <div className="flex justify-center items-center w-full h-full overflow-auto">
       <FormProvider {...methods}>
@@ -301,10 +354,10 @@ export default function ContentForm({
                 placeholder="دسته بندی‌ها*"
                 isMulti={false}
                 error={methods.formState.errors.category}
+                width={47.5}
               />
-
               <MyDropDown
-                value={methods.watch("subcategory")}
+                value={methods.getValues("subcategory")}
                 onChange={(value) => {
                   methods.setValue("subcategory", value as string[]);
                   methods.clearErrors("subcategory");
@@ -313,6 +366,7 @@ export default function ContentForm({
                 placeholder="زیر دسته بندی‌ها*"
                 isMulti={true}
                 error={methods.formState.errors.subcategory as FieldError}
+                width={47.5}
               />
             </div>
 
@@ -370,7 +424,7 @@ export default function ContentForm({
                   type="submit"
                   className="w-[180px]"
                   model="fill_blue"
-                  title={"افزودن"}
+                  title={mode === "add" ? "افزودن" : "ویرایش"}
                 />
               </div>
             </div>

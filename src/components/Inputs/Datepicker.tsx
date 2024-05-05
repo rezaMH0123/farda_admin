@@ -31,7 +31,7 @@ const Datepicker: FC<{
         color: "#423B6F",
         margin: "0px",
       }}
-      value={value}
+      value={new Date(value)}
       placeholder="از تاریخ"
       onChange={(date: DateObject) => {
         if (date) {

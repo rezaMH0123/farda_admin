@@ -52,17 +52,21 @@ const MyDropDown = ({
 }: SelectInputProps) => {
   const valueObj = isMulti
     ? value
-      ? (value as string[]).map((item) => {
-          return options?.find((o) => o.value === item) || [];
-        })
+      ? (value as string[])
+          .map((item) => {
+            return options?.find((o) => o.value === item) || "";
+          })
+          .filter((val) => val !== "")
       : []
     : options?.find((item) => item.value === value);
+
   return (
     <div className="h-[38px]" style={{ width: `${width}%` }}>
       <div className="w-full h-full">
         <Select
           options={options}
           onChange={(data) => {
+            console.log(data);
             if (isMulti) {
               onChange((data as OptionType[]).map((item) => item.value));
             } else {

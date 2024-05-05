@@ -15,6 +15,7 @@ enum StringsE {
   Delete,
   Previw,
   Realease,
+  EditButton,
 
   // signin page
   INSFardaAdminPanel,
@@ -47,6 +48,7 @@ enum StringsE {
   MostImportant,
   Sports,
   AddContent,
+  EditContent,
 
   // manage file section
   ManageFiles,

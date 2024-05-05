@@ -7,11 +7,13 @@ import { HttpApiResponse } from "@/types/httpResponse";
 import { Advertisement } from "@/types/models/Content.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RowContent: FC<{ keyName: string } & Advertisement> = ({
   keyName,
   ...props
 }) => {
+  const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [deleteItemTitle, setDeleteItemTitle] = useState<string>();
   const [deleteItemId, setDeleteItemId] = useState<string>();
@@ -68,7 +70,9 @@ const RowContent: FC<{ keyName: string } & Advertisement> = ({
       </div>
       <div className="flex items-center justify-end gap-x-4  w-[15%] h-[40px]">
         <Edit
-          onClick={() => console.log(`edit:${props.id}`)}
+          onClick={() => {
+            navigate(`edit/${props.id}`);
+          }}
           className="cursor-pointer fill-Green-G1"
         />
         <RecycleBin

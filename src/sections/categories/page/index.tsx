@@ -3,7 +3,9 @@ import Modal from "@/components/Modal";
 import TableWithApi from "@/components/TableWithApi";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { CategorieController } from "@/controllers/categorie.contoroller";
-import { CategorieItem, CategoryMain } from "@/types/models/Categories.type";
+
+import { CategoryMain } from "@/types/models/Categories.type";
+
 import StringsE from "@/types/strings";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";

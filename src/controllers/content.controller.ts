@@ -1,6 +1,11 @@
 import http from "@/core/services/httpServices";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
-import { Advertisement, postContentT } from "@/types/models/Content.type";
+import {
+  Advertisement,
+  SingleContentI,
+  editContentT,
+  postContentT,
+} from "@/types/models/Content.type";
 
 export const contentController = {
   getContent: async (currentPage: number) => {
@@ -41,6 +46,27 @@ export const contentController = {
     } catch (err) {
       console.log(err);
       throw new Error("Failed to post content");
+    }
+  },
+  editContent: async (data: editContentT) => {
+    try {
+      const res = await http.put<HttpApiResponse>("Panel/Content", data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error("Failed to post content");
+    }
+  },
+
+  getContentWithId: async (id: string | undefined) => {
+    try {
+      const res = await http.get<HttpApiResponse<SingleContentI>>(
+        `Panel/Content/${id}`
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error("Failed to fetch content");
     }
   },
 };

@@ -10,6 +10,9 @@ import Categories from "@/sections/categories";
 import Comment from "@/sections/comment";
 import Labels from "@/sections/labels";
 import AddContent from "@/sections/content/AddContent";
+
+import EditContent from "@/sections/content/EditContent";
+
 import CategoryPage from "@/sections/categories/page";
 
 export const router = createBrowserRouter([
@@ -32,6 +35,10 @@ export const router = createBrowserRouter([
                   {
                     path: "add",
                     element: <AddContent />,
+                  },
+                  {
+                    path: "edit/:id",
+                    element: <EditContent />,
                   },
                 ],
               },
