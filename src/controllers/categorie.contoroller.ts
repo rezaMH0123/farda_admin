@@ -1,10 +1,12 @@
 import http from "@/core/services/httpServices";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
+
 import {
   CategorieItem,
   CategoryMain,
   CategoryPostT,
 } from "@/types/models/Categories.type";
+
 import { AxiosError } from "axios";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
@@ -13,7 +15,7 @@ import { ErrorToast, SuccessToast } from "@/components/Toast";
 export const CategorieController = {
   getCategorie: async () => {
     try {
-      const res = await http.get<HttpApiResponse<CategorieItem[]>>(
+      const res = await http.get<HttpApiResponse<CategoryMain>>(
         "Panel/Category/GetCategories"
       );
       return res.data;

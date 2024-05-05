@@ -53,6 +53,7 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.AddContent]: "محتوا با موفیت اضافه شد",
   [StringsE.EditContent]: "محتوا با موفیت ویرایش شد",
 
+
   // manage file section
   [StringsE.ManageFiles]: "مدیریت فایل‌ها",
   [StringsE.Photo]: "عکس",

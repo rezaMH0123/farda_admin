@@ -9,7 +9,9 @@ import { HttpApiResponse } from "@/types/httpResponse";
 import { CategoryMain } from "@/types/models/Categories.type";
 import StringsE from "@/types/strings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { FC, useState } from "react";
+
 
 type Props = {
   modal: boolean;
@@ -18,6 +20,7 @@ type Props = {
 
 const RowCategory: FC<{ keyName: string } & Props & CategoryMain> = ({
   keyName,
+
   ...props
 }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
