@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import ContentForm from "@/components/Form/ContentForm";
 import PlusIcon from "@/components/Icons/PlusIcon";
+import Loading from "@/components/Loading";
 import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import UploadFile from "@/components/UploadFile";
@@ -72,7 +73,7 @@ export default function EditContent() {
     <div className="h-full">
       {singleContentLoading ? (
         <div className="w-full h-full flex justify-center items-center">
-          loading...
+          <Loading className="bg-Black-B2" />
         </div>
       ) : (
         <ContentForm
