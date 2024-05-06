@@ -22,6 +22,10 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Goback]: "بازگشت",
   [StringsE.Title]: "عنوان",
   [StringsE.Summery]: "خلاصه",
+  [StringsE.Publish]: "منتشر شده",
+  [StringsE.NoPublish]: "منتشر نشده",
+  [StringsE.Can]: "می شود",
+  [StringsE.Cant]: "نمی شود",
 
   // singin page
   [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",

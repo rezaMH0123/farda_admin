@@ -20,6 +20,10 @@ enum StringsE {
   Goback,
   Title,
   Summery,
+  Publish,
+  NoPublish,
+  Can,
+  Cant,
 
   // signin page
   INSFardaAdminPanel,
