@@ -36,6 +36,7 @@ export default function EditContent() {
     queryKey: ["singleContent", id],
     queryFn: () => contentController.getContentWithId(id),
     retry: false,
+    refetchOnWindowFocus: true,
   });
 
   const { data } = useQuery<HttpResponseList<FilesI>>({

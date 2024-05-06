@@ -12,7 +12,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import LableSelected from "@/sections/content/components/LableSelected";
 import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
 import { TagsI } from "@/types/models/Tags.type";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { TagsController } from "@/controllers/tags.contoroller";
 import { useEffect, useState } from "react";
 import MyDropDown from "../DropDown";
@@ -104,7 +104,7 @@ export default function ContentForm({
     },
   });
   const { openModal } = useModal();
-
+  const queryClient = useQueryClient();
   const [labelItems, setLabelItems] = useState<LabelItem[] | undefined>();
   const [option1, setOption1] = useState<{ value: string; label: string }[]>(
     []
@@ -252,6 +252,8 @@ export default function ContentForm({
             status="success"
           />
         ));
+        const queryKey = ["singleContent", id] as const;
+        await queryClient.invalidateQueries({ queryKey });
       }
     }
   };
