@@ -18,6 +18,10 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Previw]: "پیش‌نمایش",
   [StringsE.Realease]: "انتشار",
   [StringsE.EditButton]: "ویرایش",
+  [StringsE.UploadFile]: "بارگذاری فایل",
+  [StringsE.Goback]: "بازگشت",
+  [StringsE.Title]: "عنوان",
+  [StringsE.Summery]: "خلاصه",
 
   // singin page
   [StringsE.INSFardaAdminPanel]: "پنل ادمین بیمه هوشمند فردا",
@@ -39,7 +43,6 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.OriginalCoverPhoto]: "عکس کاور اصلی",
   [StringsE.ManageFile]: "مدیریت فایل",
   [StringsE.PhotosAndFiles]: "عکس‌ و فایل‌ها",
-  [StringsE.Title]: "عنوان",
   [StringsE.Status]: "وضعیت",
   [StringsE.Commenting]: "کامنت‌گذاری",
   [StringsE.Operation]: "عملیات",
@@ -52,7 +55,9 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.Sports]: "ورزشی",
   [StringsE.AddContent]: "محتوا با موفیت اضافه شد",
   [StringsE.EditContent]: "محتوا با موفیت ویرایش شد",
-
+  [StringsE.DisplayStatus]: "وضعیت نمایش*",
+  [StringsE.Description]: "توضیحات",
+  [StringsE.AddedContent]: "افزودن محتوا",
 
   // manage file section
   [StringsE.ManageFiles]: "مدیریت فایل‌ها",
@@ -70,6 +75,8 @@ const SHARED_STRINGS: Record<StringsE, string> = {
   [StringsE.AddedCategory]: "!دسته بندی با موفقیت اضافه شد",
   [StringsE.EditedCategory]: "!دسته بندی با موفقیت ویرایش شد",
   [StringsE.DeletedCategory]: "!دسته بندی با موفقیت حذف شد",
+  [StringsE.Categorie]: "دسته بندی ها",
+  [StringsE.SubCategorie]: "زیر دسته بندی ها",
 };
 
 export default SHARED_STRINGS;

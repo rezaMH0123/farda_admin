@@ -16,6 +16,10 @@ enum StringsE {
   Previw,
   Realease,
   EditButton,
+  UploadFile,
+  Goback,
+  Title,
+  Summery,
 
   // signin page
   INSFardaAdminPanel,
@@ -36,7 +40,6 @@ enum StringsE {
   OriginalCoverPhoto,
   ManageFile,
   PhotosAndFiles,
-  Title,
   Status,
   Commenting,
   Operation,
@@ -49,6 +52,9 @@ enum StringsE {
   Sports,
   AddContent,
   EditContent,
+  DisplayStatus,
+  Description,
+  AddedContent,
 
   // manage file section
   ManageFiles,
@@ -66,6 +72,8 @@ enum StringsE {
   AddedCategory,
   EditedCategory,
   DeletedCategory,
+  Categorie,
+  SubCategorie,
 }
 
 export default StringsE;

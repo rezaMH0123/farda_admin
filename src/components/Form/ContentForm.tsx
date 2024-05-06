@@ -265,25 +265,25 @@ export default function ContentForm({
           <div className="flex flex-col gap-y-10  w-[90%] h-full py-4 ">
             <div className="h-[25%] mb-4">
               <span className="font-bold text-[20px] text-Black-PrimaryBlack">
-                افزودن محتوا
+                {SHARED_STRINGS[StringsE.AddedContent]}
               </span>
 
               <TextInput
                 type="text"
                 name="title"
-                placeholder="عنوان*"
+                placeholder={`${SHARED_STRINGS[StringsE.Title]}*`}
                 className="mt-4 pr-3"
               />
               <TextInput
                 type="text"
                 name="summary"
-                placeholder="خلاصه*"
+                placeholder={`${SHARED_STRINGS[StringsE.Summery]}*`}
                 className="mt-4 pr-3"
               />
             </div>
             <div className="h-fit  mt-3">
               <span className="font-normal block mb-4 text-Black-B2">
-                توضیحات
+                {SHARED_STRINGS[StringsE.Description]}
               </span>
 
               <CKEditor
@@ -296,7 +296,7 @@ export default function ContentForm({
                 }}
                 data={methods.getValues("ckDescription")}
                 config={{
-                  placeholder: "توضیحات...",
+                  placeholder: `${SHARED_STRINGS[StringsE.Description]}...`,
                 }}
               />
             </div>
@@ -351,7 +351,7 @@ export default function ContentForm({
                   methods.clearErrors("category");
                 }}
                 options={option1}
-                placeholder="دسته بندی‌ها*"
+                placeholder={`${SHARED_STRINGS[StringsE.Categorie]}*‍‍`}
                 isMulti={false}
                 error={methods.formState.errors.category}
                 width={47.5}
@@ -363,7 +363,7 @@ export default function ContentForm({
                   methods.clearErrors("subcategory");
                 }}
                 options={option2}
-                placeholder="زیر دسته بندی‌ها*"
+                placeholder={`${SHARED_STRINGS[StringsE.SubCategorie]}*‍‍`}
                 isMulti={true}
                 error={methods.formState.errors.subcategory as FieldError}
                 width={47.5}
@@ -378,7 +378,7 @@ export default function ContentForm({
                     methods.setValue("isShare", value);
                   }}
                   toggleBackground="#36B37E"
-                  toggleText="قابلیت اشتراک گذاری*"
+                  toggleText={`قابلیت ${SHARED_STRINGS[StringsE.Share]}*`}
                 />
 
                 <SwitchToggle
@@ -387,12 +387,13 @@ export default function ContentForm({
                     methods.setValue("isComment", value);
                   }}
                   toggleBackground="#36B37E"
-                  toggleText="قابلیت کامنت گذاری*"
+                  toggleText={`قابلیت ${SHARED_STRINGS[StringsE.Commenting]}*`}
                 />
               </div>
               <div className="flex items-center gap-x-3">
-                <span className="text-Black-B2">وضعیت نمایش*</span>
-
+                <span className="text-Black-B2">
+                  {SHARED_STRINGS[StringsE.DisplayStatus]}
+                </span>
                 <RadioButton
                   value={methods.watch("selectedOption")}
                   onChange={(value) => {
@@ -408,7 +409,9 @@ export default function ContentForm({
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <div className="w-fit border-b border-Blue-PrimaryBlue">
-                  <span className="text-Blue-PrimaryBlue">بارگذاری فایل</span>
+                  <span className="text-Blue-PrimaryBlue">
+                    {SHARED_STRINGS[StringsE.UploadFile]}
+                  </span>
                 </div>
                 <UploadFile className="fill-Blue-PrimaryBlue" />
               </div>
@@ -418,13 +421,17 @@ export default function ContentForm({
                   onClick={goBackHandle}
                   className="w-[180px]"
                   model="outline_red"
-                  title={"بازگشت"}
+                  title={SHARED_STRINGS[StringsE.Goback]}
                 />
                 <Button
                   type="submit"
                   className="w-[180px]"
                   model="fill_blue"
-                  title={mode === "add" ? "افزودن" : "ویرایش"}
+                  title={
+                    mode === "add"
+                      ? SHARED_STRINGS[StringsE.Add]
+                      : SHARED_STRINGS[StringsE.EditButton]
+                  }
                 />
               </div>
             </div>
