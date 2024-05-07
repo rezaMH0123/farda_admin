@@ -9,12 +9,6 @@ export interface Advertisement {
   isCommentAvailable: boolean;
   isShareAvailable: boolean;
   createdOn: string;
-  language: {
-    id: string;
-    title: string;
-    dir: "Rtl" | "Ltr";
-    shortTitle: string;
-  };
   status: "Preview" | "Publish";
   categories: Category[];
   tags: Tag[];
@@ -34,12 +28,6 @@ export interface SingleContentI {
   isShareAvailable: boolean;
   viewCount: number | null;
   createdOn: string;
-  language: {
-    id: string;
-    title: string;
-    dir: "Rtl" | "Ltr";
-    shortTitle: string;
-  };
   status: string;
   categories: Category[];
   tags: Tag[];
