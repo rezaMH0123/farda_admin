@@ -61,7 +61,12 @@ export const contentController = {
   getContentWithId: async (id: string | undefined) => {
     try {
       const res = await http.get<HttpApiResponse<SingleContentI>>(
-        `Panel/Content/${id}`
+        `Panel/Content/GetById`,
+        {
+          params: {
+            id: id,
+          },
+        }
       );
       return res.data;
     } catch (err) {

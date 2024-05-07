@@ -16,7 +16,7 @@ export const CategorieController = {
   getCategorie: async () => {
     try {
       const res = await http.get<HttpApiResponse<CategorieItem[]>>(
-        "Panel/Category/GetCategories"
+        "Panel/Category/GetWithSubCategories"
       );
       return res.data;
     } catch (err) {
