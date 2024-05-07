@@ -50,6 +50,7 @@ const MyDropDown = ({
   error,
   width,
 }: SelectInputProps) => {
+  isMulti && console.log(value);
   const valueObj = isMulti
     ? value
       ? (value as string[])
@@ -66,7 +67,6 @@ const MyDropDown = ({
         <Select
           options={options}
           onChange={(data) => {
-            console.log(data);
             if (isMulti) {
               onChange((data as OptionType[]).map((item) => item.value));
             } else {

@@ -70,14 +70,12 @@ const formContentScherma = yup.object().shape({
 type ContentFormProps = {
   selectedMainImage?: string | undefined;
   selectedsecondImages: string[];
-  mode: string;
   singleContent?: HttpApiResponse<SingleContentI>;
 };
 export default function ContentForm({
   selectedMainImage,
   selectedsecondImages,
   singleContent,
-  mode,
 }: ContentFormProps) {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -103,6 +101,8 @@ export default function ContentForm({
       isComment: singleContent ? singleContent.data?.isCommentAvailable : false,
     },
   });
+  console.log(methods.getValues("subcategory"));
+
   const { openModal } = useModal();
   const queryClient = useQueryClient();
   const [labelItems, setLabelItems] = useState<LabelItem[] | undefined>();
@@ -187,7 +187,7 @@ export default function ContentForm({
       })) ?? [];
     setOption2(subcategoriOP);
 
-    if (mode === "add") {
+    if (!id) {
       methods.setValue("subcategory", []);
     }
   }, [methods.watch("category"), categorieData]);
@@ -198,7 +198,7 @@ export default function ContentForm({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const combinedArray = [data.category ?? [], ...(data.subcategory ?? [])];
-    if (mode === "add") {
+    if (!id) {
       const res = await postMutation({
         title: data.title,
         description: data.ckDescription,
@@ -430,7 +430,7 @@ export default function ContentForm({
                   className="w-[180px]"
                   model="fill_blue"
                   title={
-                    mode === "add"
+                    !id
                       ? SHARED_STRINGS[StringsE.Add]
                       : SHARED_STRINGS[StringsE.EditButton]
                   }
