@@ -3,6 +3,7 @@ import Pagination from "@/components/Pagination";
 import TailSpinner from "@/components/Loading/TailSpinner";
 import { HttpResponseList } from "@/types/httpResponse";
 import { useQuery } from "@tanstack/react-query";
+import IconChevron from "../Icons/Chevron";
 
 type TableWithApiProps<T> = {
   title: string[];
@@ -34,6 +35,7 @@ export default function TableWithApi<T>({
   const onChangePage = (page: number) => {
     setCurrentPage(page);
   };
+  console.log(data?.data);
 
   return (
     <div className="chartContetnt px-6 h-full w-full">
@@ -55,6 +57,9 @@ export default function TableWithApi<T>({
                     } items-center  w-[15%]`}
                   >
                     <span>{item}</span>
+                    {index < title.length - 1 && (
+                      <IconChevron className="fill-black h-3 w-3 rotate-90 mr-2 cursor-pointer" />
+                    )}
                   </div>
                 )}
               </Fragment>
