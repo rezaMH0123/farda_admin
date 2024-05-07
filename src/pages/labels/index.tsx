@@ -2,9 +2,9 @@ import TableWithApi from "@/components/TableWithApi";
 import { labelController } from "@/controllers/label.controller";
 import { LabelI } from "@/types/models/Label.type";
 import { useState } from "react";
-import LabelHeaderSection from "../../sections/labels/components/Header";
-import RowLabel from "../../sections/labels/components/RowLabel";
-import AddLabelModal from "@/sections/labels/components/AddLabelModal";
+import LabelHeaderSection from "../../sections/labels/Header";
+import RowLabel from "../../sections/labels/RowLabel";
+import AddLabelModal from "@/sections/labels/AddLabelModal";
 
 const chartTitles = ["عنوان", "پین بودن", "عملیات"];
 
