@@ -1,8 +1,8 @@
 import Modal from "@/components/Modal";
-import ManageFileHeaderSection from "./components/Header";
+import ManageFileHeaderSection from "../../sections/manageFiles/Header";
 import { useModal } from "@/context/modalContext";
 import UploadFile from "../../components/UploadFile";
-import ManageFileBody from "./components/Body";
+import ManageFileBody from "../../sections/manageFiles/Body";
 
 export default function ManageFile() {
   const { isUploadFileModal } = useModal();

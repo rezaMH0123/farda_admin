@@ -2,12 +2,12 @@ import Layout from "@/components/Layout";
 import NotFound from "@/pages/NotFound";
 import SignIn from "@/pages/auth/SignIn";
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import ManageFile from "@/sections/manageFiles";
 import Categories from "@/pages/categories";
 import Labels from "@/pages/labels";
 import AddAndEditContentPage from "@/pages/content/AddAndEditContentPage";
 import ContentPage from "@/pages/content";
 import CategoryPage from "@/pages/categories/CategoriePage";
+import ManageFile from "@/pages/manageFiles";
 
 export const router = createBrowserRouter([
   {
