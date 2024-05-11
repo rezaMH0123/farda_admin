@@ -6,6 +6,8 @@ interface GlobalStateContextType {
   setItemFile: React.Dispatch<React.SetStateAction<FilesI | undefined>>;
   tab: "photo" | "file";
   setTab: React.Dispatch<React.SetStateAction<"photo" | "file">>;
+  queryKey: "files" | "images";
+  setQueryKey: React.Dispatch<React.SetStateAction<"files" | "images">>;
 }
 
 type MyComponentProps = {
@@ -29,6 +31,7 @@ export const GlobalStateProvider: React.FC<MyComponentProps> = ({
 }) => {
   const [itemFile, setItemFile] = useState<FilesI | undefined>(undefined);
   const [tab, setTab] = useState<"photo" | "file">("photo");
+  const [queryKey, setQueryKey] = useState<"files" | "images">("images");
 
   return (
     <GlobalStateContext.Provider
@@ -37,6 +40,8 @@ export const GlobalStateProvider: React.FC<MyComponentProps> = ({
         setItemFile,
         tab,
         setTab,
+        queryKey,
+        setQueryKey,
       }}
     >
       {children}
