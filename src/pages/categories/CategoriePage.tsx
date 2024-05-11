@@ -36,8 +36,8 @@ export default function CategoryPage() {
     <div className="h-full">
       <PagesHeaderSection setModal={setModal} title={passedData.title} />
       <TableWithApi<CategoryMain>
-        controller={(currentPage) =>
-          CategorieController.getChilds(passedData.id, currentPage)
+        controller={(currentPage, isPin) =>
+          CategorieController.getChilds(passedData.id, currentPage, isPin)
         }
         title={chartTitles}
         keyNme="category"

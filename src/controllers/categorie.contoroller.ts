@@ -50,7 +50,11 @@ export const CategorieController = {
       throw new Error("Failed to fetch category");
     }
   },
-  getChilds: async (parentId: string, Page: number) => {
+  getChilds: async (
+    parentId: string,
+    Page: number,
+    isPin?: string | boolean | undefined | null
+  ) => {
     try {
       const res = await http.get<HttpResponseList<CategoryMain>>(
         "Panel/Category/GetChilds",
@@ -59,6 +63,7 @@ export const CategorieController = {
             parentId,
             Size: 6,
             Page,
+            IsPin: isPin,
             Sort: "createdOn desc",
           },
         }
