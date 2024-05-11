@@ -54,6 +54,7 @@ export default function TableWithApi<T>({
 
     retry: false,
   });
+  console.log(isPin);
 
   const [allPage, setAllPage] = useState<number | undefined>();
 
@@ -68,7 +69,6 @@ export default function TableWithApi<T>({
   };
 
   const filterOnChange = (data: string | boolean) => {
-    // console.log(data);
     if (typeof data === "boolean") {
       if (filterState === 2) {
         setIsShareAvailable(data);
@@ -84,7 +84,7 @@ export default function TableWithApi<T>({
       } else if (data === "" && filterState === 3) {
         setIsCommentable(undefined);
       }
-      setIsPin(null);
+      setIsPin(undefined);
     }
     setFilterState(0);
   };
