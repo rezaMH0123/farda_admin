@@ -7,7 +7,20 @@ import { CategoryMain } from "@/types/models/Categories.type";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-const chartTitles = ["عنوان", "پین بودن", "عملیات"];
+const chartTitles = [
+  {
+    title: "عنوان",
+    value: null,
+  },
+  {
+    title: "پین بودن",
+    value: [true, false],
+  },
+  {
+    title: "عملیات",
+    value: null,
+  },
+];
 
 export default function CategoryPage() {
   const [modal, setModal] = useState<boolean>(false);
