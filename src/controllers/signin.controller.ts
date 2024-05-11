@@ -7,10 +7,7 @@ import { AxiosError } from "axios";
 
 export async function SigninController(data: SigninI) {
   try {
-    const res = await http.post("Panel/Login", {
-      username: data.username,
-      password: data.password,
-    });
+    const res = await http.post("Panel/Login", data);
     SuccessToast(SHARED_STRINGS[StringsE.SigninSuccessMessage]);
     return res.data;
   } catch (err) {

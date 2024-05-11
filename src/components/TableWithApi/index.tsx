@@ -3,11 +3,21 @@ import Pagination from "@/components/Pagination";
 import TailSpinner from "@/components/Loading/TailSpinner";
 import { HttpResponseList } from "@/types/httpResponse";
 import { useQuery } from "@tanstack/react-query";
+import IconChevron from "../Icons/Chevron";
+import FilterDropDown from "../FilterDropDown";
 
 type TableWithApiProps<T> = {
-  title: string[];
+  title: {
+    title: string;
+    value: string[] | boolean[] | null;
+  }[];
   children: (row: T) => ReactElement | ReactElement[];
-  controller: (currentPage: number) => Promise<HttpResponseList<T>>;
+  controller: (
+    currentPage: number,
+    IsShareAvailable?: boolean | null,
+    IsCommentAvailable?: boolean | null,
+    Status?: string
+  ) => Promise<HttpResponseList<T>>;
   keyNme: string;
 };
 
@@ -18,12 +28,33 @@ export default function TableWithApi<T>({
   keyNme,
 }: TableWithApiProps<T>) {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [filterState, setFilterState] = useState<number>(0);
+  const [isShareAvailable, setIsShareAvailable] = useState<
+    boolean | null | undefined
+  >(null);
+  const [isCommentable, setIsCommentable] = useState<
+    boolean | null | undefined
+  >(null);
+  const [isPin, setIsPin] = useState<boolean | null | undefined>(undefined);
+  const [status, setStatus] = useState<string | undefined>("");
 
   const { data, isLoading } = useQuery<HttpResponseList<T>>({
-    queryKey: [keyNme, currentPage],
-    queryFn: () => controller(currentPage),
+    queryKey: [
+      keyNme,
+      currentPage,
+      isShareAvailable,
+      isCommentable,
+      status,
+      isPin,
+    ],
+    queryFn: () =>
+      isPin !== undefined
+        ? controller(currentPage, isPin)
+        : controller(currentPage, isShareAvailable, isCommentable, status),
+
     retry: false,
   });
+
   const [allPage, setAllPage] = useState<number | undefined>();
 
   useEffect(() => {
@@ -31,10 +62,31 @@ export default function TableWithApi<T>({
       setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
   }, [data]);
+
   const onChangePage = (page: number) => {
     setCurrentPage(page);
   };
 
+  const filterOnChange = (data: string | boolean) => {
+    if (typeof data === "boolean") {
+      if (filterState === 2) {
+        setIsShareAvailable(data);
+      } else if (filterState === 3) {
+        setIsCommentable(data);
+      }
+      setIsPin(data);
+    } else {
+      if (filterState === 1) {
+        setStatus(data);
+      } else if (data === "" && filterState === 2) {
+        setIsShareAvailable(undefined);
+      } else if (data === "" && filterState === 3) {
+        setIsCommentable(undefined);
+      }
+      setIsPin(undefined);
+    }
+    setFilterState(0);
+  };
   return (
     <div className="chartContetnt px-6 h-full w-full">
       <div className="headChart flex h-[60px] font-medium pt-3 text-Black-B2">
@@ -44,17 +96,38 @@ export default function TableWithApi<T>({
               <Fragment key={index}>
                 {index < 1 ? (
                   <div className="flex items-center w-[40%]">
-                    <span className="mr-5 ">{item}</span>
+                    <span className="mr-5 ">{item.title}</span>
                   </div>
                 ) : (
                   <div
+                    onClick={() => {
+                      index < title.length - 1 && setFilterState(index);
+                    }}
                     className={`flex ${
                       index === title.length - 1
                         ? "justify-end"
                         : "justify-center"
-                    } items-center  w-[15%]`}
+                    } items-center  w-[15%] cursor-pointer relative`}
                   >
-                    <span>{item}</span>
+                    <span>{item.title}</span>
+                    {index < title.length - 1 && (
+                      <IconChevron className="fill-black h-3 w-3 rotate-90 mr-2 cursor-pointer" />
+                    )}
+
+                    {index === filterState && (
+                      <FilterDropDown
+                        option={item.value}
+                        setFilterState={setFilterState}
+                        onChange={filterOnChange}
+                        selected={
+                          filterState === 1
+                            ? status
+                            : filterState === 2
+                            ? isShareAvailable
+                            : isCommentable
+                        }
+                      />
+                    )}
                   </div>
                 )}
               </Fragment>
@@ -65,7 +138,10 @@ export default function TableWithApi<T>({
             {title.map((item, index) => (
               <div
                 key={index}
-                className={`flex items-center ${
+                onClick={() => {
+                  index < title.length - 1 && setFilterState(index);
+                }}
+                className={`flex items-center  ${
                   index === 0
                     ? "justify-start"
                     : index === title.length - 1
@@ -73,7 +149,21 @@ export default function TableWithApi<T>({
                     : "justify-center"
                 }  flex-1`}
               >
-                <span className="mr-5 ">{item}</span>
+                <span className="mr-5 relative">
+                  {item.title}
+                  {index > 0 && index === filterState && (
+                    <FilterDropDown
+                      option={item.value}
+                      setFilterState={setFilterState}
+                      onChange={filterOnChange}
+                      selected={isPin}
+                    />
+                  )}
+                </span>
+
+                {index == 1 && (
+                  <IconChevron className="fill-black h-3 w-3 rotate-90 mr-2 cursor-pointer" />
+                )}
               </div>
             ))}
           </>
@@ -86,13 +176,15 @@ export default function TableWithApi<T>({
             <TailSpinner />
           </div>
         ) : (
-          <div className="flex flex-col gap-y-2">
-            {data ? (
+          <div className="flex flex-col gap-y-2 h-full mt-4">
+            {data && data?.data.totalRowCount !== 0 ? (
               data?.data?.result?.map((item, index) => (
                 <div key={index}>{children(item)}</div>
               ))
             ) : (
-              <div>empty state</div>
+              <div className="flex justify-center items-center h-full">
+                empty state
+              </div>
             )}
           </div>
         )}

@@ -2,9 +2,11 @@ import Edit from "@/components/Icons/Edit";
 import RecycleBin from "@/components/Icons/RecycleBin";
 import Modal from "@/components/Modal";
 import DeleteModal from "@/components/Modal/DeleteModal";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { contentController } from "@/controllers/content.controller";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { Advertisement } from "@/types/models/Content.type";
+import StringsE from "@/types/strings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -60,13 +62,19 @@ const RowContent: FC<{ keyName: string } & Advertisement> = ({
           : props.title}
       </div>
       <div className="flex items-center justify-center  w-[15%] h-[40px]">
-        {props.status === "Publish" ? "منتشر شده" : "منتشر نشده"}
+        {props.status === "Publish"
+          ? SHARED_STRINGS[StringsE.Publish]
+          : SHARED_STRINGS[StringsE.NoPublish]}
       </div>
       <div className="flex items-center justify-center  w-[15%] h-[40px]">
-        {props.isShareAvailable ? "می شود" : "نمی شود"}
+        {props.isShareAvailable
+          ? SHARED_STRINGS[StringsE.Can]
+          : SHARED_STRINGS[StringsE.Cant]}
       </div>
       <div className="flex items-center justify-center  w-[15%] h-[40px]">
-        {props.isCommentAvailable ? "می شود" : "نمی شود"}
+        {props.isCommentAvailable
+          ? SHARED_STRINGS[StringsE.Can]
+          : SHARED_STRINGS[StringsE.Cant]}
       </div>
       <div className="flex items-center justify-end gap-x-4  w-[15%] h-[40px]">
         <Edit

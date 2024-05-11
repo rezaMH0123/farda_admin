@@ -15,9 +15,9 @@ import { useMutation } from "@tanstack/react-query";
 import { SigninController } from "@/controllers/signin.controller";
 import { HttpApiResponse } from "@/types/httpResponse";
 import { SiginData } from "@/types/signin";
-import "../../../yup.config";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
+import "../../../yup.config";
 
 const siginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -29,6 +29,10 @@ export default function SignInForm() {
   const navigate = useNavigate();
   const methods = useForm<SigninI>({
     resolver: yupResolver(siginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
 
   const { mutateAsync: signinMutate, isPending } = useMutation<
@@ -43,7 +47,7 @@ export default function SignInForm() {
     const res = await signinMutate(inputsData);
     console.log(res);
     if (res.data && res.isSuccess) {
-      const access_token = res.data.access_token;
+      const access_token = res.data.tokenResponse.access_token;
       console.log(access_token);
       SetToStorage({
         key: "access_token",

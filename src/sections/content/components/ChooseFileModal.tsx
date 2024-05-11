@@ -1,34 +1,39 @@
 import Button from "@/components/Button";
+import PlusIcon from "@/components/Icons/PlusIcon";
 import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
+import SHARED_STRINGS from "@/constants/strings/shared.string";
+import { useGlobalState } from "@/context/globalStateContext";
 import { useModal } from "@/context/modalContext";
-import PlusIcon from "@/components/Icons/PlusIcon";
-import "animate.css";
-import UploadFile from "@/components/UploadFile";
+import { fileController } from "@/controllers/file.controller";
 import { HttpResponseList } from "@/types/httpResponse";
 import { FilesI } from "@/types/models/Files.type";
-import { fileController } from "@/controllers/file.controller";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
-import ContentForm from "@/components/Form/ContentForm";
+import { useQuery } from "@tanstack/react-query";
+import { Fragment } from "react/jsx-runtime";
 
-export default function AddContent() {
-  const {
-    isModalOpen,
-    openUploadFileModal,
-    isUploadFileModal,
-    closeUploadFileModal,
-    closeModal,
-  } = useModal();
-  const [selectedMainImage, setSelectedMainImage] = useState<string>();
-  const [selectedsecondImages, setSelectedsecondImages] = useState<string[]>(
-    []
-  );
+type ChooseFileModalProps = {
+  selectedMainImage: string | undefined;
+
+  setSelectedMainImage: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
+  selectedsecondImages: string[];
+  setSelectedsecondImages: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export default function ChooseFileModal({
+  setSelectedMainImage,
+  setSelectedsecondImages,
+  selectedMainImage,
+  selectedsecondImages,
+}: ChooseFileModalProps) {
+  const { isModalOpen, openUploadFileModal, closeModal } = useModal();
+
+  const { queryKey } = useGlobalState();
 
   const { data } = useQuery<HttpResponseList<FilesI>>({
-    queryKey: ["manage_file"],
+    queryKey: [queryKey],
     queryFn: () => fileController.getFiles(1, 1000000),
     retry: false,
     refetchOnWindowFocus: true,
@@ -41,12 +46,7 @@ export default function AddContent() {
   };
 
   return (
-    <div className="h-full">
-      <ContentForm
-        selectedMainImage={selectedMainImage}
-        selectedsecondImages={selectedsecondImages}
-        mode="add"
-      />
+    <Fragment>
       {isModalOpen && (
         <>
           <Modal width={70} height={90}>
@@ -110,21 +110,6 @@ export default function AddContent() {
           </Modal>
         </>
       )}
-
-      {isUploadFileModal && (
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50  flex justify-center items-center z-40">
-          <div
-            onClick={(e) => {
-              closeUploadFileModal();
-              e.stopPropagation;
-            }}
-            className="w-full h-full absolute top-0 left-0"
-          ></div>
-          <div className="animate__animated animate__fadeInUp w-[35%] h-[55%] bg-W1 rounded-md z-50">
-            <UploadFile />
-          </div>
-        </div>
-      )}
-    </div>
+    </Fragment>
   );
 }

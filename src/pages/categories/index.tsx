@@ -17,8 +17,6 @@ export default function Categories() {
     refetchOnWindowFocus: true,
   });
 
-  console.log(data);
-
   return (
     <div
       dir="rtl"

@@ -16,7 +16,7 @@ export const CategorieController = {
   getCategorie: async () => {
     try {
       const res = await http.get<HttpApiResponse<CategorieItem[]>>(
-        "Panel/Category/GetCategories"
+        "Panel/Category/GetWithSubCategories"
       );
       return res.data;
     } catch (err) {
@@ -50,7 +50,11 @@ export const CategorieController = {
       throw new Error("Failed to fetch category");
     }
   },
-  getChilds: async (parentId: string, Page: number) => {
+  getChilds: async (
+    parentId: string,
+    Page: number,
+    isPin?: string | boolean | undefined | null
+  ) => {
     try {
       const res = await http.get<HttpResponseList<CategoryMain>>(
         "Panel/Category/GetChilds",
@@ -59,6 +63,7 @@ export const CategorieController = {
             parentId,
             Size: 6,
             Page,
+            IsPin: isPin,
             Sort: "createdOn desc",
           },
         }
@@ -103,7 +108,11 @@ export const CategorieController = {
   },
   deleteCategory: async (id: string) => {
     try {
-      const res = await http.delete<HttpApiResponse>(`Panel/Category/${id}`);
+      const res = await http.delete<HttpApiResponse>("Panel/Category", {
+        params: {
+          id,
+        },
+      });
       SuccessToast(SHARED_STRINGS[StringsE.DeletedCategory]);
       return res.data;
     } catch (err) {

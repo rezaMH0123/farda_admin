@@ -18,8 +18,8 @@ type Props = {
 
 const RowLabel: FC<{ keyName: string } & Props & LabelI> = ({
   keyName,
-  modal,
-  setModal,
+  // modal,
+  // setModal,
   ...props
 }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);

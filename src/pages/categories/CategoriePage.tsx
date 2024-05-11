@@ -1,18 +1,26 @@
-import CategoryForm from "@/components/Form/CategoryForm";
-import Modal from "@/components/Modal";
 import TableWithApi from "@/components/TableWithApi";
-import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { CategorieController } from "@/controllers/categorie.contoroller";
-
+import AddCategorieModal from "@/sections/categories/AddCategorieModal";
+import PagesHeaderSection from "@/sections/categories/Header";
+import RowCategory from "@/sections/categories/RowCategory";
 import { CategoryMain } from "@/types/models/Categories.type";
-
-import StringsE from "@/types/strings";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import PagesHeaderSection from "../components/Header";
-import RowCategory from "../components/RowCategory";
 
-const chartTitles = ["عنوان", "پین بودن", "عملیات"];
+const chartTitles = [
+  {
+    title: "عنوان",
+    value: null,
+  },
+  {
+    title: "پین بودن",
+    value: [true, false],
+  },
+  {
+    title: "عملیات",
+    value: null,
+  },
+];
 
 export default function CategoryPage() {
   const [modal, setModal] = useState<boolean>(false);
@@ -28,8 +36,8 @@ export default function CategoryPage() {
     <div className="h-full">
       <PagesHeaderSection setModal={setModal} title={passedData.title} />
       <TableWithApi<CategoryMain>
-        controller={(currentPage) =>
-          CategorieController.getChilds(passedData.id, currentPage)
+        controller={(currentPage, isPin) =>
+          CategorieController.getChilds(passedData.id, currentPage, isPin)
         }
         title={chartTitles}
         keyNme="category"
@@ -43,16 +51,7 @@ export default function CategoryPage() {
           />
         )}
       </TableWithApi>
-
-      {modal && (
-        <Modal onCloseModal={HandleCloseModal} height={45} width={30}>
-          <CategoryForm
-            onCloseModal={HandleCloseModal}
-            title={SHARED_STRINGS[StringsE.Add]}
-            controller="post"
-          />
-        </Modal>
-      )}
+      <AddCategorieModal isModal={modal} HandleCloseModal={HandleCloseModal} />
     </div>
   );
 }

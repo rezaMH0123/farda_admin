@@ -1,15 +1,25 @@
-import TagForm from "@/components/Form/TagForm";
-import Modal from "@/components/Modal";
 import TableWithApi from "@/components/TableWithApi";
-import SHARED_STRINGS from "@/constants/strings/shared.string";
 import { labelController } from "@/controllers/label.controller";
 import { LabelI } from "@/types/models/Label.type";
-import StringsE from "@/types/strings";
 import { useState } from "react";
-import LabelHeaderSection from "./components/Header";
-import RowLabel from "./components/RowLabel";
+import LabelHeaderSection from "../../sections/labels/Header";
+import RowLabel from "../../sections/labels/RowLabel";
+import AddLabelModal from "@/sections/labels/AddLabelModal";
 
-const chartTitles = ["عنوان", "پین بودن", "عملیات"];
+const chartTitles = [
+  {
+    title: "عنوان",
+    value: null,
+  },
+  {
+    title: "پین بودن",
+    value: [true, false],
+  },
+  {
+    title: "عملیات",
+    value: null,
+  },
+];
 
 export default function Labels() {
   const [modal, setModal] = useState<boolean>(false);
@@ -33,16 +43,7 @@ export default function Labels() {
           <RowLabel modal={modal} setModal={setModal} keyName="tags" {...row} />
         )}
       </TableWithApi>
-
-      {modal && (
-        <Modal onCloseModal={HandleCloseModal} height={45} width={30}>
-          <TagForm
-            onCloseModal={HandleCloseModal}
-            title={SHARED_STRINGS[StringsE.Add]}
-            controller="post"
-          />
-        </Modal>
-      )}
+      <AddLabelModal isModal={modal} HandleCloseModal={HandleCloseModal} />
     </div>
   );
 }
