@@ -6,7 +6,20 @@ import LabelHeaderSection from "../../sections/labels/Header";
 import RowLabel from "../../sections/labels/RowLabel";
 import AddLabelModal from "@/sections/labels/AddLabelModal";
 
-const chartTitles = ["عنوان", "پین بودن", "عملیات"];
+const chartTitles = [
+  {
+    title: "عنوان",
+    value: null,
+  },
+  {
+    title: "پین بودن",
+    value: [true, false],
+  },
+  {
+    title: "عملیات",
+    value: null,
+  },
+];
 
 export default function Labels() {
   const [modal, setModal] = useState<boolean>(false);

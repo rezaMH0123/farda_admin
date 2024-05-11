@@ -8,8 +8,14 @@ import {
 } from "@/types/models/Content.type";
 
 export const contentController = {
-  getContent: async (currentPage: number) => {
+  getContent: async (
+    currentPage: number,
+    IsShareAvailable?: boolean | null,
+    IsCommentAvailable?: boolean | null,
+    Status?: string | null | undefined
+  ) => {
     try {
+      console.log(IsShareAvailable);
       const res = await http.get<HttpResponseList<Advertisement>>(
         "Panel/Content",
         {
@@ -17,6 +23,11 @@ export const contentController = {
             Size: 6,
             Page: currentPage,
             Sort: "createdOn desc",
+            IsShareAvailable:
+              IsShareAvailable !== undefined ? IsShareAvailable : null,
+            IsCommentAvailable:
+              IsCommentAvailable !== undefined ? IsCommentAvailable : null,
+            Status: Status !== undefined ? Status : null,
           },
         }
       );

@@ -8,11 +8,26 @@ import StringsE from "@/types/strings";
 
 export default function Content() {
   const chartTitles = [
-    "عنوان",
-    "وضعیت",
-    "اشتراک گذاری",
-    "کامنت گذاری",
-    "عملیات",
+    {
+      title: "عنوان",
+      value: null,
+    },
+    {
+      title: "وضعیت",
+      value: ["Publish", "Preview"],
+    },
+    {
+      title: "اشتراک گذاری",
+      value: [true, false],
+    },
+    {
+      title: "کامنت گذاری",
+      value: [true, false],
+    },
+    {
+      title: "عملیات",
+      value: null,
+    },
   ];
 
   return (

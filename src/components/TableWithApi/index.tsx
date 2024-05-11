@@ -4,11 +4,20 @@ import TailSpinner from "@/components/Loading/TailSpinner";
 import { HttpResponseList } from "@/types/httpResponse";
 import { useQuery } from "@tanstack/react-query";
 import IconChevron from "../Icons/Chevron";
+import FilterDropDown from "../FilterDropDown";
 
 type TableWithApiProps<T> = {
-  title: string[];
+  title: {
+    title: string;
+    value: string[] | boolean[] | null;
+  }[];
   children: (row: T) => ReactElement | ReactElement[];
-  controller: (currentPage: number) => Promise<HttpResponseList<T>>;
+  controller: (
+    currentPage: number,
+    IsShareAvailable?: boolean | null,
+    IsCommentAvailable?: boolean | null,
+    Status?: string
+  ) => Promise<HttpResponseList<T>>;
   keyNme: string;
 };
 
@@ -19,10 +28,19 @@ export default function TableWithApi<T>({
   keyNme,
 }: TableWithApiProps<T>) {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [filterState, setFilterState] = useState<number>(0);
+  const [isShareAvailable, setIsShareAvailable] = useState<
+    boolean | null | undefined
+  >(null);
+  const [isCommentable, setIsCommentable] = useState<
+    boolean | null | undefined
+  >(null);
+  const [status, setStatus] = useState<string | undefined>();
 
   const { data, isLoading } = useQuery<HttpResponseList<T>>({
-    queryKey: [keyNme, currentPage],
-    queryFn: () => controller(currentPage),
+    queryKey: [keyNme, currentPage, isShareAvailable, isCommentable, status],
+    queryFn: () =>
+      controller(currentPage, isShareAvailable, isCommentable, status),
     retry: false,
   });
   const [allPage, setAllPage] = useState<number | undefined>();
@@ -32,11 +50,29 @@ export default function TableWithApi<T>({
       setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
     }
   }, [data]);
+
   const onChangePage = (page: number) => {
     setCurrentPage(page);
   };
-  console.log(data?.data);
 
+  const filterOnChange = (data: string | boolean) => {
+    console.log(data);
+    if (typeof data === "boolean") {
+      if (filterState === 2) {
+        setIsShareAvailable(data);
+      } else if (filterState === 3) {
+        setIsCommentable(data);
+      }
+    } else {
+      if (filterState === 1) {
+        setStatus(data);
+      } else if (data === "" && filterState === 2) {
+        setIsShareAvailable(undefined);
+      } else if (data === "" && filterState === 3) {
+        setIsCommentable(undefined);
+      }
+    }
+  };
   return (
     <div className="chartContetnt px-6 h-full w-full">
       <div className="headChart flex h-[60px] font-medium pt-3 text-Black-B2">
@@ -46,19 +82,30 @@ export default function TableWithApi<T>({
               <Fragment key={index}>
                 {index < 1 ? (
                   <div className="flex items-center w-[40%]">
-                    <span className="mr-5 ">{item}</span>
+                    <span className="mr-5 ">{item.title}</span>
                   </div>
                 ) : (
                   <div
+                    onClick={() => {
+                      index < title.length - 1 && setFilterState(index);
+                    }}
                     className={`flex ${
                       index === title.length - 1
                         ? "justify-end"
                         : "justify-center"
-                    } items-center  w-[15%]`}
+                    } items-center  w-[15%] cursor-pointer relative`}
                   >
-                    <span>{item}</span>
+                    <span>{item.title}</span>
                     {index < title.length - 1 && (
                       <IconChevron className="fill-black h-3 w-3 rotate-90 mr-2 cursor-pointer" />
+                    )}
+
+                    {index === filterState && (
+                      <FilterDropDown
+                        option={item.value}
+                        setFilterState={setFilterState}
+                        onChange={filterOnChange}
+                      />
                     )}
                   </div>
                 )}
@@ -78,7 +125,7 @@ export default function TableWithApi<T>({
                     : "justify-center"
                 }  flex-1`}
               >
-                <span className="mr-5 ">{item}</span>
+                <span className="mr-5 ">{item.title}</span>
               </div>
             ))}
           </>
