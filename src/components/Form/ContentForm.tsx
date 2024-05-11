@@ -33,7 +33,7 @@ import {
 } from "@/types/models/Content.type";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import CustomToast from "../Toast";
+import CustomToast, { ErrorToast } from "../Toast";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
 import StringsE from "@/types/strings";
 
@@ -198,6 +198,9 @@ export default function ContentForm({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const combinedArray = [data.category ?? [], ...(data.subcategory ?? [])];
+    if (!data.dateStart || !data.dateEnd) {
+      return ErrorToast("لطفا تاریخ ها را انتخاب کنید");
+    }
     if (!id) {
       const res = await postMutation({
         title: data.title,
