@@ -50,7 +50,6 @@ const MyDropDown = ({
   error,
   width,
 }: SelectInputProps) => {
-  isMulti && console.log(value);
   const valueObj = isMulti
     ? value
       ? (value as string[])

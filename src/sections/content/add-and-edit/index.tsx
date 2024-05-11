@@ -2,7 +2,7 @@ import "animate.css";
 import { HttpApiResponse } from "@/types/httpResponse";
 
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ContentForm from "@/components/Form/ContentForm";
 import LoadingContent from "../components/LoadingContent";
@@ -30,6 +30,13 @@ export default function AddAndEditSection() {
     retry: false,
     refetchOnWindowFocus: true,
   });
+
+  useEffect(() => {
+    console.log(singleContent?.data?.files);
+    setSelectedMainImage(singleContent?.data?.file.split("/")[4]);
+    const fileIds = singleContent?.data?.files.map((file) => file.id);
+    if (fileIds) setSelectedsecondImages(fileIds);
+  }, [singleContent]);
 
   if (isError && id) {
     navigate("/content");
