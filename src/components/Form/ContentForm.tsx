@@ -101,7 +101,6 @@ export default function ContentForm({
       isComment: singleContent ? singleContent.data?.isCommentAvailable : false,
     },
   });
-  console.log(methods.getValues("subcategory"));
 
   const { openModal } = useModal();
   const queryClient = useQueryClient();
