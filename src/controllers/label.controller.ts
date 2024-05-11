@@ -7,13 +7,14 @@ import StringsE from "@/types/strings";
 import { AxiosError } from "axios";
 
 export const labelController = {
-  getLabel: async (Page: number) => {
+  getLabel: async (Page: number, isPin?: boolean | string | null) => {
     try {
       const res = await http.get<HttpResponseList<LabelI>>("Panel/Tag", {
         params: {
           Size: 6,
           Page,
           Sort: "createdOn desc",
+          IsPin: isPin,
         },
       });
       return res.data;

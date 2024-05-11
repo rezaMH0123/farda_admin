@@ -35,14 +35,26 @@ export default function TableWithApi<T>({
   const [isCommentable, setIsCommentable] = useState<
     boolean | null | undefined
   >(null);
-  const [status, setStatus] = useState<string | undefined>();
+  const [isPin, setIsPin] = useState<boolean | null | undefined>(undefined);
+  const [status, setStatus] = useState<string | undefined>("");
 
   const { data, isLoading } = useQuery<HttpResponseList<T>>({
-    queryKey: [keyNme, currentPage, isShareAvailable, isCommentable, status],
+    queryKey: [
+      keyNme,
+      currentPage,
+      isShareAvailable,
+      isCommentable,
+      status,
+      isPin,
+    ],
     queryFn: () =>
-      controller(currentPage, isShareAvailable, isCommentable, status),
+      isPin !== undefined
+        ? controller(currentPage, isPin)
+        : controller(currentPage, isShareAvailable, isCommentable, status),
+
     retry: false,
   });
+
   const [allPage, setAllPage] = useState<number | undefined>();
 
   useEffect(() => {
@@ -56,13 +68,14 @@ export default function TableWithApi<T>({
   };
 
   const filterOnChange = (data: string | boolean) => {
-    console.log(data);
+    // console.log(data);
     if (typeof data === "boolean") {
       if (filterState === 2) {
         setIsShareAvailable(data);
       } else if (filterState === 3) {
         setIsCommentable(data);
       }
+      setIsPin(data);
     } else {
       if (filterState === 1) {
         setStatus(data);
@@ -71,7 +84,9 @@ export default function TableWithApi<T>({
       } else if (data === "" && filterState === 3) {
         setIsCommentable(undefined);
       }
+      setIsPin(null);
     }
+    setFilterState(0);
   };
   return (
     <div className="chartContetnt px-6 h-full w-full">
@@ -105,6 +120,13 @@ export default function TableWithApi<T>({
                         option={item.value}
                         setFilterState={setFilterState}
                         onChange={filterOnChange}
+                        selected={
+                          filterState === 1
+                            ? status
+                            : filterState === 2
+                            ? isShareAvailable
+                            : isCommentable
+                        }
                       />
                     )}
                   </div>
@@ -117,7 +139,10 @@ export default function TableWithApi<T>({
             {title.map((item, index) => (
               <div
                 key={index}
-                className={`flex items-center ${
+                onClick={() => {
+                  index < title.length - 1 && setFilterState(index);
+                }}
+                className={`flex items-center  ${
                   index === 0
                     ? "justify-start"
                     : index === title.length - 1
@@ -125,7 +150,21 @@ export default function TableWithApi<T>({
                     : "justify-center"
                 }  flex-1`}
               >
-                <span className="mr-5 ">{item.title}</span>
+                <span className="mr-5 relative">
+                  {item.title}
+                  {index > 0 && index === filterState && (
+                    <FilterDropDown
+                      option={item.value}
+                      setFilterState={setFilterState}
+                      onChange={filterOnChange}
+                      selected={isPin}
+                    />
+                  )}
+                </span>
+
+                {index == 1 && (
+                  <IconChevron className="fill-black h-3 w-3 rotate-90 mr-2 cursor-pointer" />
+                )}
               </div>
             ))}
           </>
@@ -138,13 +177,15 @@ export default function TableWithApi<T>({
             <TailSpinner />
           </div>
         ) : (
-          <div className="flex flex-col gap-y-2">
-            {data ? (
+          <div className="flex flex-col gap-y-2 h-full mt-4">
+            {data && data?.data.totalRowCount !== 0 ? (
               data?.data?.result?.map((item, index) => (
                 <div key={index}>{children(item)}</div>
               ))
             ) : (
-              <div>empty state</div>
+              <div className="flex justify-center items-center h-full">
+                empty state
+              </div>
             )}
           </div>
         )}

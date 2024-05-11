@@ -15,7 +15,6 @@ export const contentController = {
     Status?: string | null | undefined
   ) => {
     try {
-      console.log(IsShareAvailable);
       const res = await http.get<HttpResponseList<Advertisement>>(
         "Panel/Content",
         {
