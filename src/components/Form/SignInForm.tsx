@@ -29,6 +29,10 @@ export default function SignInForm() {
   const navigate = useNavigate();
   const methods = useForm<SigninI>({
     resolver: yupResolver(siginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
 
   const { mutateAsync: signinMutate, isPending } = useMutation<
