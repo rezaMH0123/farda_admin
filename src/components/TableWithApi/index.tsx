@@ -54,7 +54,6 @@ export default function TableWithApi<T>({
 
     retry: false,
   });
-  console.log(isPin);
 
   const [allPage, setAllPage] = useState<number | undefined>();
 
