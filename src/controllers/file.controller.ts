@@ -3,10 +3,11 @@ import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
 import { FilesI } from "@/types/models/Files.type";
 
 export const fileController = {
-  getFiles: async (Page: number, Size: number) => {
+  getFiles: async (Page: number, Size: number, fileTypeEnum?: string) => {
     try {
       const res = await http.get<HttpResponseList<FilesI>>("Panel/File", {
         params: {
+          fileTypeEnum,
           Size,
           Page,
           Sort: "createdOn desc",

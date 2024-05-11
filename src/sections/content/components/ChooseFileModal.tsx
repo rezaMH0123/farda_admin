@@ -3,6 +3,7 @@ import PlusIcon from "@/components/Icons/PlusIcon";
 import Modal from "@/components/Modal";
 import SwiperComponent from "@/components/Swiper/SwiperComponent";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
+import { useGlobalState } from "@/context/globalStateContext";
 import { useModal } from "@/context/modalContext";
 import { fileController } from "@/controllers/file.controller";
 import { HttpResponseList } from "@/types/httpResponse";
@@ -29,8 +30,10 @@ export default function ChooseFileModal({
 }: ChooseFileModalProps) {
   const { isModalOpen, openUploadFileModal, closeModal } = useModal();
 
+  const { queryKey } = useGlobalState();
+
   const { data } = useQuery<HttpResponseList<FilesI>>({
-    queryKey: ["manage_file"],
+    queryKey: [queryKey],
     queryFn: () => fileController.getFiles(1, 1000000),
     retry: false,
     refetchOnWindowFocus: true,

@@ -1,48 +1,91 @@
-import { useEffect, useState } from "react";
-import Skeleton from "@/components/Skeleton";
-import Pagination from "@/components/Pagination";
 import StringsE from "@/types/strings";
 import SHARED_STRINGS from "@/constants/strings/shared.string";
-import { FilesI } from "@/types/models/Files.type";
-import { useQuery } from "@tanstack/react-query";
-import { HttpResponseList } from "@/types/httpResponse";
-import { fileController } from "@/controllers/file.controller";
 import { useGlobalState } from "@/context/globalStateContext";
-import FileTabs from "./Tabs";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { HttpApiResponse, HttpResponseList } from "@/types/httpResponse";
+import { FilesI } from "@/types/models/Files.type";
+import { useModal } from "@/context/modalContext";
+import { fileController } from "@/controllers/file.controller";
+import Pagination from "@/components/Pagination";
+import Modal from "@/components/Modal";
+import DeleteModal from "@/components/Modal/DeleteModal";
+import toast from "react-hot-toast";
+import CustomToast from "@/components/Toast";
+import Skeleton from "@/components/Skeleton";
+import CardFile from "./Cards/CardFile";
+import CardPhoto from "./Cards/CardPhoto";
 
 export default function ManageFileBody() {
+  const { setTab, tab, itemFile, setItemFile, queryKey, setQueryKey } =
+    useGlobalState();
+  const [fileTypeEnum, setFileTypeEnum] = useState<"Image" | "File">("Image");
   const [allPage, setAllPage] = useState<number | undefined>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [photos, setPhotos] = useState<FilesI[] | undefined>([]);
-  const [files, setFiles] = useState<FilesI[] | undefined>([]);
+  const { isDeleteModalOpen, closeDeleteModal } = useModal();
 
-  const { setTab, tab } = useGlobalState();
-
-  const { data, isLoading } = useQuery<HttpResponseList<FilesI>>({
-    queryKey: ["manage_file", currentPage],
-    queryFn: () => fileController.getFiles(currentPage, 6),
+  const { data, isFetched, isLoading } = useQuery<HttpResponseList<FilesI>>({
+    queryKey: [queryKey, currentPage, fileTypeEnum],
+    queryFn: () => fileController.getFiles(currentPage, 6, fileTypeEnum),
     retry: false,
     refetchOnWindowFocus: true,
   });
 
-  useEffect(() => {
-    if (data) {
-      setPhotos(
-        data.data.result.filter(
-          (item: FilesI) => item.contentType.slice(0, 5) === "image"
-        )
-      );
-      setFiles(
-        data.data.result.filter(
-          (item: FilesI) => item.contentType.slice(0, 11) === "application"
-        )
-      );
-      setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
-    }
-  }, [data]);
-
   const onChangePage = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const fileName = itemFile && itemFile?.filename + itemFile?.extention;
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: fileDeleteMutate, isPending } = useMutation<
+    HttpApiResponse,
+    unknown,
+    string
+  >({
+    mutationFn: fileController.deleteFiles,
+  });
+
+  const DeleteFile = async () => {
+    if (itemFile && itemFile.id) {
+      try {
+        const res = await fileDeleteMutate(itemFile.id);
+        if (res.isSuccess) {
+          queryClient.invalidateQueries({ queryKey: [queryKey] });
+          closeDeleteModal();
+          toast.custom((t) => (
+            <CustomToast
+              text={SHARED_STRINGS[StringsE.DeletedSuccessfully]}
+              animation={t}
+              status="success"
+            />
+          ));
+        }
+        setItemFile(undefined);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      setAllPage(Math.ceil(Number(data?.data.totalRowCount) / 6));
+    }
+  }, [data, isFetched]);
+
+  const HandleChangeTab = (
+    tab: "photo" | "file",
+    fileTypeEnumP: "Image" | "File",
+    queryKey: "images" | "files"
+  ) => {
+    setTab(tab);
+    setFileTypeEnum(fileTypeEnumP);
+    setQueryKey(queryKey);
+    setCurrentPage(1);
+    setAllPage(undefined);
   };
 
   return (
@@ -55,7 +98,7 @@ export default function ManageFileBody() {
                 ? "border-Blue-PrimaryBlue text-Blue-PrimaryBlue"
                 : "border-Black-B3 text-Black-B3"
             }`}
-            onClick={() => setTab("photo")}
+            onClick={() => HandleChangeTab("photo", "Image", "images")}
           >
             {SHARED_STRINGS[StringsE.Photo]}
           </div>
@@ -65,7 +108,7 @@ export default function ManageFileBody() {
                 ? "border-Blue-PrimaryBlue text-Blue-PrimaryBlue"
                 : "border-Black-B3 text-Black-B3"
             }`}
-            onClick={() => setTab("file")}
+            onClick={() => HandleChangeTab("file", "File", "images")}
           >
             {SHARED_STRINGS[StringsE.File]}
           </div>
@@ -74,8 +117,15 @@ export default function ManageFileBody() {
           <div className="h-fit grid grid-cols-3 gap-6 mt-3">
             {isLoading ? (
               <Skeleton />
+            ) : tab === "file" ? (
+              data?.data.result.map((item) => (
+                <CardFile item={item} key={item.id} />
+              ))
             ) : (
-              <FileTabs photos={photos} files={files} />
+              tab === "photo" &&
+              data?.data.result.map((item) => (
+                <CardPhoto item={item} key={item.id} />
+              ))
             )}
           </div>
         </div>
@@ -86,6 +136,17 @@ export default function ManageFileBody() {
             onChangePage={onChangePage}
           />
         </div>
+        <>
+          {isDeleteModalOpen && (
+            <Modal width={25} height={38}>
+              <DeleteModal
+                onClick={DeleteFile}
+                loading={isPending}
+                title={fileName}
+              />
+            </Modal>
+          )}
+        </>
       </div>
     </>
   );

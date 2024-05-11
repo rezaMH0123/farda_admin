@@ -10,53 +10,61 @@ import ExelFile from "@/assets/img/tools/excelFile.svg";
 import { Link } from "react-router-dom";
 
 interface CardFileProps {
-  item: FilesI;
+  item: FilesI | undefined;
 }
 
 export default function CardFile({ item }: CardFileProps) {
-  const fileType: string = item.extention;
+  const fileType: string | undefined = item && item.extention;
   return (
-    <div
-      key={item.id}
-      className="h-[190px] w-[100%] rounded-[20px] bg-Blue-CardBack custom-shadow"
-    >
-      <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img
-            src={
-              fileType === ".pdf"
-                ? Pdf
-                : fileType === ".docx"
-                ? Word
-                : fileType === ".xlsx" || fileType === ".xls"
-                ? Exel
-                : ""
-            }
-            alt="fileType"
-          />
-          <p className="font-normal text-xs text-Black-B3">{item.filename}</p>
+    <>
+      {item && (
+        <div
+          key={item.id}
+          className="h-[190px] w-[100%] rounded-[20px] bg-Blue-CardBack custom-shadow"
+        >
+          <div className="w-[91%] h-[20%] m-auto flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <img
+                src={
+                  fileType === ".pdf"
+                    ? Pdf
+                    : fileType === ".docx"
+                    ? Word
+                    : fileType === ".xlsx" || fileType === ".xls"
+                    ? Exel
+                    : ""
+                }
+                alt="fileType"
+              />
+              <p className="font-normal text-xs text-Black-B3">
+                {item.filename}
+              </p>
+            </div>
+            <DropDownMenu items={item} menuItemsT={FileMenuItems} />
+          </div>
+          <Link to={item.fileUrl} target="_blank">
+            <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
+              <img
+                src={
+                  fileType === ".pdf"
+                    ? PdfFile
+                    : fileType === ".docx"
+                    ? WordFile
+                    : fileType === ".xlsx" || fileType === ".xls"
+                    ? ExelFile
+                    : ""
+                }
+                alt="file"
+              />
+            </div>
+          </Link>
+          <div className="w-full h-[15%] flex items-center justify-center">
+            <p className="font-normal text-[#667085]">
+              سه‌شنبه 21 فروردین 1403
+            </p>
+          </div>
         </div>
-        <DropDownMenu items={item} menuItemsT={FileMenuItems} />
-      </div>
-      <Link to={item.fileUrl} target="_blank">
-        <div className="w-[95%] h-[123px] flex justify-center items-center rounded m-auto">
-          <img
-            src={
-              fileType === ".pdf"
-                ? PdfFile
-                : fileType === ".docx"
-                ? WordFile
-                : fileType === ".xlsx" || fileType === ".xls"
-                ? ExelFile
-                : ""
-            }
-            alt="file"
-          />
-        </div>
-      </Link>
-      <div className="w-full h-[15%] flex items-center justify-center">
-        <p className="font-normal text-[#667085]">سه‌شنبه 21 فروردین 1403</p>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

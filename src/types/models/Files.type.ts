@@ -1,7 +1,8 @@
 export interface FilesI {
-  contentType: string;
-  extention: string;
+  id: string;
   fileUrl: string;
   filename: string;
-  id: string;
+  extention: string;
+  contentType: string;
+  uploadFileDateTime: string;
 }

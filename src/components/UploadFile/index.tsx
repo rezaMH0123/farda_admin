@@ -10,11 +10,13 @@ import { useModal } from "@/context/modalContext";
 import { fileController } from "@/controllers/file.controller";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HttpApiResponse } from "@/types/httpResponse";
+import { useGlobalState } from "@/context/globalStateContext";
 
 export default function UploadFile() {
   const [file, setFile] = useState<File | undefined>();
   const { closeUploadFileModal } = useModal();
   const queryClient = useQueryClient();
+  const { queryKey } = useGlobalState();
 
   const { mutateAsync: filepostmutate, isPending } = useMutation<
     HttpApiResponse,
@@ -40,7 +42,7 @@ export default function UploadFile() {
       try {
         const res = await filepostmutate(formData);
         if (res.isSuccess) {
-          queryClient.invalidateQueries({ queryKey: ["manage_file"] });
+          queryClient.invalidateQueries({ queryKey: [queryKey] });
           closeUploadFileModal();
           toast.custom((t) => (
             <CustomToast
