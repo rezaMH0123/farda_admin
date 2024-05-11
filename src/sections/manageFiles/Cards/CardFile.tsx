@@ -8,6 +8,7 @@ import PdfFile from "@/assets/img/tools/file.svg";
 import WordFile from "@/assets/img/tools/wordFile.svg";
 import ExelFile from "@/assets/img/tools/excelFile.svg";
 import { Link } from "react-router-dom";
+import { convertToPersianDate } from "@/utils/helper";
 
 interface CardFileProps {
   item: FilesI | undefined;
@@ -15,6 +16,9 @@ interface CardFileProps {
 
 export default function CardFile({ item }: CardFileProps) {
   const fileType: string | undefined = item && item.extention;
+
+  const shamsiDate = convertToPersianDate(item?.uploadFileDateTime);
+
   return (
     <>
       {item && (
@@ -59,9 +63,7 @@ export default function CardFile({ item }: CardFileProps) {
             </div>
           </Link>
           <div className="w-full h-[15%] flex items-center justify-center">
-            <p className="font-normal text-[#667085]">
-              سه‌شنبه 21 فروردین 1403
-            </p>
+            <p className="font-normal text-[#667085]">{shamsiDate}</p>
           </div>
         </div>
       )}

@@ -3,12 +3,15 @@ import Square from "@/assets/img/tools/square.svg";
 import { PhotoMenuItems } from "@/constants/items/dropDownMenuItems";
 import DropDownMenu from "../DropDownMenu";
 import { Link } from "react-router-dom";
+import { convertToPersianDate } from "@/utils/helper";
 
 interface CardPhotoProps {
   item: FilesI | undefined;
 }
 
 export default function CardPhoto({ item }: CardPhotoProps) {
+  const shamsiDate = convertToPersianDate(item?.uploadFileDateTime);
+
   return (
     <>
       {item && (
@@ -27,9 +30,7 @@ export default function CardPhoto({ item }: CardPhotoProps) {
             />
           </Link>
           <div className="w-full h-[15%] flex items-center justify-center">
-            <p className="font-normal text-[#667085]">
-              سه‌شنبه 21 فروردین 1403
-            </p>
+            <p className="font-normal text-[#667085]">{shamsiDate}</p>
           </div>
         </div>
       )}

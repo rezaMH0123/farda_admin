@@ -1,13 +1,13 @@
 import moment from "jalali-moment";
 
 const persianDaysOfWeek = [
-  "شنبه",
   "یک‌شنبه",
   "دوشنبه",
   "سه‌شنبه",
   "چهارشنبه",
   "پنج‌شنبه",
   "جمعه",
+  "شنبه",
 ];
 const persianMonths = [
   "فروردین",
@@ -54,4 +54,13 @@ export function getPersianYear() {
 
 export function isShamsiDate(dateString: string) {
   return /^\d{4}\/\d{2}\/\d{2}$/.test(dateString);
+}
+
+export function convertToPersianDate(dateString: string | undefined) {
+  const date = moment(dateString);
+  const persianDayOfWeek = persianDaysOfWeek[date.day()];
+  const persianMonth = persianMonths[date.jMonth()];
+  const perisanDay = date.jDate();
+  const perisanYear = date.jYear();
+  return `${persianDayOfWeek} ${perisanDay} ${persianMonth} ${perisanYear}`;
 }
